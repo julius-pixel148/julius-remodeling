@@ -1642,3 +1642,13 @@ Dir.glob(File.join(ROOT, "*.html")).sort.each do |path|
   File.write(path, s)
 end
 puts "skip link present on every page"
+
+# Photo addresses carry a version number. Raise PHOTO_VERSION when photos are replaced or re-uploaded,
+# so browsers fetch them fresh instead of using an old saved copy (or a saved "not found").
+PHOTO_VERSION = 2
+Dir.glob(File.join(ROOT, "*.html")).sort.each do |path|
+  t = File.read(path)
+  n = t.gsub(%r{(assets/photos/[^"?\s]+\.(?:jpg|png|mp4))(?:\?v=\d+)?"}) { %(#{$1}?v=#{PHOTO_VERSION}") }
+  File.write(path, n) if n != t
+end
+puts "photo version #{PHOTO_VERSION} applied"
