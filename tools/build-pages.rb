@@ -1454,12 +1454,12 @@ end
 # ---------------------------------------------------------------- promotions
 # To add, change, or remove a deal, edit this list and run: ruby tools/build-pages.rb .
 # Each deal gets its own page (<slug>.html) and a card on promotions.html.
-# form_id is that deal's GoHighLevel form; it opens in a pop-up from the "Claim this discount" buttons on that page only.
+# form_id is that deal's GoHighLevel form; it opens in a pop-up from the "Claim this offer" buttons on that page only.
 PROMOS = [
   { slug: "bathroom-remodel-offer", amount: "$1,500", project: "bathroom remodel", label: "Bathroom remodeling", service: "bathroom-remodeling", form_id: "zVU6tpjeGSNDg2uBhzmy", form_name: "$1500 Discount Bathroom Remodeling", form_height: 720,
-    blurb: "Take $1,500 off a full bathroom remodel: tile, shower or tub, vanity, fixtures, and lighting, handled by one team." },
+    blurb: "Get $1,500 toward the finish materials for a full bathroom remodel, such as tile, vanity, fixtures, and lighting. One team handles the whole job." },
   { slug: "kitchen-remodel-offer",  amount: "$1,000", project: "kitchen remodel",  label: "Kitchen remodeling",  service: "kitchen-remodeling", form_id: "sV78tURz979hTq0AppZt", form_name: "$1000 Off Kitchen Upgrade", form_height: 400,
-    blurb: "Take $1,000 off a kitchen remodel: cabinets, countertops, backsplash, flooring, and lighting, handled by one team." },
+    blurb: "Get $1,000 toward the finish materials for a kitchen remodel, such as countertops, backsplash tile, flooring, and lighting. One team handles the whole job." },
 ]
 # Countdown timer from GoHighLevel. Change the timerId here to use a different timer.
 PROMO_TIMER = %(<script src="https://widgets.leadconnectorhq.com/cdt/remoteEntry.js" timerId=6af4cf7678a6a6baacefb635 position="left" altText="Countdown Timer" data-v2='true'></script>)
@@ -1470,10 +1470,10 @@ end
 
 def promo_page(pr)
   form_url = "https://api.leadconnectorhq.com/widget/form/#{pr[:form_id]}"
-  band = cta_band("Ready to save <em>#{pr[:amount]}?</em>").sub(%(<a href="consultation.html" class="btn btn-night">Book a free consultation), %(<a href="#{form_url}" data-claim class="btn btn-night">Claim this discount))
-  title = "#{pr[:amount]} Off Your #{pr[:project].split.map(&:capitalize).join(' ')}"
+  band = cta_band("Ready for #{pr[:amount]} <em>toward finish materials?</em>").sub(%(<a href="consultation.html" class="btn btn-night">Book a free consultation), %(<a href="#{form_url}" data-claim class="btn btn-night">Claim this offer))
+  title = "#{pr[:amount]} Toward Finish Materials for Your #{pr[:project].split.map(&:capitalize).join(' ')}"
   <<~HTML
-    #{head_html(title, "Limited-time offer from Julius Remodeling Group: #{pr[:amount]} off your #{pr[:project]} in Seattle and the Eastside. Book a free consultation before the offer ends.", promo_ld(title, pr[:slug]))}
+    #{head_html(title, "Limited-time offer from Julius Remodeling Group: #{pr[:amount]} toward finish materials for your #{pr[:project]} in Seattle and the Eastside. Book a free consultation before the offer ends.", promo_ld(title, pr[:slug]))}
     <body>
 
     #{header(pr[:slug])}
@@ -1483,14 +1483,14 @@ def promo_page(pr)
     <section class="dark page-top" aria-labelledby="h1">
       <div class="wrap">
         <p class="eyebrow">Limited-time offer</p>
-        <h1 id="h1">#{pr[:amount]} off <em>your #{pr[:project]}.</em></h1>
+        <h1 id="h1">#{pr[:amount]} toward finish materials <em>for your #{pr[:project]}.</em></h1>
         <p class="lede">#{pr[:blurb]} Claim it before the countdown ends.</p>
         <div class="promo-time">
           <span class="mono">Offer ends in</span>
           <div class="timer">#{PROMO_TIMER}</div>
         </div>
         <div class="promo-acts">
-          <a href="#{form_url}" data-claim class="btn btn-brass">Claim this discount <span class="ar" aria-hidden="true">→</span></a>
+          <a href="#{form_url}" data-claim class="btn btn-brass">Claim this offer <span class="ar" aria-hidden="true">→</span></a>
           <a href="tel:" data-tel class="btn btn-line">Call <span data-k="phone">[Phone]</span></a>
         </div>
       </div>
@@ -1500,17 +1500,17 @@ def promo_page(pr)
       <div class="wrap promo-how">
         <div>
           <p class="eyebrow">How it works</p>
-          <h2 id="how">Three steps to <em>claim your discount.</em></h2>
+          <h2 id="how">Three steps to <em>claim your offer.</em></h2>
           <p class="note">Want to see what goes into the work first? Read about our <a href="#{pr[:service]}.html">#{pr[:label].downcase}</a>.</p>
         </div>
         <div>
           <ol class="promo-steps">
-            <li><span class="no">1</span><div><h3>Claim this discount</h3><p>Press the button and send us the short form before the countdown ends. There is no obligation.</p></div></li>
+            <li><span class="no">1</span><div><h3>Claim this offer</h3><p>Press the button and send us the short form before the countdown ends. There is no obligation.</p></div></li>
             <li><span class="no">2</span><div><h3>We'll contact you</h3><p>We'll get in touch to set up your free consultation and talk through your #{pr[:project]}.</p></div></li>
-            <li><span class="no">3</span><div><h3>Save #{pr[:amount]}</h3><p>The discount comes off the price of your #{pr[:project]}.</p></div></li>
+            <li><span class="no">3</span><div><h3>Get #{pr[:amount]} in finish materials</h3><p>We put #{pr[:amount]} toward the finish materials for your #{pr[:project]}.</p></div></li>
           </ol>
           <p class="fine">Terms and conditions apply.</p>
-          <a href="#{form_url}" data-claim class="btn btn-ink" style="margin-top:24px">Claim this discount <span class="ar" aria-hidden="true">→</span></a>
+          <a href="#{form_url}" data-claim class="btn btn-ink" style="margin-top:24px">Claim this offer <span class="ar" aria-hidden="true">→</span></a>
         </div>
       </div>
     </section>
@@ -1523,7 +1523,7 @@ def promo_page(pr)
 
     <dialog class="claim" id="claim" aria-labelledby="claim-t">
       <div class="hd">
-        <div><span class="mono">Limited-time offer</span><h2 id="claim-t">#{pr[:amount]} off your #{pr[:project]}</h2></div>
+        <div><span class="mono">Limited-time offer</span><h2 id="claim-t">#{pr[:amount]} toward finish materials</h2></div>
         <button type="button" class="x" aria-label="Close">×</button>
       </div>
       <iframe
@@ -1551,10 +1551,10 @@ end
 
 def promos_hub
   cards = PROMOS.map { |pr|
-    %(<a class="promo-card" href="#{pr[:slug]}.html"><span class="mono">#{pr[:label]}</span><b>#{pr[:amount]} <em>off</em></b><p>#{pr[:blurb]}</p><span class="go">See this offer <span aria-hidden="true">→</span></span></a>)
+    %(<a class="promo-card" href="#{pr[:slug]}.html"><span class="mono">#{pr[:label]}</span><b>#{pr[:amount]}</b><span class="pc-for">toward finish materials</span><p>#{pr[:blurb]}</p><span class="go">See this offer <span aria-hidden="true">→</span></span></a>)
   }.join("\n          ")
   <<~HTML
-    #{head_html("Promotions &amp; Deals", "Current remodeling promotions from Julius Remodeling Group: #{PROMOS.map { |pr| "#{pr[:amount]} off a #{pr[:project]}" }.join(', ')}. Serving Seattle and the Eastside.", promo_ld("Promotions and Deals", "promotions"))}
+    #{head_html("Promotions &amp; Deals", "Current remodeling promotions from Julius Remodeling Group: #{PROMOS.map { |pr| "#{pr[:amount]} toward finish materials for a #{pr[:project]}" }.join(', ')}. Serving Seattle and the Eastside.", promo_ld("Promotions and Deals", "promotions"))}
     <body>
 
     #{header("promotions")}
@@ -1565,7 +1565,7 @@ def promos_hub
       <div class="wrap">
         <p class="eyebrow">Promotions</p>
         <h1 id="h1">Current <em>promotions.</em></h1>
-        <p class="lede">Limited-time savings on remodeling projects across Seattle and the Eastside. Choose an offer to see the details and how to claim it.</p>
+        <p class="lede">Limited-time offers on remodeling projects across Seattle and the Eastside. Choose an offer to see the details and how to claim it.</p>
       </div>
     </section>
 
@@ -1658,7 +1658,7 @@ def newsletter_page
           <p class="eyebrow">What you'll get</p>
           <h2 id="nl-t">Worth opening, <em>every time.</em></h2>
           <ol class="promo-steps">
-            <li><span class="no">1</span><div><h3>Promotions first</h3><p>New offers, like money off a kitchen or bathroom remodel, sent to subscribers as soon as they open.</p></div></li>
+            <li><span class="no">1</span><div><h3>Promotions first</h3><p>New offers, like money toward finish materials for a kitchen or bathroom remodel, sent to subscribers as soon as they open.</p></div></li>
             <li><span class="no">2</span><div><h3>Our latest work</h3><p>Recently finished kitchens, bathrooms, and flooring, with before-and-after photos.</p></div></li>
             <li><span class="no">3</span><div><h3>No clutter</h3><p>We only email when we have something worth sharing, and you can unsubscribe with one click.</p></div></li>
           </ol>

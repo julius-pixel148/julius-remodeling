@@ -559,6 +559,7 @@ main:focus,main:focus-visible{outline:none;box-shadow:none}
 .promo-card .mono{color:var(--gold)}
 .promo-card b{font-family:var(--display);font-weight:500;font-size:clamp(60px,7vw,104px);line-height:.95;letter-spacing:-.01em}
 .promo-card b em{color:var(--gold)}
+.promo-card .pc-for{font-family:var(--display);font-style:italic;color:var(--gold);font-size:clamp(28px,3vw,44px);line-height:1.1;margin-top:-4px}
 .promo-card p{color:var(--muted-d);font-size:16.5px;max-width:30em}
 .promo-card .go{margin-top:auto;padding-top:12px;color:var(--gold);font-size:15px}
 .promo-time{margin-top:clamp(28px,4vh,44px)}
