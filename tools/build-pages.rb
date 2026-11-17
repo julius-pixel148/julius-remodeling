@@ -69,20 +69,32 @@ def header(current, home: false)
   HTML
 end
 
-def footer(home: false)
+NEWS_STRIP = <<~HTML.chomp
+
+        <div class="news">
+          <div>
+            <span class="mono">Newsletter</span>
+            <p class="nt">Our latest work and promotions, <em>in your inbox.</em></p>
+            <p class="ns">Be the first to hear about new offers and see our most recent projects. Unsubscribe anytime.</p>
+          </div>
+          <a href="newsletter.html" class="btn btn-brass">Sign up for the newsletter <span class="ar" aria-hidden="true">→</span></a>
+        </div>
+HTML
+
+def footer(home: false, news: true)
   p = home ? "" : "index.html"
   li = ->(list) { list.map { |s| %(<li><a href="#{s[:slug]}.html">#{s[:name]}</a></li>) }.join }
   <<~HTML.chomp
     <footer class="dark">
-      <div class="wrap">
+      <div class="wrap">#{news ? NEWS_STRIP : ""}
         <div class="fgrid">
-          <div><p class="tag">Transforming homes. <em>Elevating lives.</em></p><p class="sub">Remodeling for single-family homes, condos, and apartments across Seattle and the Eastside.</p></div>
+          <div><p class="tag">Transforming homes. <em>Elevating lives.</em></p><p class="sub">Remodeling for single-family homes, condos, and apartments across Seattle and the Eastside.</p><p class="sister">Need a repair or home service instead? Chimney, garage door, plumbing, electrical, and more are handled by our sister company, <a href="https://juliusservices.com/" target="_blank" rel="noopener">Julius Services ↗</a></p></div>
           <div><h4 class="mono">Remodeling</h4><ul>#{li.(REMODELING)}</ul></div>
           <div><h4 class="mono">Specialty &amp; repairs</h4><ul>#{li.(SPECIALTY)}</ul></div>
           <div><h4 class="mono"><a href="service-areas.html">Service areas</a></h4><ul>#{li.(AREAS)}</ul></div>
           <div><h4 class="mono">Contact</h4><ul><li><a href="tel:" data-tel data-k="phone">[Phone]</a></li><li><a href="mailto:ask@juliusremodeling.com" data-mail data-k="email">ask@juliusremodeling.com</a></li><li data-k="hours">[Business hours]</li><li data-k="address">[Address]</li><li><a href="#{LICENSE_URL}" target="_blank" rel="noopener">WA License <span data-k="license">[License #]</span> ↗</a></li><li data-k="insurance">[Insurance details]</li><li><a href="https://www.youtube.com/@Juliusremodelinggroup" target="_blank" rel="noopener">YouTube ↗</a></li></ul></div>
         </div>
-        <div class="legal mono"><span>© 2026 Julius Remodeling Group</span><span class="flinks"><a href="promotions.html">Promotions</a><a href="terms-and-conditions.html">Terms &amp; Conditions</a><a href="privacy-policy.html">Privacy Policy</a></span><span>Bellevue, WA · Serving Seattle &amp; the Eastside</span></div>
+        <div class="legal mono"><span>© 2026 Julius Remodeling Group</span><span class="flinks"><a href="promotions.html">Promotions</a><a href="newsletter.html">Newsletter</a><a href="terms-and-conditions.html">Terms &amp; Conditions</a><a href="privacy-policy.html">Privacy Policy</a></span><span>Bellevue, WA · Serving Seattle &amp; the Eastside</span></div>
       </div>
     </footer>
   HTML
@@ -1580,6 +1592,93 @@ def promos_hub
   HTML
 end
 
+# ---------------------------------------------------------------- newsletter page
+# GoHighLevel form "Newsletter Signup". If this id is set to nil, the page shows a sample form that does NOT send anything.
+NEWSLETTER_FORM_ID = "8J9srvv6uEPwCzcWuH4n"
+NEWSLETTER_FORM_HEIGHT = 600
+
+def newsletter_form
+  if NEWSLETTER_FORM_ID
+    url = "https://msgsndr.com/widget/form/#{NEWSLETTER_FORM_ID}"
+    <<~HTML.chomp
+      <iframe
+              src="#{url}"
+              id="inline-#{NEWSLETTER_FORM_ID}"
+              data-layout="{'id':'INLINE','minimizedTitle':'','isLeftAligned':true,'isRightAligned':false,'allowMinimize':true}"
+              data-trigger-type="alwaysShow"
+              data-trigger-value=""
+              data-activation-type="alwaysActivated"
+              data-activation-value=""
+              data-deactivation-type="neverDeactivate"
+              data-deactivation-value=""
+              data-form-name="Newsletter Signup"
+              data-height="#{NEWSLETTER_FORM_HEIGHT}"
+              data-layout-iframe-id="inline-#{NEWSLETTER_FORM_ID}"
+              data-form-id="#{NEWSLETTER_FORM_ID}"
+              style="height:#{NEWSLETTER_FORM_HEIGHT}px;min-height:#{NEWSLETTER_FORM_HEIGHT}px"
+              title="Newsletter Signup"></iframe>
+            <p class="fallback">Form not loading? <a href="#{url}" target="_blank" rel="noopener">Open it in a new tab</a>.</p>
+            <script src="https://link.msgsndr.com/js/form_embed.js"></script>
+    HTML
+  else
+    <<~HTML.chomp
+      <form class="nl-form" data-example novalidate>
+              <p class="nl-note" role="status">Example only. This form is not connected yet and does not save anything.</p>
+              <div class="field"><label for="nl-name">First name</label><input id="nl-name" name="first_name" type="text" autocomplete="given-name"></div>
+              <div class="field"><label for="nl-email">Email</label><input id="nl-email" name="email" type="email" autocomplete="email" required></div>
+              <label class="nl-check"><input type="checkbox" name="consent" required><span>Yes, send me project updates and promotions from Julius Remodeling Group by email.</span></label>
+              <button type="submit" class="btn btn-ink">Sign me up <span class="ar" aria-hidden="true">→</span></button>
+              <p class="nl-fine">We only email when we have something worth sharing. Unsubscribe anytime. See our <a href="privacy-policy.html">Privacy Policy</a>.</p>
+            </form>
+    HTML
+  end
+end
+
+def newsletter_page
+  ld = %({"@context":"https://schema.org","@type":"WebPage","name":"Newsletter","url":"https://juliusremodeling.com/newsletter","publisher":{"@type":"Organization","name":"Julius Remodeling Group"}})
+  <<~HTML
+    #{head_html("Newsletter Sign-Up", "Sign up for the Julius Remodeling Group newsletter: new promotions first, recent projects, and before-and-afters from Seattle and the Eastside.", ld)}
+    <body>
+
+    #{header("newsletter")}
+
+    <main id="top">
+
+    <section class="dark page-top" aria-labelledby="h1">
+      <div class="wrap">
+        <p class="eyebrow">Newsletter</p>
+        <h1 id="h1">Stay <em>in the loop.</em></h1>
+        <p class="lede">Get our latest work and our promotions by email. Sign up below and you'll hear about new offers before anyone else.</p>
+      </div>
+    </section>
+
+    <section class="sheet sec" aria-labelledby="nl-t" style="padding-top:clamp(56px,6vw,96px)">
+      <div class="wrap promo-how nl">
+        <div>
+          <p class="eyebrow">What you'll get</p>
+          <h2 id="nl-t">Worth opening, <em>every time.</em></h2>
+          <ol class="promo-steps">
+            <li><span class="no">1</span><div><h3>Promotions first</h3><p>New offers, like money off a kitchen or bathroom remodel, sent to subscribers as soon as they open.</p></div></li>
+            <li><span class="no">2</span><div><h3>Our latest work</h3><p>Recently finished kitchens, bathrooms, and flooring, with before-and-after photos.</p></div></li>
+            <li><span class="no">3</span><div><h3>No clutter</h3><p>We only email when we have something worth sharing, and you can unsubscribe with one click.</p></div></li>
+          </ol>
+          <p class="fine">Looking for a current deal? See our <a href="promotions.html">promotions</a>.</p>
+        </div>
+        <div class="form-card offer-form nl-card">
+          #{NEWSLETTER_FORM_ID ? "" : %(<h3 class="nl-h">Sign up for the newsletter</h3>)}
+          #{newsletter_form}
+        </div>
+      </div>
+    </section>
+
+    </main>
+
+    #{footer(news: false)}
+
+    #{tail_html}
+  HTML
+end
+
 # ================================================================ write files
 PAGES.each { |pg| File.write(File.join(ROOT, "#{pg[:slug]}.html"), page(pg)) }
 AREAS.each { |a| File.write(File.join(ROOT, "#{a[:slug]}.html"), city_page(a)) }
@@ -1588,6 +1687,7 @@ File.write(File.join(ROOT, "terms-and-conditions.html"), terms_page)
 File.write(File.join(ROOT, "privacy-policy.html"), privacy_page)
 PROMOS.each { |pr| File.write(File.join(ROOT, "#{pr[:slug]}.html"), promo_page(pr)) }
 File.write(File.join(ROOT, "promotions.html"), promos_hub)
+File.write(File.join(ROOT, "newsletter.html"), newsletter_page)
 
 { "index.html" => [nil, true], "condo-remodeling.html" => ["condo-remodeling", false], "consultation.html" => ["consultation", false] }.each do |file, (cur, home)|
   path = File.join(ROOT, file)
@@ -1609,7 +1709,7 @@ end
 puts "built #{PAGES.size} service pages, #{AREAS.size} city pages, and service-areas.html"
 
 # sitemap.xml for search engines (the hidden consultation page is left out on purpose)
-urls = [""] + ALL.map { |s| s[:slug] } + ["service-areas"] + AREAS.map { |a| a[:slug] } + ["promotions"] + PROMOS.map { |pr| pr[:slug] } + ["terms-and-conditions", "privacy-policy"]
+urls = [""] + ALL.map { |s| s[:slug] } + ["service-areas"] + AREAS.map { |a| a[:slug] } + ["promotions", "newsletter"] + PROMOS.map { |pr| pr[:slug] } + ["terms-and-conditions", "privacy-policy"]
 File.write(File.join(ROOT, "sitemap.xml"), %(<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n) +
   urls.map { |u| "  <url><loc>https://juliusremodeling.com/#{u}</loc></url>" }.join("\n") + "\n</urlset>\n")
 puts "wrote sitemap.xml (#{urls.size} pages)"

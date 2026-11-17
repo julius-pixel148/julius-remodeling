@@ -76,6 +76,15 @@ var CONFIG = {
     claim.addEventListener("click", function(e){ if (e.target === claim) claim.close(); }); // click outside the box
   }
 
+  // Newsletter sample form (shown only until the real GoHighLevel form is connected): never submits
+  document.querySelectorAll("form[data-example]").forEach(function(f){
+    f.addEventListener("submit", function(e){
+      e.preventDefault();
+      var n = f.querySelector(".nl-note");
+      if (n) { n.textContent = "Example only. Nothing was sent: this form is not connected yet."; n.scrollIntoView({block: "nearest"}); }
+    });
+  });
+
   // "Copy" buttons next to phone / email
   document.querySelectorAll('[data-copy]').forEach(function(b){
     b.addEventListener('click', function(){

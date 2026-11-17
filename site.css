@@ -260,6 +260,9 @@ footer{padding-top:clamp(80px,9vw,128px);border-top:1px solid var(--rule-d)}
 .fgrid .tag{font-family:var(--display);font-weight:500;font-size:clamp(28px,2.6vw,38px);line-height:1.1}
 .fgrid .tag em{color:var(--gold)}
 .fgrid .sub{color:var(--muted-d);margin-top:16px;font-size:15px;max-width:22em}
+.fgrid .sister{color:var(--muted-d);margin-top:14px;font-size:15px;max-width:22em}
+.fgrid .sister a{color:var(--gold);white-space:nowrap}
+.fgrid .sister a:hover{text-decoration:underline}
 .fgrid h4{margin:0 0 18px;color:var(--gold)}
 .fgrid ul{list-style:none;margin:0;padding:0;display:grid;gap:10px;color:rgba(247,244,238,.78);font-size:15px}
 .fgrid ul a:hover{color:var(--gold)}
@@ -639,3 +642,24 @@ html:has(dialog.claim[open]){overflow:hidden}
 .team-grid img{display:block;width:100%;height:100%;object-fit:cover}
 .team-grid figcaption{margin-top:12px;color:var(--muted)}
 @media (max-width:900px){.team-head{grid-template-columns:1fr}.team-grid{grid-template-columns:1fr 1fr}}
+
+/* ===== Newsletter: footer strip and sign-up page ===== */
+.news{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px 48px;margin-bottom:clamp(56px,6vw,88px);padding:clamp(28px,3.4vw,48px) clamp(24px,3.2vw,52px);background:var(--char);border:1px solid var(--rule-d);border-left:3px solid var(--gold)}
+.news .mono{color:var(--gold)}
+.news .nt{font-family:var(--display);font-size:clamp(28px,3vw,42px);line-height:1.08;margin-top:10px}
+.news .nt em{color:var(--gold)}
+.news .ns{margin-top:12px;max-width:36em;color:var(--muted-d);font-size:15.5px}
+.nl-card{padding:clamp(24px,3vw,40px)}
+.nl-h{font-size:clamp(26px,2.2vw,32px);margin-bottom:8px}
+.nl-form{display:grid;grid-template-columns:1fr;gap:24px;padding:16px 0 0;background:none}
+.nl-form .btn{justify-self:start;border:0}
+.nl-note{padding:12px 14px;background:var(--paper-2);border-left:3px solid var(--brass);font-size:14.5px;color:var(--ink)}
+.nl-check{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start;font:400 15.5px/1.5 var(--body);letter-spacing:0;text-transform:none;color:var(--ink);cursor:pointer}
+.nl-check input{width:20px;height:20px;margin:2px 0 0;padding:0;border:0;accent-color:var(--ink)}
+.nl-fine{font-size:14px;color:var(--muted)}
+.nl-fine a,.promo-how .fine a{color:var(--brass);border-bottom:1px solid currentColor}
+@media (max-width:640px){.news .btn{width:100%}}
+.nl h2{margin-bottom:28px}
+.news > div{flex:1 1 420px}
+/* GoHighLevel hides an inline form until it reports ready; keep it visible so the box is never blank */
+.nl-card iframe{display:block!important;position:static!important;width:100%;border:0;opacity:1!important;visibility:visible!important;pointer-events:auto!important}
