@@ -88,7 +88,7 @@ def footer(home: false, news: true)
     <footer class="dark">
       <div class="wrap">#{news ? NEWS_STRIP : ""}
         <div class="fgrid">
-          <div><p class="tag">Transforming homes. <em>Elevating lives.</em></p><p class="sub">Remodeling for single-family homes, condos, and apartments across Seattle and the Eastside.</p><p class="sister">Need a repair or home service instead? Chimney, garage door, plumbing, electrical, and more are handled by our sister company, <a href="https://juliusservices.com/" target="_blank" rel="noopener">Julius Services ↗</a></p></div>
+          <div><p class="tag">Transforming homes. <em>Elevating lives.</em></p><p class="sub">Remodeling for single-family homes, condos, and apartments across Seattle and the Eastside.</p><p class="sister">Need a repair or home service instead? Chimney, garage door, plumbing, electrical, and more are handled by our sister company, <a href="https://www.juliusservices.com/" target="_blank" rel="noopener">Julius Services ↗</a></p></div>
           <div><h4 class="mono">Remodeling</h4><ul>#{li.(REMODELING)}</ul></div>
           <div><h4 class="mono">Specialty &amp; repairs</h4><ul>#{li.(SPECIALTY)}</ul></div>
           <div><h4 class="mono"><a href="service-areas.html">Service areas</a></h4><ul>#{li.(AREAS)}</ul></div>
