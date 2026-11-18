@@ -77,17 +77,17 @@ def header(current, home: false)
   cta = current == "consultation" ?
     %(<a href="tel:" data-tel class="btn btn-brass">Call <span data-k="phone">[Phone]</span></a>) :
     %(<a href="consultation.html" class="btn btn-brass">Free consultation <span class="ar" aria-hidden="true">→</span></a>)
-  promo_cur = (current == "promotions" || current.to_s.end_with?("-offer")) ? ' aria-current="page"' : ""
+  promo_cur = (current == "specials" || current.to_s.end_with?("-offer")) ? ' aria-current="page"' : ""
   <<~HTML.chomp
-    <header class="top#{current == 'consultation' ? ' solid' : ''}" id="hdr">
+    <header class="top#{current == 'consultation' ? ' solid' : ''}" id="hdr">#{holiday_bar(current)}
       <div class="wrap">
         <a href="#{home ? '#top' : 'index.html'}" class="logo" aria-label="Julius Remodeling Group, home"><img src="assets/wordmark.png" width="560" height="189" alt="Julius Remodeling Group"></a>
         <nav class="menu" id="nav" aria-label="Main">
           <a href="#{p}#work">Projects</a>
           <div class="dd svc"><a href="#{p}#services"#{svc_cur}>Services</a><div class="dd-panel two four">#{SERVICE_GROUPS.map { |(t, l)| %(<div><span class="mono">#{t}</span>#{links(l, current)}</div>) }.join}</div></div>
           <div class="dd"><a href="service-areas.html"#{area_cur}>Areas</a><div class="dd-panel areas">#{links(AREAS, current)}<a href="service-areas.html">All service areas</a></div></div>
-          <a href="promotions.html"#{promo_cur}>Promotions</a>
-          <a href="#{p}#about">About</a><a href="#{p}#reviews">Reviews</a><a href="#{p}#contact">Contact</a>
+          <a href="specials.html"#{promo_cur}>Specials</a>
+          <a href="about.html"#{current == "about" ? ' aria-current="page"' : ""}>About</a><a href="#{p}#reviews">Reviews</a><a href="#{p}#contact">Contact</a>
         </nav>
         #{cta}
         <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
@@ -96,12 +96,181 @@ def header(current, home: false)
   HTML
 end
 
+# ---------------------------------------------------------------- holiday campaign (Black Friday / holiday season)
+# on: true shows the gold bar at the top of every page, the holiday section near the top of the home page,
+# and the holiday heading on specials.html. Set on: false after the season and rebuild to remove all of it.
+HOLIDAY = {
+  on: true,
+  tag: "Black Friday",
+  eyebrow: "Black Friday &amp; holiday season",
+  hub_lede: "Our Black Friday and holiday season specials are here.",
+}
+def holiday_max_amount
+  PROMOS.max_by { |pr| pr[:amount].delete("^0-9").to_i }[:amount]
+end
+def holiday_bar(current)
+  return "" unless HOLIDAY[:on]
+  return "" if %w[specials consultation].include?(current.to_s)
+  %(\n      <a class="hbar" href="specials.html"><span class="hb-tag">#{HOLIDAY[:tag]}</span><span class="hb-long">Holiday specials: up to #{holiday_max_amount} toward finish materials for your remodel</span><span class="hb-short">Holiday specials are here</span><span class="hb-go">See the specials <span aria-hidden="true">→</span></span></a>)
+end
+HOL_STARS = [[70, 60, 1.0], [210, 300, 0.6], [520, 40, 0.7], [760, 330, 0.9], [980, 90, 1.2], [1130, 260, 0.6], [1250, 140, 0.8], [400, 210, 0.5], [880, 200, 0.5]]
+def home_holiday_section
+  return "<!-- HOLIDAY -->\n<!-- /HOLIDAY -->" unless HOLIDAY[:on]
+  stars = HOL_STARS.each_with_index.map { |(x, y, k), i|
+    %(<path transform="translate(#{x} #{y}) scale(#{k})" style="animation-delay:#{(i * 0.7).round(1)}s" d="M0-14 3.2-3.2 14 0 3.2 3.2 0 14-3.2 3.2-14 0-3.2-3.2Z"/>)
+  }.join
+  tickets = PROMOS.map { |pr|
+    %(<a class="ticket" href="#{pr[:slug]}.html"><span class="mono">#{pr[:label]}</span><b>#{pr[:amount]}</b><span class="t-for">toward finish materials</span><span class="t-go">Claim this special <span aria-hidden="true">→</span></span></a>)
+  }.join
+  <<~HTML.chomp
+    <!-- HOLIDAY -->
+    <section class="hol" aria-labelledby="hol-t">
+      <svg class="hol-stars" viewBox="0 0 1320 380" preserveAspectRatio="xMidYMid slice" aria-hidden="true">#{stars}</svg>
+      <div class="wrap hol-in">
+        <div class="hol-copy">
+          <p class="hol-tag"><span>#{HOLIDAY[:tag]}</span><span>Holiday season</span></p>
+          <h2 id="hol-t">The season for <em>a new space.</em></h2>
+          <p>This holiday season, our specials put real money toward the finish materials for your remodel. Claim one, book your free consultation, and start the new year with the room you've been waiting for.</p>
+          <div class="hol-acts"><a href="specials.html" class="btn btn-brass">Explore the specials <span class="ar" aria-hidden="true">→</span></a><a href="consultation.html" class="btn btn-line">Book a free consultation</a></div>
+        </div>
+        <div class="hol-tickets">#{tickets}</div>
+      </div>
+    </section>
+    <!-- /HOLIDAY -->
+  HTML
+end
+
+# ---------------------------------------------------------------- kitchen refresh (home page, between Projects and Services)
+# Set REFRESH_ON = false and rebuild to remove the section.
+REFRESH_ON = true
+REFRESH_ITEMS = ["Cabinets painted white or a natural, modern color", "New handles", "Recessed lighting", "Pendant lights",
+                 "Quartz countertops", "New sink &amp; faucet", "Backsplash", "Appliances"]
+def home_refresh_section
+  return "<!-- REFRESH -->\n<!-- /REFRESH -->" unless REFRESH_ON
+  items = REFRESH_ITEMS.map { |t| "<li>#{t}</li>" }.join
+  <<~HTML.chomp
+    <!-- REFRESH -->
+    <section class="sheet sec refresh" aria-labelledby="refresh-t">
+      <div class="wrap refresh-in">
+        <div class="refresh-copy">
+          <p class="eyebrow">Kitchen refresh</p>
+          <h2 id="refresh-t">Tired of your old cabinets? <em>Skip the huge remodel.</em></h2>
+          <p class="lead">Save your cabinets and get a fresh, modern kitchen on a budget. We paint the cabinets you already have and update everything around them.</p>
+          <ul class="refresh-list">#{items}</ul>
+          <p class="refresh-note">We've completed many kitchen refresh projects this year. It's one of our specialties.</p>
+          <div class="acts">
+            <a href="consultation.html" class="btn btn-ink">Book a free consultation <span class="ar" aria-hidden="true">→</span></a>
+            <a href="kitchen-remodeling.html#ba-t" class="btn btn-line-n">See the before &amp; after</a>
+          </div>
+        </div>
+        <div class="refresh-ba">
+          <figure><img src="assets/photos/kitchen-white-sink-before.jpg" width="1600" height="1200" loading="lazy" alt="Before: kitchen with brown cherry-stained cabinets and dark speckled granite counters"><span class="mono">Before</span></figure>
+          <figure><img src="assets/photos/kitchen-white-sink-after.jpg" width="1600" height="1200" loading="lazy" alt="After: the same kitchen with white painted cabinets, white quartz counters, and wood-and-glass pendant lights over the island"><span class="mono">After</span></figure>
+          <figure><img src="assets/photos/kitchen-white-range-before.jpg" width="1600" height="1200" loading="lazy" alt="Before: range wall with brown cabinets, a glass tile strip backsplash, and dark granite counters"><span class="mono">Before</span></figure>
+          <figure><img src="assets/photos/kitchen-white-range-after.jpg" width="1600" height="1200" loading="lazy" alt="After: the range wall with white cabinets, a full-height quartz slab backsplash, and white quartz counters"><span class="mono">After</span></figure>
+        </div>
+      </div>
+    </section>
+    <!-- /REFRESH -->
+  HTML
+end
+
+# ---------------------------------------------------------------- materials & suppliers (home page, above Reviews)
+# Each row: name, logo file in assets/brands/, label, what you buy there, their website.
+# To remove a store, delete its row. To remove the whole section, set SUPPLIERS_ON = false. Then rebuild.
+SUPPLIERS_ON = true
+SUPPLIERS = [
+  ["MSI Surfaces", "msi-surfaces.svg", "Countertops &amp; tile", "Quartz and natural stone countertops, porcelain tile, and backsplash", "https://www.msisurfaces.com/"],
+  ["Floor &amp; Decor", "floor-and-decor.svg", "Flooring &amp; tile", "Tile, wood, laminate, and luxury vinyl flooring", "https://www.flooranddecor.com/"],
+  ["Dunn Lumber", "dunn-lumber.png", "Lumber &amp; millwork", "Framing lumber, trim, millwork, and building materials from a local Seattle-area yard", "https://www.dunnlumber.com/"],
+  ["The Home Depot", "home-depot.svg", "Building supplies", "Fixtures, hardware, building materials, and appliances", "https://www.homedepot.com/"],
+  ["Lowe's", "lowes.svg", "Building supplies", "Fixtures, hardware, building materials, and appliances", "https://www.lowes.com/"],
+  ["Wayfair", "wayfair.svg", "Fixtures &amp; finishes", "Vanities, lighting, mirrors, and finishing pieces you pick out", "https://www.wayfair.com/"],
+  ["Amazon", "amazon.svg", "Fixtures &amp; finishes", "Hardware, lighting, and specialty items you choose", "https://www.amazon.com/"],
+]
+def home_suppliers_section
+  return "<!-- SUPPLIERS -->\n<!-- /SUPPLIERS -->" unless SUPPLIERS_ON
+  cards = SUPPLIERS.map { |name, logo, cat, what, url|
+    %(<a class="vend-card" href="#{url}" target="_blank" rel="noopener"><span class="vend-logo"><img src="assets/brands/#{logo}" alt="#{name}" loading="lazy"></span><span class="mono">#{cat}</span><p>#{what}</p><span class="go">Browse their selection ↗</span></a>)
+  }.join
+  cards += %(<a class="vend-card cta" href="consultation.html"><span class="mono">Something else?</span><b>We'll source <em>it for you.</em></b><p>Found a product somewhere else? Send it to us and we'll check that it fits your project and order it.</p><span class="go">Book a free consultation →</span></a>)
+  <<~HTML.chomp
+    <!-- SUPPLIERS -->
+    <section class="sheet sec vend" aria-labelledby="vend-t">
+      <div class="wrap">
+        <div class="head">
+          <div><p class="eyebrow">Materials &amp; suppliers</p><h2 id="vend-t">Quality materials from <em>names you know.</em></h2></div>
+          <p>We buy from trusted suppliers across the Seattle area and online, and we help you choose and shop for your finishes. Browse their selections to get ideas before your consultation.</p>
+        </div>
+        <div class="vend-grid">#{cards}</div>
+        <p class="vend-note">Logos and store names belong to their owners. We buy from these suppliers; they don't sponsor or endorse our work.</p>
+      </div>
+    </section>
+    <!-- /SUPPLIERS -->
+  HTML
+end
+
+# ---------------------------------------------------------------- social media (Instagram + YouTube)
+# The footer strip appears on every page with a footer; the two sections appear on the home page between Reviews and FAQ.
+# To change the YouTube videos shown, edit YT_VIDEOS (the id is the part after "v=" in the video's address).
+IG_URL = "https://www.instagram.com/juliusremodeling/"
+IG_HANDLE = "@juliusremodeling"
+YT_URL = "https://www.youtube.com/@Juliusremodelinggroup"
+YT_VIDEOS = [
+  ["Z-EL9TteaCM", "Kitchen renovation on a budget"],
+  ["NImXZL295qQ", "Client testimonial"],
+]
+IG_PHOTOS = %w[kitchen-1 bath-1 bath-wetroom kitchen-wood bath-2 laundry]  # keys from PHOTOS
+IG_GLYPH = %(<svg class="ig-glyph" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>)
+YT_GLYPH = %(<svg class="yt-glyph" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor"/></svg>)
+SOCIAL_STRIP = %(\n        <div class="ig-strip"><p class="l">#{IG_GLYPH}#{YT_GLYPH}Follow along for our latest projects</p><div class="links"><a href="#{IG_URL}" target="_blank" rel="noopener">Instagram #{IG_HANDLE} ↗</a><a href="#{YT_URL}" target="_blank" rel="noopener">YouTube ↗</a></div></div>)
+
+def home_social_section
+  vids = YT_VIDEOS.map { |id, t|
+    %(<figure><div class="yt-frame"><iframe src="https://www.youtube-nocookie.com/embed/#{id}?rel=0" title="#{t}" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div><figcaption>#{t}</figcaption></figure>)
+  }.join
+  tiles = IG_PHOTOS.map { |k|
+    ph = PHOTOS.fetch(k)
+    %(<a href="#{IG_URL}" target="_blank" rel="noopener" aria-label="See this project and more on Instagram"><img src="#{ph[:src]}" width="#{ph[:w]}" height="#{ph[:h]}" alt="" loading="lazy"></a>)
+  }.join
+  <<~HTML.chomp
+    <!-- SOCIAL -->
+    <section class="dark sec yt" aria-labelledby="yt-t">
+      <div class="wrap">
+        <div class="head">
+          <div><p class="eyebrow">YouTube</p><h2 id="yt-t">See our work <em>in motion.</em></h2></div>
+          <p>Project walkthroughs and what our clients have to say, on our YouTube channel.</p>
+        </div>
+        <div class="yt-grid">#{vids}</div>
+        <div class="yt-act">
+          <a href="#{YT_URL}" target="_blank" rel="noopener" class="btn btn-brass">Watch more on YouTube <span class="ar" aria-hidden="true">↗</span></a>
+          <span class="yt-handle">#{YT_GLYPH}Julius Remodeling Group</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="sheet sec ig" aria-labelledby="ig-t">
+      <div class="wrap ig-in">
+        <div class="ig-copy">
+          <p class="eyebrow">Instagram</p>
+          <h2 id="ig-t">Follow the work <em>as it happens.</em></h2>
+          <p>Before-and-afters, projects in progress, and the details we're proud of. See our latest work on Instagram.</p>
+          <p class="ig-handle">#{IG_GLYPH}#{IG_HANDLE}</p>
+          <a href="#{IG_URL}" target="_blank" rel="noopener" class="btn btn-ink">Follow us on Instagram <span class="ar" aria-hidden="true">↗</span></a>
+        </div>
+        <div class="ig-grid">#{tiles}</div>
+      </div>
+    </section>
+    <!-- /SOCIAL -->
+  HTML
+end
+
 NEWS_STRIP = <<~HTML.chomp
 
         <div class="news">
           <div>
             <span class="mono">Newsletter</span>
-            <p class="nt">Our latest work and promotions, <em>in your inbox.</em></p>
+            <p class="nt">Our latest work and specials, <em>in your inbox.</em></p>
             <p class="ns">Be the first to hear about new offers and see our most recent projects. Unsubscribe anytime.</p>
           </div>
           <a href="newsletter.html" class="btn btn-brass">Sign up for the newsletter <span class="ar" aria-hidden="true">→</span></a>
@@ -113,16 +282,16 @@ def footer(home: false, news: true)
   li = ->(list) { list.map { |s| %(<li><a href="#{s[:slug]}.html">#{s[:name]}</a></li>) }.join }
   <<~HTML.chomp
     <footer class="dark">
-      <div class="wrap">#{news ? NEWS_STRIP : ""}
+      <div class="wrap">#{SOCIAL_STRIP}#{news ? NEWS_STRIP : ""}
         <div class="fgrid">
           <div><p class="tag">Transforming homes. <em>Elevating lives.</em></p><p class="sub">Remodeling for single-family homes, condos, and apartments across Seattle and the Eastside.</p><p class="sister">Need a repair or a quick service call instead? Chimney, garage door, plumbing and electrical repairs, and more are handled by our sister company, <a href="https://www.juliusservices.com/" target="_blank" rel="noopener">Julius Services ↗</a></p></div>
           <div><h4 class="mono">Remodeling</h4><ul>#{li.(REMODELING)}</ul><h4 class="mono">Additions &amp; new builds</h4><ul>#{li.(ADDITIONS)}</ul></div>
           <div><h4 class="mono">Exterior &amp; outdoor</h4><ul>#{li.(EXTERIOR)}</ul></div>
           <div><h4 class="mono">Interior &amp; systems</h4><ul>#{li.(INTERIOR)}</ul></div>
           <div><h4 class="mono"><a href="service-areas.html">Service areas</a></h4><ul>#{li.(AREAS)}</ul></div>
-          <div><h4 class="mono">Contact</h4><ul><li><a href="tel:" data-tel data-k="phone">[Phone]</a></li><li><a href="mailto:ask@juliusremodeling.com" data-mail data-k="email">ask@juliusremodeling.com</a></li><li data-k="hours">[Business hours]</li><li data-k="address">[Address]</li><li><a href="#{LICENSE_URL}" target="_blank" rel="noopener">WA License <span data-k="license">[License #]</span> ↗</a></li><li data-k="insurance">[Insurance details]</li><li><a href="https://www.youtube.com/@Juliusremodelinggroup" target="_blank" rel="noopener">YouTube ↗</a></li></ul></div>
+          <div><h4 class="mono">Contact</h4><ul><li><a href="tel:" data-tel data-k="phone">[Phone]</a></li><li><a href="mailto:ask@juliusremodeling.com" data-mail data-k="email">ask@juliusremodeling.com</a></li><li data-k="hours">[Business hours]</li><li data-k="address">[Address]</li><li><a href="#{LICENSE_URL}" target="_blank" rel="noopener">WA License <span data-k="license">[License #]</span> ↗</a></li><li data-k="insurance">[Insurance details]</li><li><a href="https://www.youtube.com/@Juliusremodelinggroup" target="_blank" rel="noopener">YouTube ↗</a></li><li><a href="#{IG_URL}" target="_blank" rel="noopener">Instagram ↗</a></li></ul></div>
         </div>
-        <div class="legal mono"><span>© 2026 Julius Remodeling Group</span><span class="flinks"><a href="promotions.html">Promotions</a><a href="newsletter.html">Newsletter</a><a href="terms-and-conditions.html">Terms &amp; Conditions</a><a href="privacy-policy.html">Privacy Policy</a></span><span>Bellevue, WA · Serving Seattle &amp; the Eastside</span></div>
+        <div class="legal mono"><span>© 2026 Julius Remodeling Group</span><span class="flinks"><a href="about.html">About us</a><a href="specials.html">Specials</a><a href="newsletter.html">Newsletter</a><a href="terms-and-conditions.html">Terms &amp; Conditions</a><a href="privacy-policy.html">Privacy Policy</a></span><span>Bellevue, WA · Serving Seattle &amp; the Eastside</span></div>
       </div>
     </footer>
   HTML
@@ -141,6 +310,40 @@ PHOTOS = {
                  alt: "Kitchen with a white quartz peninsula and brass pull-down faucet, a built-in coffee bar with floating shelves, and gray shaker cabinets" },
   "kitchen-3" => { src: "assets/photos/kitchen-3.jpg", w: 1293, h: 875, land: true, tag: "Kitchen", title: "Open-concept kitchen &amp; living", sub: "Open layout, new peninsula, recessed lighting, flooring throughout",
                  alt: "Open-concept kitchen and living room with gray shaker cabinets, a white peninsula, recessed lights, and gray wood-look flooring" },
+  "basement-stairs-gray" => { src: "assets/photos/basement-stairs-gray.jpg", w: 1320, h: 813, land: true, tag: "Basement", title: "Modern basement, open stairs", sub: "Floating wood stairs with a black steel railing, gray accent wall, recessed lighting, patterned carpet",
+                 alt: "Finished basement with a gray accent wall, floating light wood stairs with a black horizontal-bar railing, recessed lights, and light patterned carpet" },
+  "basement-stairs-open" => { src: "assets/photos/basement-stairs-open.jpg", w: 1320, h: 809, land: true, tag: "Basement", title: "Open family room", sub: "Bright open space under the new stairs, built-in ledge, recessed lighting",
+                 alt: "Large finished basement room with white walls, a floating staircase with a black railing, a built-in ledge, and light gray patterned carpet" },
+  "basement-soffit-doors" => { src: "assets/photos/basement-soffit-doors.jpg", w: 1320, h: 824, land: true, tag: "Basement", title: "Finished basement, soffits &amp; storage", sub: "Soffits around beams and ducts, new doors, black railing, plush carpet",
+                 alt: "Finished basement with beige walls, white doors, soffits along the ceiling, a black railing at the stairs, and beige carpet" },
+  "basement-soffit-closet" => { src: "assets/photos/basement-soffit-closet.jpg", w: 1320, h: 812, land: true, tag: "Basement", title: "Soffited ceiling &amp; closet", sub: "Clean soffit lines, recessed lights, bifold closet doors, new carpet",
+                 alt: "Finished basement with soffits on the ceiling, recessed lights, a small window, white bifold closet doors, and beige carpet" },
+  "basement-soffit-room" => { src: "assets/photos/basement-soffit-room.jpg", w: 1320, h: 816, land: true, tag: "Basement", title: "One big open space", sub: "Soffits frame the ceiling, doors to a bathroom and storage, new carpet throughout",
+                 alt: "Wide finished basement room with stepped soffits on the ceiling, white doors, recessed lights, and beige carpet" },
+  "second-story-finished" => { src: "assets/photos/second-story-finished.jpg", w: 1142, h: 970, land: true, tag: "Second story", title: "Finished second story", sub: "New upper floor with black windows, cedar soffits, and new siding that ties into the original house",
+                 alt: "Finished two-story home with a new upper floor, black-framed windows, cedar soffits, green siding, red French doors, and a stone patio" },
+  "second-story-dormer" => { src: "assets/photos/second-story-dormer.jpg", w: 1047, h: 1618, land: false, tag: "Second story", title: "Dormer addition, during &amp; after", sub: "Roof opened and framed, then finished with siding, windows, and a new roof",
+                 alt: "Two photos of the same house: top, the roof opened and new walls framed; bottom, the finished second-floor dormer with white siding, two windows, and a new red roof" },
+  "second-story-roof-crew" => { src: "assets/photos/second-story-roof-crew.jpg", w: 1320, h: 1411, land: true, tag: "Second story", title: "Our crew framing the roof", sub: "Rafters and ceiling joists going up on a full second floor",
+                 alt: "Aerial view of four crew members standing on new roof framing over a full second-story addition" },
+  "second-story-framing" => { src: "assets/photos/second-story-framing.jpg", w: 1320, h: 1185, land: true, tag: "Second story", title: "A full second floor, framed", sub: "New walls and rooms framed on top of the existing house, with materials staged on site",
+                 alt: "Aerial view of a house with a full second floor framed in wood, a dumpster and stacked lumber in the front yard" },
+  "second-story-split-level" => { src: "assets/photos/second-story-split-level.jpg", w: 1306, h: 1512, land: false, tag: "Second story", title: "Split-level, before &amp; during", sub: "The original roofline, then the new second-floor walls going up",
+                 alt: "Two photos of the same split-level house: top, crew framing a new second floor; bottom, the original house before the addition" },
+  "second-story-stairs" => { src: "assets/photos/second-story-stairs.jpg", w: 815, h: 1443, land: false, tag: "Second story", title: "New stairs to the new floor", sub: "Stair and wall framing inside, with systems run before drywall",
+                 alt: "Interior framing of a second-story addition with a new wooden staircase, open stud walls, and exposed ceiling joists" },
+  "addition-rear-framing" => { src: "assets/photos/addition-rear-framing.jpg", w: 1133, h: 973, land: true, tag: "Home addition", title: "Addition with a new gable roof", sub: "New foundation, sheathed walls, and roof framing tied into the existing house",
+                 alt: "A home addition under construction on a block foundation, with sheathed walls, a crew member framing the gable roof, and the existing house with brown siding beside it" },
+  "addition-hip-roof" => { src: "assets/photos/addition-hip-roof.jpg", w: 1121, h: 980, land: true, tag: "Home addition", title: "Front addition, hip roof", sub: "Wall framing and roof sheathing going on, built to match the existing roofline",
+                 alt: "A single-story addition framed in wood on a concrete foundation, with a crew member sheathing the hip roof next to the existing house" },
+  "addition-family-room" => { src: "assets/photos/addition-family-room.jpg", w: 1133, h: 979, land: true, tag: "Home addition", title: "Rear family-room addition", sub: "Sheathed walls, window openings, and roof framing against a two-story home",
+                 alt: "A rear addition with sheathed walls, large window openings, and roof framing built against a white two-story house with red shutters" },
+  "newbuild-two-story-framing" => { src: "assets/photos/newbuild-two-story-framing.jpg", w: 1120, h: 714, land: true, tag: "New construction", title: "Two-story home, framed", sub: "Walls sheathed and roof framing up, with lumber staged on site",
+                 alt: "A new two-story house framed and sheathed in OSB, with roof trusses, window openings, and stacked lumber in front" },
+  "newbuild-single-story-framing" => { src: "assets/photos/newbuild-single-story-framing.jpg", w: 1142, h: 870, land: true, tag: "New construction", title: "Single-story home, framed", sub: "Roof trusses, arched window openings, and a covered entry taking shape",
+                 alt: "A new single-story house under construction with sheathed walls, roof trusses, an arched window opening, and a covered porch" },
+  "newbuild-modern-finished" => { src: "assets/photos/newbuild-modern-finished.jpg", w: 1134, h: 556, land: true, tag: "New construction", title: "Modern new build, finished", sub: "Board-and-batten and lap siding, black-framed windows, and a cedar entry",
+                 alt: "Two finished modern homes at dusk, one with white board-and-batten siding and one with gray lap siding, black-framed windows, and a cedar front entry" },
   "bath-wetroom" => { src: "assets/photos/bath-wetroom.jpg", w: 1320, h: 990, land: true, tag: "Bathroom", title: "Japanese-style wet room", sub: "Soaking tub inside the shower, large-format tile, brass fixtures, skylight, mosaic floor",
                  alt: "Japanese-style wet room with a freestanding soaking tub inside a walk-in shower, large white tile, brass rain head and hand shower, tiled niches, and a hex mosaic floor" },
   "bath-guest" => { src: "assets/photos/bath-guest.jpg", w: 1320, h: 1971, tag: "Bathroom", title: "Guest bathroom", sub: "Tiled tub-shower with niche, wood vanity with quartz top, hex floor tile",
@@ -204,6 +407,38 @@ PHOTOS = {
   "drywall-ceiling" => { src: "assets/photos/team-drywall-ceiling.jpg", w: 560, h: 1200, tag: "Drywall", title: "Ceiling drywall finishing", sub: "Ceiling patches taped, mudded, and sanded smooth, with the room protected in plastic",
                  alt: "Crew member on a work platform applying joint compound to ceiling drywall patches in a room protected with plastic sheeting" },
 }
+# Kitchen page "Before & after" section (wide photos, one project per row)
+KITCHEN_BA = <<~HTML
+  <!-- BEFORE & AFTER -->
+  <section class="sheet sec" aria-labelledby="ba-t" style="background:var(--paper-2)">
+    <div class="wrap">
+      <div class="head">
+        <div><p class="eyebrow">Before &amp; after</p><h2 id="ba-t">Same kitchen. <em>A whole new look.</em></h2></div>
+        <p>A recent kitchen, photographed before we started and after we finished. Same layout, transformed with painted cabinets and new quartz.</p>
+      </div>
+      <div class="ba-grid ba-wide">
+        <article class="ba">
+          <div class="ba-pair">
+            <figure><img src="assets/photos/kitchen-white-sink-before.jpg" width="1600" height="1200" loading="lazy" alt="Before: kitchen with brown cherry-stained cabinets, dark speckled granite counters, a glass tile accent backsplash, and a brushed nickel pendant"><span class="mono">Before</span></figure>
+            <figure><img src="assets/photos/kitchen-white-sink-after.jpg" width="1600" height="1200" loading="lazy" alt="After: the same kitchen with white painted cabinets, white quartz counters with gray veining, wood-and-glass pendants over the island, and floating wood shelves"><span class="mono">After</span></figure>
+          </div>
+          <h3>Brown cabinets to bright white</h3>
+          <p>The cherry-stained cabinets were repainted white, and dark granite was replaced with white quartz on the counters and island. New pendants and floating shelves finish the room.</p>
+        </article>
+        <article class="ba">
+          <div class="ba-pair">
+            <figure><img src="assets/photos/kitchen-white-range-before.jpg" width="1600" height="1200" loading="lazy" alt="Before: range wall with brown cabinets, a stainless hood, a glass tile strip backsplash, and dark granite counters"><span class="mono">Before</span></figure>
+            <figure><img src="assets/photos/kitchen-white-range-after.jpg" width="1600" height="1200" loading="lazy" alt="After: the range wall with white cabinets, a full-height quartz slab backsplash behind the range, white quartz counters, and a white island"><span class="mono">After</span></figure>
+          </div>
+          <h3>Quartz slab backsplash</h3>
+          <p>A full-height quartz slab now runs behind the range, matching the new counters, with fresh white paint on every cabinet and the island.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+HTML
+
 BATH_EXTRA = <<~HTML
   <!-- SPECIAL FEATURES -->
   <section class="sheet sec" aria-labelledby="feat-t">
@@ -310,6 +545,7 @@ PAGES = [
     lede: "From repainting the cabinets you have to a fully custom kitchen: countertops, islands, sinks, plumbing, electrical, windows, and flooring for homes, condos, and apartments across Seattle and the Eastside, built by one team under one license.",
     tags: ["Cabinet repainting", "Semi-custom &amp; custom cabinets", "Countertops", "Islands", "Plumbing &amp; electrical", "Windows &amp; flooring"],
     photo: "kitchen-1",
+    extra: KITCHEN_BA,
     incl_h: "Everything the kitchen needs, <em>under one roof.</em>",
     incl_p: "From layout to the last outlet cover, one team plans and builds the whole kitchen. Choose any part, or all of it.",
     incl: [
@@ -415,40 +651,41 @@ PAGES = [
     slug: "basement-remodeling", short: "Basement",
     financing: { url: "https://www.acornfinance.com/remodel/basement-remodel-financing/", project: "basement remodel" },
     title: "Basement Remodeling &amp; Finishing in Seattle &amp; the Eastside",
-    meta: "Basement remodeling and finishing in Seattle and the Eastside: family rooms, guest bedrooms, bathrooms, wet bars, and home offices, with moisture, framing, electrical, plumbing, and permits handled.",
+    meta: "Basement remodeling and finishing in Seattle and the Eastside: guest suites, kitchenettes, bathrooms, laundry rooms, playrooms, and man caves, plus support beams, drain lines, foundation repair, and egress windows.",
     eyebrow: "Basement remodeling",
     h1: "Turn the basement into <em>real living space.</em>",
-    lede: "Finish an unfinished basement or update an old one: family rooms, guest bedrooms, bathrooms, wet bars, and home offices for homes across Seattle and the Eastside, planned and built by one team.",
-    tags: ["Family rooms", "Guest bedrooms", "Bathrooms", "Wet bars", "Home offices", "Storage"],
-    photo: nil,
+    lede: "Finish an unfinished basement or update an old one. Add a kitchenette, a bathroom, or a laundry room, and make it the perfect place for your guests, a playroom for your kids, or your own man cave. One team handles everything, from support beams and drain lines to egress windows.",
+    tags: ["Guest suites", "Kitchenettes", "Bathrooms", "Laundry rooms", "Playrooms", "Man caves", "Egress windows"],
+    photo: "basement-stairs-gray",
     incl_h: "Everything a finished basement needs, <em>done in order.</em>",
-    incl_p: "A good basement starts with what's behind the walls. We take care of moisture, framing, and systems first, then the finishes.",
-    incl: [
-      ["Moisture first", "Signs of moisture are checked and addressed before any walls go up, so the finished space stays dry."],
-      ["Framing &amp; insulation", "New walls, insulation, and soffits that work around beams, ducts, and pipes."],
-      ["Electrical &amp; lighting", "New circuits, outlets, recessed lighting, and wiring for TVs, offices, and gyms."],
-      ["Plumbing", "Bathrooms, wet bars, and laundry, with plumbing run and inspected under our license."],
-      ["Egress windows", "For bedrooms, egress windows where code requires them, with permits coordinated."],
-      ["Drywall &amp; ceilings", "Drywall, ceilings, and paint, finished like the rest of the house."],
-      ["Flooring", "Flooring suited to below-grade spaces, with clean transitions and trim."],
-      ["Stairs &amp; storage", "Updated stairs and railings, built-ins, and storage that keeps the space usable."],
-    ],
+incl_p: "A good basement starts with what's behind the walls and under the floor. We take care of the structure, moisture, and systems first, then the finishes.",
+incl: [
+  ["Moisture &amp; foundation", "Signs of moisture and foundation cracks are checked and repaired before any walls go up, so the finished space stays dry. <a href=\"foundation-repair.html\" style=\"text-decoration:underline\">Foundation repair</a>."],
+  ["Support beams &amp; openings", "We move or replace support posts and beams and create new openings to open up the space, engineered and permitted."],
+  ["Soffits &amp; framing", "Soffits built around ducts, pipes, and beams, plus new walls and insulation, for clean lines throughout."],
+  ["Drain lines in the slab", "We cut and dig through the concrete slab to run new drain lines, so a bathroom, kitchenette, or laundry can go where you want it."],
+  ["Egress windows", "We cut the opening in the foundation, dig the window well, and install a code-compliant egress window for a legal bedroom."],
+  ["Plumbing &amp; laundry", "Bathrooms, kitchenettes, wet bars, and laundry rooms, with plumbing run and inspected under our license."],
+  ["Electrical &amp; lighting", "New circuits, outlets, recessed lighting, and wiring for TVs, games, offices, and gyms."],
+  ["Drywall, floors &amp; finish", "Drywall, ceilings, paint, and flooring suited to below-grade spaces, finished like the rest of the house."],
+],
     options: {
       eyebrow: "Your options", h: "What will your basement <em>become?</em>",
       p: "We'll plan the space around how you want to use it, then handle the permits, systems, and finishes to get it there.",
-      cards: [
-        ["Finish an unfinished basement", "Bare concrete and open framing turned into finished living space: walls, insulation, electrical, lighting, drywall, ceilings, and flooring.", ["Family room or media room", "Home office or gym", "Permits coordinated"]],
-        ["Update a finished basement", "An older finished basement brought up to date: new flooring, lighting, paint, trim, and layout changes where they make sense.", ["New flooring and lighting", "Better layout", "Least disruption"]],
-        ["Add a bedroom, bath, or wet bar", "Make the basement work like a suite: a guest bedroom with egress, a full or half bathroom, or a wet bar for entertaining.", ["Guest suite", "Bathroom or wet bar", "Plumbing and egress planned"]],
-      ],
+cards: [
+  ["A suite for your guests", "A private place for family and friends to stay: a bedroom with an egress window, a full bathroom, and a kitchenette.", ["Bedroom with egress window", "Full bathroom", "Kitchenette or wet bar"]],
+  ["A playroom for your kids", "Room to run, play, and make noise, away from the main floor, with durable floors and plenty of storage.", ["Open play space", "Durable flooring", "Built-in storage"]],
+  ["A man cave or media room", "Your own space for the game, movies, and friends: big-screen wiring, lighting you can dim, and a wet bar.", ["TV and sound wiring", "Wet bar or kitchenette", "Gym or home office"]],
+],
     },
-    gallery: [],
+    gallery: ["basement-stairs-gray", "basement-stairs-open", "basement-soffit-room", "basement-soffit-doors", "basement-soffit-closet"],
     quote: :david,
     faq: [
       ["Do I need a permit to finish my basement?", "Finishing a basement usually requires permits, especially for framing, electrical, and plumbing. We coordinate permits as part of the project, before construction begins."],
       ["What if my basement has moisture?", "Moisture is the first thing we look at. Any signs of water are checked and addressed before walls and flooring go in, so the finished space stays dry."],
-      ["Can you add a bedroom in the basement?", "Often, yes. A basement bedroom needs an egress window or door and has to meet other code requirements, and we plan for those from the start."],
-      ["Can you add a bathroom or wet bar downstairs?", "Yes. Bathrooms, wet bars, and laundry rooms are common basement additions. We plan the plumbing during design so everything drains and vents properly."],
+      ["Can you add a bedroom in the basement?", "Often, yes. A basement bedroom needs an egress window or door and has to meet other code requirements. We cut the opening, dig the window well, and install the egress window as part of the project."],
+      ["Can you move a support beam or post?", "Often, yes. A structural engineer designs the new beam or post layout, we pull the permit, and we install temporary supports while the work is done."],
+      ["Can you add a bathroom, kitchenette, or laundry downstairs?", "Yes. When there's no drain where you need one, we cut and dig through the concrete slab to run a new drain line, then patch the floor. We plan the plumbing during design so everything drains and vents properly."],
       LICENSED_FAQ,
     ],
   },
@@ -711,6 +948,8 @@ PAGES = [
   # ============================== SECOND-STORY ADDITIONS
   {
     slug: "second-story-additions", short: "Second-story",
+    gallery_p: "Second-story additions from start to finish: framing, roofing, and the finished homes.",
+    photo: "second-story-roof-crew",
     title: "Second-Story Additions in Seattle &amp; the Eastside",
     meta: "Second-story and second-floor additions in Seattle and the Eastside: engineering, permits, structural work, framing, roofing, and finished bedrooms and baths from one licensed general contractor.",
     eyebrow: "Second-story additions",
@@ -725,7 +964,7 @@ PAGES = [
       ["Stairs, systems &amp; insulation", "A new staircase, plus plumbing, electrical, heating, and insulation extended to the new floor."],
       ["Finished rooms &amp; exterior", "Bedrooms, bathrooms, and closets finished inside, with siding and roofing matched to the rest of the house."],
     ],
-    gallery: [],
+    gallery: ["second-story-finished", "second-story-dormer", "second-story-roof-crew", "second-story-split-level", "second-story-framing", "second-story-stairs"],
     quote: :rebecca,
     faq: [
       ["Can my house support a second story?", "Many can, but it depends on the existing foundation and framing. A structural engineer reviews your home first, and we tell you what reinforcement, if any, is needed before you commit."],
@@ -737,6 +976,8 @@ PAGES = [
   # ============================== HOME ADDITIONS
   {
     slug: "home-additions", short: "Addition",
+    photo: "addition-rear-framing",
+    gallery_p: "Home additions in progress: new foundations, framing, and roofs tied into the existing house.",
     title: "Home Additions in Seattle &amp; the Eastside",
     meta: "Home additions in Seattle and the Eastside: room additions, bump-outs, primary suites, and larger kitchens and family rooms, designed and built by a licensed general contractor.",
     eyebrow: "Home additions",
@@ -751,7 +992,7 @@ PAGES = [
       ["Systems &amp; insulation", "Plumbing, electrical, heating, and insulation extended into the new space."],
       ["Matching finishes", "Siding, roofing, windows, floors, and trim matched to what you already have."],
     ],
-    gallery: [],
+    gallery: ["addition-rear-framing", "addition-hip-roof", "addition-family-room"],
     quote: :david,
     faq: [
       ["What is a bump-out?", "A bump-out is a small addition, often just a few feet deep, that extends one room, such as a kitchen or bathroom. It adds space without the scope of a full room addition."],
@@ -763,6 +1004,8 @@ PAGES = [
   # ============================== NEW CONSTRUCTION
   {
     slug: "new-construction", short: "New construction",
+    photo: "newbuild-two-story-framing",
+    gallery_p: "New homes from framing to the finished build.",
     title: "New Home Construction in Seattle &amp; the Eastside",
     meta: "New home construction in Seattle and the Eastside: custom homes and teardown rebuilds, managed by a licensed general contractor from permits and site work to the final walkthrough.",
     eyebrow: "New construction",
@@ -777,7 +1020,7 @@ PAGES = [
       ["Framing, roofing &amp; systems", "Structure, roof, windows, siding, plumbing, electrical, and HVAC, built and inspected in order."],
       ["Interiors &amp; finishes", "Kitchens, bathrooms, flooring, trim, and paint, finished to the standard you see in our remodels."],
     ],
-    gallery: [],
+    gallery: ["newbuild-modern-finished", "newbuild-two-story-framing", "newbuild-single-story-framing"],
     quote: :david,
     faq: [
       ["Do I need my own architect?", "Not necessarily. If you already have one, we're happy to build from their plans. If not, we can bring in a designer and engineer we work with."],
@@ -1157,7 +1400,7 @@ def options_html(o)
   HTML
 end
 
-def gallery_html(keys)
+def gallery_html(keys, note = nil)
   return "" if keys.empty?
   mixed = keys.any? { |k| !PHOTOS[k][:land] }
   cards = keys.each_with_index.map { |k, i|
@@ -1173,7 +1416,7 @@ def gallery_html(keys)
       <div class="wrap">
         <div class="head">
           <div><p class="eyebrow">Recent work</p><h2 id="work-t">From our <em>projects.</em></h2></div>
-          <p>A few finished rooms from homes around Seattle.</p>
+          <p>#{note || "A few finished rooms from homes around Seattle."}</p>
         </div>
       </div>
       <div class="reel">
@@ -1273,7 +1516,7 @@ def page(pg)
           <div><dt class="mono">License</dt><dd>WA <span data-k="license">[License #]</span></dd></div>
           <div><dt class="mono">Insurance</dt><dd data-k="insurance">[Insurance details]</dd></div>
           <div><dt class="mono">Rating</dt><dd>4.98 ★ from 58 reviews</dd></div>
-          <div><dt class="mono">Jobs completed</dt><dd>481</dd></div>
+          <div><dt class="mono">Projects completed</dt><dd>1,500+</dd></div>
         </dl>
       </div>
     </section>
@@ -1299,7 +1542,7 @@ def page(pg)
       </div>
     </section>
 
-    #{options_html(pg[:options])}#{gallery_html(pg[:gallery])}#{pg[:extra]}<!-- PROCESS -->
+    #{options_html(pg[:options])}#{gallery_html(pg[:gallery], pg[:gallery_p])}#{pg[:extra]}<!-- PROCESS -->
     <section class="sheet sec" aria-labelledby="proc-t">
       <div class="wrap">
         <div class="head">
@@ -1943,7 +2186,7 @@ end
 
 # ---------------------------------------------------------------- promotions
 # To add, change, or remove a deal, edit this list and run: ruby tools/build-pages.rb .
-# Each deal gets its own page (<slug>.html) and a card on promotions.html.
+# Each deal gets its own page (<slug>.html) and a card on specials.html.
 # form_id is that deal's GoHighLevel form; it opens in a pop-up from the "Claim this offer" buttons on that page only.
 PROMOS = [
   { slug: "bathroom-remodel-offer", amount: "$1,500", project: "bathroom remodel", label: "Bathroom remodeling", service: "bathroom-remodeling", form_id: "zVU6tpjeGSNDg2uBhzmy", form_name: "$1500 Discount Bathroom Remodeling", form_height: 720,
@@ -2044,18 +2287,18 @@ def promos_hub
     %(<a class="promo-card" href="#{pr[:slug]}.html"><span class="mono">#{pr[:label]}</span><b>#{pr[:amount]}</b><span class="pc-for">toward finish materials</span><p>#{pr[:blurb]}</p><span class="go">See this offer <span aria-hidden="true">→</span></span></a>)
   }.join("\n          ")
   <<~HTML
-    #{head_html("Promotions &amp; Deals", "Current remodeling promotions from Julius Remodeling Group: #{PROMOS.map { |pr| "#{pr[:amount]} toward finish materials for a #{pr[:project]}" }.join(', ')}. Serving Seattle and the Eastside.", promo_ld("Promotions and Deals", "promotions"))}
+    #{head_html("Specials", "Current remodeling specials from Julius Remodeling Group: #{PROMOS.map { |pr| "#{pr[:amount]} toward finish materials for a #{pr[:project]}" }.join(', ')}. Serving Seattle and the Eastside.", promo_ld("Specials", "specials"))}
     <body>
 
-    #{header("promotions")}
+    #{header("specials")}
 
     <main id="top">
 
     <section class="dark page-top" aria-labelledby="h1">
       <div class="wrap">
-        <p class="eyebrow">Promotions</p>
-        <h1 id="h1">Current <em>promotions.</em></h1>
-        <p class="lede">Limited-time offers on remodeling projects across Seattle and the Eastside. Choose an offer to see the details and how to claim it.</p>
+        <p class="eyebrow">#{HOLIDAY[:on] ? HOLIDAY[:eyebrow] : "Specials"}</p>
+        <h1 id="h1">#{HOLIDAY[:on] ? "Holiday <em>specials.</em>" : "Current <em>specials.</em>"}</h1>
+        <p class="lede">#{HOLIDAY[:on] ? HOLIDAY[:hub_lede] + " " : ""}Limited-time offers on remodeling projects across Seattle and the Eastside. Choose an offer to see the details and how to claim it.</p>
       </div>
     </section>
 
@@ -2116,7 +2359,7 @@ def newsletter_form
               <p class="nl-note" role="status">Example only. This form is not connected yet and does not save anything.</p>
               <div class="field"><label for="nl-name">First name</label><input id="nl-name" name="first_name" type="text" autocomplete="given-name"></div>
               <div class="field"><label for="nl-email">Email</label><input id="nl-email" name="email" type="email" autocomplete="email" required></div>
-              <label class="nl-check"><input type="checkbox" name="consent" required><span>Yes, send me project updates and promotions from Julius Remodeling Group by email.</span></label>
+              <label class="nl-check"><input type="checkbox" name="consent" required><span>Yes, send me project updates and specials from Julius Remodeling Group by email.</span></label>
               <button type="submit" class="btn btn-ink">Sign me up <span class="ar" aria-hidden="true">→</span></button>
               <p class="nl-fine">We only email when we have something worth sharing. Unsubscribe anytime. See our <a href="privacy-policy.html">Privacy Policy</a>.</p>
             </form>
@@ -2127,7 +2370,7 @@ end
 def newsletter_page
   ld = %({"@context":"https://schema.org","@type":"WebPage","name":"Newsletter","url":"https://juliusremodeling.com/newsletter","publisher":{"@type":"Organization","name":"Julius Remodeling Group"}})
   <<~HTML
-    #{head_html("Newsletter Sign-Up", "Sign up for the Julius Remodeling Group newsletter: new promotions first, recent projects, and before-and-afters from Seattle and the Eastside.", ld)}
+    #{head_html("Newsletter Sign-Up", "Sign up for the Julius Remodeling Group newsletter: new specials first, recent projects, and before-and-afters from Seattle and the Eastside.", ld)}
     <body>
 
     #{header("newsletter")}
@@ -2138,7 +2381,7 @@ def newsletter_page
       <div class="wrap">
         <p class="eyebrow">Newsletter</p>
         <h1 id="h1">Stay <em>in the loop.</em></h1>
-        <p class="lede">Get our latest work and our promotions by email. Sign up below and you'll hear about new offers before anyone else.</p>
+        <p class="lede">Get our latest work and our specials by email. Sign up below and you'll hear about new offers before anyone else.</p>
       </div>
     </section>
 
@@ -2148,11 +2391,11 @@ def newsletter_page
           <p class="eyebrow">What you'll get</p>
           <h2 id="nl-t">Worth opening, <em>every time.</em></h2>
           <ol class="promo-steps">
-            <li><span class="no">1</span><div><h3>Promotions first</h3><p>New offers, like money toward finish materials for a kitchen or bathroom remodel, sent to subscribers as soon as they open.</p></div></li>
+            <li><span class="no">1</span><div><h3>Specials first</h3><p>New offers, like money toward finish materials for a kitchen or bathroom remodel, sent to subscribers as soon as they open.</p></div></li>
             <li><span class="no">2</span><div><h3>Our latest work</h3><p>Recently finished kitchens, bathrooms, and flooring, with before-and-after photos.</p></div></li>
             <li><span class="no">3</span><div><h3>No clutter</h3><p>We only email when we have something worth sharing, and you can unsubscribe with one click.</p></div></li>
           </ol>
-          <p class="fine">Looking for a current deal? See our <a href="promotions.html">promotions</a>.</p>
+          <p class="fine">Looking for a current deal? See our <a href="specials.html">specials</a>.</p>
         </div>
         <div class="form-card offer-form nl-card">
           #{NEWSLETTER_FORM_ID ? "" : %(<h3 class="nl-h">Sign up for the newsletter</h3>)}
@@ -2169,6 +2412,82 @@ def newsletter_page
   HTML
 end
 
+# ---------------------------------------------------------------- about page (about.html)
+def about_page
+  ld = %({"@context":"https://schema.org","@type":"AboutPage","name":"About Julius Remodeling Group","url":"https://juliusremodeling.com/about","publisher":{"@type":"Organization","name":"Julius Remodeling Group"}})
+  goals = [
+    ["01", "Vision", "Understand your vision", "We start by listening: what you want, what you need, and how you live in your home."],
+    ["02", "Budget", "Work with your budget and schedule", "We plan around the number and the timing that work for you, and we're honest about what fits."],
+    ["03", "Options", "Find the right solutions", "We help you explore your options and recommend practical ways to get there."],
+    ["04", "Quality", "Deliver work you can trust", "Quality workmanship, clear communication, and clean, organized, respectful job sites."],
+  ].map { |n, k, h, t| %(<article class="goal"><div class="idx mono"><span>#{n}</span><span>#{k}</span></div><h3>#{h}</h3><p>#{t}</p></article>) }.join("\n          ")
+  <<~HTML
+    #{head_html("About Us: Family Owned, 15+ Years", "Julius Remodeling Group is a family-owned company with over 15 years of experience and more than 1,500 completed projects across Seattle, Bellevue, and the Eastside.", ld)}
+    <body>
+
+    #{header("about")}
+
+    <main id="top">
+
+    <section class="dark page-top" aria-labelledby="h1">
+      <div class="wrap">
+        <p class="eyebrow">About us</p>
+        <h1 id="h1">Family owned. <em>Built on experience.</em></h1>
+        <p class="lede">Julius Remodeling &amp; Services is a family-owned company with over 15 years of experience in residential construction, remodeling, and home services.</p>
+      </div>
+    </section>
+
+    <section class="sheet sec" aria-labelledby="story-t" style="padding-top:clamp(56px,6vw,96px)">
+      <div class="wrap">
+        <div class="stats about-stats">
+          <div><b>15<em>+</em></b><span class="mono">Years of experience</span></div>
+          <div><b>1,500<em>+</em></b><span class="mono">Completed projects</span></div>
+          <div><b>10<em>+</em></b><span class="mono">Years in Greater Seattle</span></div>
+        </div>
+        <div class="about" style="margin:clamp(56px,6vw,96px) 0 0">
+          <figure class="ph about-family"><img src="assets/photos/team-family.jpg" width="1274" height="1336" loading="lazy" alt="The Julius Remodeling family and team in matching Julius shirts"><figcaption class="mono">The Julius family &amp; team</figcaption></figure>
+          <div class="txt">
+            <p class="eyebrow">Our story</p>
+            <h2 id="story-t">From Los Angeles <em>to Seattle.</em></h2>
+            <p class="lead">Our journey began in Los Angeles, where we worked with one of the area's largest construction companies.</p>
+            <p>There we gained hands-on experience in everything from basic home improvements to high-end custom renovations, ADU/DADU construction, garage conversions, additions, and complete home remodels.</p>
+            <p>Over a decade ago, we brought that experience to the Greater Seattle area. Today, with more than 1,500 completed projects, we proudly serve homeowners throughout Seattle, Bellevue, the Eastside, and surrounding communities.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sheet sec" aria-labelledby="how-t" style="background:var(--paper-2)">
+      <div class="wrap">
+        <div class="head">
+          <div><p class="eyebrow">How we work</p><h2 id="how-t">Small on purpose. <em>Personal by design.</em></h2></div>
+          <div class="about-cols">
+            <p>We believe every successful project starts with understanding our customers' vision, needs, budget, and schedule. Our role is to help homeowners explore their options, find practical solutions, and turn their ideas into reality while making the process as straightforward and efficient as possible.</p>
+            <p>As a small, family-owned business, we maintain low overhead and an organized, efficient operation. We don't take on more projects than we can properly manage, so we stay personally involved and give each customer the time and attention they deserve.</p>
+          </div>
+        </div>
+        <h3 class="why-t" style="margin-top:clamp(48px,5vw,80px)">Our goal <em>is simple.</em></h3>
+        <div class="goals">
+          #{goals}
+        </div>
+        <a class="callout" href="https://www.juliusservices.com/" target="_blank" rel="noopener">
+          <span class="mono">Repairs &amp; maintenance</span>
+          <span class="ct">From complete home renovations to everyday repairs and maintenance. Smaller repairs and service calls are handled by our sister company, <em>Julius Services</em>.</span>
+          <span class="ar" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+
+    #{cta_band("Let's talk about <em>your vision.</em>")}
+
+    </main>
+
+    #{footer}
+
+    #{tail_html}
+  HTML
+end
+
 # ================================================================ write files
 PAGES.each { |pg| File.write(File.join(ROOT, "#{pg[:slug]}.html"), page(pg)) }
 AREAS.each { |a| File.write(File.join(ROOT, "#{a[:slug]}.html"), city_page(a)) }
@@ -2176,8 +2495,11 @@ File.write(File.join(ROOT, "service-areas.html"), areas_hub)
 File.write(File.join(ROOT, "terms-and-conditions.html"), terms_page)
 File.write(File.join(ROOT, "privacy-policy.html"), privacy_page)
 PROMOS.each { |pr| File.write(File.join(ROOT, "#{pr[:slug]}.html"), promo_page(pr)) }
-File.write(File.join(ROOT, "promotions.html"), promos_hub)
+File.write(File.join(ROOT, "specials.html"), promos_hub)
+# The old address keeps working: promotions.html sends visitors to specials.html (vercel.json also redirects /promotions).
+File.write(File.join(ROOT, "promotions.html"), %(<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<title>Specials · Julius Remodeling Group</title>\n<meta name="robots" content="noindex">\n<link rel="canonical" href="https://juliusremodeling.com/specials">\n<meta http-equiv="refresh" content="0; url=specials.html">\n</head>\n<body>\n<p>This page has moved to <a href="specials.html">Specials</a>.</p>\n</body>\n</html>\n))
 File.write(File.join(ROOT, "newsletter.html"), newsletter_page)
+File.write(File.join(ROOT, "about.html"), about_page)
 
 { "index.html" => [nil, true], "condo-remodeling.html" => ["condo-remodeling", false], "consultation.html" => ["consultation", false] }.each do |file, (cur, home)|
   path = File.join(ROOT, file)
@@ -2185,6 +2507,26 @@ File.write(File.join(ROOT, "newsletter.html"), newsletter_page)
   s = s.sub(%r{<header class="top[^"]*" id="hdr">.*?</header>}m) { header(cur, home: home) }
   s = s.sub(%r{<footer class="dark">.*?</footer>}m) { footer(home: home) }
   if home
+    if s.include?("<!-- HOLIDAY -->")
+      s = s.sub(%r{<!-- HOLIDAY -->.*?<!-- /HOLIDAY -->}m) { home_holiday_section }
+    else
+      s = s.sub("<!-- ONES -->") { home_holiday_section + "\n\n<!-- ONES -->" }
+    end
+    if s.include?("<!-- REFRESH -->")
+      s = s.sub(%r{<!-- REFRESH -->.*?<!-- /REFRESH -->}m) { home_refresh_section }
+    else
+      s = s.sub("<!-- SERVICES -->") { home_refresh_section + "\n\n<!-- SERVICES -->" }
+    end
+    if s.include?("<!-- SUPPLIERS -->")
+      s = s.sub(%r{<!-- SUPPLIERS -->.*?<!-- /SUPPLIERS -->}m) { home_suppliers_section }
+    else
+      s = s.sub("<!-- REVIEWS -->") { home_suppliers_section + "\n\n<!-- REVIEWS -->" }
+    end
+    if s.include?("<!-- SOCIAL -->")
+      s = s.sub(%r{<!-- SOCIAL -->.*?<!-- /SOCIAL -->}m) { home_social_section }
+    else
+      s = s.sub("<!-- FAQ -->") { home_social_section + "\n\n<!-- FAQ -->" }
+    end
     if s.include?("<!-- AREAS -->")
       s = s.sub(%r{<!-- AREAS -->.*?<!-- /AREAS -->}m) { home_areas_section }
     else
@@ -2200,7 +2542,7 @@ end
 puts "built #{PAGES.size} service pages, #{AREAS.size} city pages, and service-areas.html"
 
 # sitemap.xml for search engines (the hidden consultation page is left out on purpose)
-urls = [""] + ALL.map { |s| s[:slug] } + ["service-areas"] + AREAS.map { |a| a[:slug] } + ["promotions", "newsletter"] + PROMOS.map { |pr| pr[:slug] } + ["terms-and-conditions", "privacy-policy"]
+urls = [""] + ALL.map { |s| s[:slug] } + ["service-areas"] + AREAS.map { |a| a[:slug] } + ["about", "specials", "newsletter"] + PROMOS.map { |pr| pr[:slug] } + ["terms-and-conditions", "privacy-policy"]
 File.write(File.join(ROOT, "sitemap.xml"), %(<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n) +
   urls.map { |u| "  <url><loc>https://juliusremodeling.com/#{u}</loc></url>" }.join("\n") + "\n</urlset>\n")
 puts "wrote sitemap.xml (#{urls.size} pages)"

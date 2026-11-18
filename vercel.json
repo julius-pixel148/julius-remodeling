@@ -4,7 +4,8 @@
   "trailingSlash": false,
   "redirects": [
     { "source": "/flooring-interior-finish", "destination": "/flooring-installation", "permanent": true },
-    { "source": "/doors-windows-repairs", "destination": "/door-replacement", "permanent": true }
+    { "source": "/doors-windows-repairs", "destination": "/door-replacement", "permanent": true },
+    { "source": "/promotions", "destination": "/specials", "permanent": true }
   ],
   "headers": [
     {

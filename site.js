@@ -95,3 +95,47 @@ var CONFIG = {
     });
   });
 })();
+
+/* ===== Motion: reveal blocks as they scroll into view, and count up the big numbers ===== */
+(function(){
+  if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var sel = [".head", ".why-t", ".proj", ".card", ".goal", ".area-card", ".vend-card", ".promo-card", ".fin-card", ".opt",
+    ".stage", ".worry", ".ba", ".stats > div", ".about .ph", ".about .txt", ".refresh-copy", ".refresh-ba figure",
+    ".gal figure", ".incl > *", ".rel a", ".callout", ".quote", ".yt-frame", ".ig-grid a", ".cta-band .wrap", "main details"].join(",");
+  var fold = window.innerHeight * 0.92;
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if (!e.isIntersecting) return;
+      var el = e.target; el.classList.add("in"); io.unobserve(el);
+      // Once it has finished appearing, hand it back to its normal hover effects
+      setTimeout(function(){ el.classList.remove("rv", "in"); el.style.removeProperty("--d"); }, 1700 + parseFloat(el.style.getPropertyValue("--d") || 0) * 1000);
+    });
+  }, {rootMargin: "0px 0px -8% 0px", threshold: 0.08});
+  document.querySelectorAll(sel).forEach(function(el){
+    if (el.closest(".hero, .page-top, .rv") || el.getBoundingClientRect().top < fold) return; // leave what's already on screen alone
+    // Items in the same row come in one after another
+    var i = 0, s = el.previousElementSibling;
+    while (s && i < 6) { if (s.className === el.className) i++; else break; s = s.previousElementSibling; }
+    el.style.setProperty("--d", (i * 0.09) + "s");
+    el.classList.add("rv"); io.observe(el);
+  });
+  // Count-up numbers ("1,500+", "4.98★", "15+")
+  var co = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if (!e.isIntersecting) return; co.unobserve(e.target);
+      var t = e.target.firstChild, raw = t.nodeValue, end = parseFloat(raw.replace(/,/g, "")),
+          dec = (raw.split(".")[1] || "").length, comma = raw.indexOf(",") > -1, t0 = null;
+      function fmt(v){ var s = v.toFixed(dec); return comma ? Number(s).toLocaleString("en-US", {minimumFractionDigits: dec}) : s; }
+      function step(ts){
+        if (!t0) t0 = ts; var p = Math.min((ts - t0) / 1600, 1);
+        t.nodeValue = p < 1 ? fmt(end * (1 - Math.pow(1 - p, 3))) : raw;
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }, {threshold: 0.4});
+  document.querySelectorAll(".stats b").forEach(function(b){
+    var t = b.firstChild;
+    if (t && t.nodeType === 3 && /^[\d.,]+$/.test(t.nodeValue.trim())) co.observe(b);
+  });
+})();
