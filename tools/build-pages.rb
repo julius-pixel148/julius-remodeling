@@ -14,16 +14,43 @@ REMODELING = [
   { slug: "whole-home-remodeling", name: "Whole-home remodeling" },
   { slug: "condo-remodeling",      name: "Condos &amp; apartments" },
 ]
-SPECIALTY = [
+ADDITIONS = [
+  { slug: "adu-dadu",                name: "ADU &amp; DADU" },
+  { slug: "second-story-additions",  name: "Second-story additions" },
+  { slug: "home-additions",          name: "Home additions" },
+  { slug: "new-construction",        name: "New construction" },
+]
+EXTERIOR = [
+  { slug: "roofing",              name: "Roofing" },
+  { slug: "siding",               name: "Siding" },
+  { slug: "window-replacement",   name: "Windows" },
+  { slug: "decks",                name: "Decks" },
+  { slug: "patios-and-pavers",    name: "Patios &amp; pavers" },
+  { slug: "concrete-work",        name: "Concrete" },
+  { slug: "driveways",            name: "Driveways" },
+  { slug: "foundation-repair",    name: "Foundation repair" },
+  { slug: "landscaping",          name: "Landscaping" },
+  { slug: "fencing",              name: "Fencing" },
+]
+INTERIOR = [
   { slug: "flooring-installation",      name: "Flooring" },
   { slug: "interior-finish-carpentry",  name: "Interior finish &amp; carpentry" },
   { slug: "door-replacement",           name: "Doors" },
-  { slug: "window-replacement",         name: "Windows" },
   { slug: "stairs-and-railings",        name: "Stairs &amp; railings" },
-  { slug: "concrete-work",              name: "Concrete" },
   { slug: "drywall-repair",             name: "Drywall repair" },
+  { slug: "plumbing",                   name: "Plumbing" },
+  { slug: "electrical",                 name: "Electrical" },
+  { slug: "hvac",                       name: "Heating &amp; cooling" },
+  { slug: "insulation",                 name: "Insulation" },
 ]
-ALL = REMODELING + SPECIALTY
+# Menu, footer, and home page show these groups. To add a service: add it to a group here and add its page to PAGES.
+SERVICE_GROUPS = [
+  ["Remodeling", REMODELING],
+  ["Additions &amp; new builds", ADDITIONS],
+  ["Exterior &amp; outdoor", EXTERIOR],
+  ["Interior &amp; systems", INTERIOR],
+]
+ALL = REMODELING + ADDITIONS + EXTERIOR + INTERIOR
 # City pages. Add or remove a city here and in CITY_PAGES (further down), then rebuild.
 AREAS = [
   { slug: "remodeling-seattle-wa",       name: "Seattle" },
@@ -57,7 +84,7 @@ def header(current, home: false)
         <a href="#{home ? '#top' : 'index.html'}" class="logo" aria-label="Julius Remodeling Group, home"><img src="assets/wordmark.png" width="560" height="189" alt="Julius Remodeling Group"></a>
         <nav class="menu" id="nav" aria-label="Main">
           <a href="#{p}#work">Projects</a>
-          <div class="dd"><a href="#{p}#services"#{svc_cur}>Services</a><div class="dd-panel two"><div><span class="mono">Remodeling</span>#{links(REMODELING, current)}</div><div><span class="mono">Specialty &amp; repairs</span>#{links(SPECIALTY, current)}</div></div></div>
+          <div class="dd svc"><a href="#{p}#services"#{svc_cur}>Services</a><div class="dd-panel two four">#{SERVICE_GROUPS.map { |(t, l)| %(<div><span class="mono">#{t}</span>#{links(l, current)}</div>) }.join}</div></div>
           <div class="dd"><a href="service-areas.html"#{area_cur}>Areas</a><div class="dd-panel areas">#{links(AREAS, current)}<a href="service-areas.html">All service areas</a></div></div>
           <a href="promotions.html"#{promo_cur}>Promotions</a>
           <a href="#{p}#about">About</a><a href="#{p}#reviews">Reviews</a><a href="#{p}#contact">Contact</a>
@@ -88,9 +115,10 @@ def footer(home: false, news: true)
     <footer class="dark">
       <div class="wrap">#{news ? NEWS_STRIP : ""}
         <div class="fgrid">
-          <div><p class="tag">Transforming homes. <em>Elevating lives.</em></p><p class="sub">Remodeling for single-family homes, condos, and apartments across Seattle and the Eastside.</p><p class="sister">Need a repair or home service instead? Chimney, garage door, plumbing, electrical, and more are handled by our sister company, <a href="https://www.juliusservices.com/" target="_blank" rel="noopener">Julius Services ↗</a></p></div>
-          <div><h4 class="mono">Remodeling</h4><ul>#{li.(REMODELING)}</ul></div>
-          <div><h4 class="mono">Specialty &amp; repairs</h4><ul>#{li.(SPECIALTY)}</ul></div>
+          <div><p class="tag">Transforming homes. <em>Elevating lives.</em></p><p class="sub">Remodeling for single-family homes, condos, and apartments across Seattle and the Eastside.</p><p class="sister">Need a repair or a quick service call instead? Chimney, garage door, plumbing and electrical repairs, and more are handled by our sister company, <a href="https://www.juliusservices.com/" target="_blank" rel="noopener">Julius Services ↗</a></p></div>
+          <div><h4 class="mono">Remodeling</h4><ul>#{li.(REMODELING)}</ul><h4 class="mono">Additions &amp; new builds</h4><ul>#{li.(ADDITIONS)}</ul></div>
+          <div><h4 class="mono">Exterior &amp; outdoor</h4><ul>#{li.(EXTERIOR)}</ul></div>
+          <div><h4 class="mono">Interior &amp; systems</h4><ul>#{li.(INTERIOR)}</ul></div>
           <div><h4 class="mono"><a href="service-areas.html">Service areas</a></h4><ul>#{li.(AREAS)}</ul></div>
           <div><h4 class="mono">Contact</h4><ul><li><a href="tel:" data-tel data-k="phone">[Phone]</a></li><li><a href="mailto:ask@juliusremodeling.com" data-mail data-k="email">ask@juliusremodeling.com</a></li><li data-k="hours">[Business hours]</li><li data-k="address">[Address]</li><li><a href="#{LICENSE_URL}" target="_blank" rel="noopener">WA License <span data-k="license">[License #]</span> ↗</a></li><li data-k="insurance">[Insurance details]</li><li><a href="https://www.youtube.com/@Juliusremodelinggroup" target="_blank" rel="noopener">YouTube ↗</a></li></ul></div>
         </div>
@@ -266,6 +294,7 @@ QUOTES = {
   david:   ["From the first meeting to the final walkthrough, you can tell Julius Remodeling Group runs as a true team. The designers, builders, and project managers all communicate smoothly. Everyone cares about the end result and it shows. Our home turned out even better than we imagined.", "David L.", "Mercer Island, WA"],
 }
 LICENSED_FAQ = ["Are you licensed, insured, and bonded?", "Yes. Julius Remodeling Group is a licensed, insured, and bonded Washington general contractor (License JULIURG780NJ). <a href=\"#{LICENSE_URL}\" target=\"_blank\" rel=\"noopener\" style=\"text-decoration:underline\">Verify it with Washington L&amp;I</a>."]
+SISTER_LINK = %(<a href="https://www.juliusservices.com/" target="_blank" rel="noopener" style="text-decoration:underline">Julius Services</a>)
 CONDO_LINK = "<a href=\"condo-remodeling.html\" style=\"text-decoration:underline\">See how condo remodeling works</a>"
 
 # ---------------------------------------------------------------- page content
@@ -273,6 +302,7 @@ PAGES = [
   # ============================== KITCHEN
   {
     slug: "kitchen-remodeling", short: "Kitchen",
+    financing: { url: "https://www.acornfinance.com/remodel/kitchen-remodel-financing/", project: "kitchen remodel" },
     title: "Kitchen Remodeling in Seattle &amp; the Eastside",
     meta: "Kitchen remodeling in Seattle and the Eastside: cabinet repainting, semi-custom and custom cabinets, countertops, islands, sinks, plumbing, electrical, windows, and flooring.",
     eyebrow: "Kitchen remodeling",
@@ -327,6 +357,7 @@ PAGES = [
   # ============================== BATHROOM
   {
     slug: "bathroom-remodeling", short: "Bathroom",
+    financing: { url: "https://www.acornfinance.com/remodel/bathroom-remodel-renovation-financing/", project: "bathroom remodel" },
     title: "Bathroom Remodeling in Seattle &amp; the Eastside",
     meta: "Bathroom remodeling in Seattle and the Eastside: bathroom refreshes, full remodels, tub-to-shower conversions, walk-in showers, custom tile, waterproofing, vanities, plumbing, and lighting.",
     eyebrow: "Bathroom remodeling",
@@ -382,6 +413,7 @@ PAGES = [
   # ============================== BASEMENT
   {
     slug: "basement-remodeling", short: "Basement",
+    financing: { url: "https://www.acornfinance.com/remodel/basement-remodel-financing/", project: "basement remodel" },
     title: "Basement Remodeling &amp; Finishing in Seattle &amp; the Eastside",
     meta: "Basement remodeling and finishing in Seattle and the Eastside: family rooms, guest bedrooms, bathrooms, wet bars, and home offices, with moisture, framing, electrical, plumbing, and permits handled.",
     eyebrow: "Basement remodeling",
@@ -451,6 +483,7 @@ PAGES = [
   # ============================== FLOORING
   {
     slug: "flooring-installation", short: "Flooring",
+    financing: { url: "https://www.acornfinance.com/home-improvement/flooring-financing/", project: "flooring project" },
     title: "Flooring Installation in Seattle &amp; the Eastside",
     meta: "Flooring installation in Seattle and the Eastside: hardwood, luxury vinyl plank, and tile, with old floors removed, subfloors prepared, and transitions and trim finished clean.",
     eyebrow: "Flooring",
@@ -649,6 +682,422 @@ PAGES = [
       ["Do you take small drywall jobs?", "Yes. Drywall repair can be its own job, or part of a larger project."],
     ],
   },
+  # ============================== ADU & DADU
+  {
+    slug: "adu-dadu", short: "ADU",
+    title: "ADU &amp; DADU Builders in Seattle &amp; the Eastside",
+    meta: "Accessory dwelling units in Seattle and the Eastside: detached backyard cottages (DADUs), attached ADUs, and garage and basement conversions, from feasibility and permits to the finished unit.",
+    eyebrow: "ADU &amp; DADU",
+    h1: "More home on the lot <em>you already own.</em>",
+    lede: "Detached backyard cottages, attached ADUs, and garage or basement conversions for rental income, family, or a home office, planned, permitted, and built by one team.",
+    tags: ["Detached ADUs (DADUs)", "Attached ADUs", "Garage conversions", "Basement units", "Permits &amp; utilities"],
+    incl_h: "A second home, <em>start to finish.</em>",
+    incl_p: "An ADU is a small house with every system a full house has. We manage all of it, from the first site check to the final inspection.",
+    incl: [
+      ["Feasibility &amp; design", "We check your lot, zoning, setbacks, and utilities, then plan a size and layout that fit your budget and what your city allows."],
+      ["Permits &amp; approvals", "Drawings, engineering, and permit applications, handled for you, with the city's review comments answered along the way."],
+      ["Foundation, framing &amp; utilities", "Site work, foundation, framing, and the water, sewer, and power connections the unit needs."],
+      ["Finished, livable interiors", "Kitchen, bathroom, flooring, and finishes built to the same standard as our full remodels."],
+    ],
+    gallery: [],
+    quote: :david,
+    faq: [
+      ["What is the difference between an ADU and a DADU?", "An ADU (accessory dwelling unit) is a second, self-contained home on your property. A DADU is the detached kind: a separate backyard cottage. An attached ADU is part of the main house, such as a basement unit or an addition."],
+      ["Can I build an ADU on my lot?", "In most Seattle-area cities, yes, but the rules on size, height, setbacks, and parking vary by city and by lot. We check what applies to your property before any design work starts."],
+      ["Can I convert my garage or basement instead?", "Often, yes. Converting existing space can cost less than building new, as long as it can meet code for ceiling height, egress, insulation, and utilities. We'll tell you honestly which option makes more sense."],
+      LICENSED_FAQ,
+    ],
+  },
+  # ============================== SECOND-STORY ADDITIONS
+  {
+    slug: "second-story-additions", short: "Second-story",
+    title: "Second-Story Additions in Seattle &amp; the Eastside",
+    meta: "Second-story and second-floor additions in Seattle and the Eastside: engineering, permits, structural work, framing, roofing, and finished bedrooms and baths from one licensed general contractor.",
+    eyebrow: "Second-story additions",
+    h1: "Build up, <em>not out.</em>",
+    lede: "Add bedrooms, bathrooms, or a primary suite on a new second floor without giving up your yard. We handle the engineering, permits, structure, and the finished rooms.",
+    tags: ["Full second floors", "Partial additions", "Primary suites", "Structural engineering", "Roof &amp; siding tie-in"],
+    incl_h: "A new floor <em>that belongs to the house.</em>",
+    incl_p: "A second story changes the structure, the roof, and the stairs. We plan all of it together, so the addition looks like it was always there.",
+    incl: [
+      ["Engineering &amp; permits", "A structural engineer reviews the existing foundation and framing, and we handle the drawings and the permit process."],
+      ["Structure &amp; framing", "Reinforcement where it's needed, new floor framing, walls, and a new roof, built to the engineer's plans."],
+      ["Stairs, systems &amp; insulation", "A new staircase, plus plumbing, electrical, heating, and insulation extended to the new floor."],
+      ["Finished rooms &amp; exterior", "Bedrooms, bathrooms, and closets finished inside, with siding and roofing matched to the rest of the house."],
+    ],
+    gallery: [],
+    quote: :rebecca,
+    faq: [
+      ["Can my house support a second story?", "Many can, but it depends on the existing foundation and framing. A structural engineer reviews your home first, and we tell you what reinforcement, if any, is needed before you commit."],
+      ["Can we live in the house during construction?", "Sometimes, for part of the project. Because the roof comes off, most families plan to move out for at least some of the work. We'll walk you through the schedule at the start."],
+      ["Is a second story better than a ground-level addition?", %(It depends on your lot and goals. Building up keeps your yard and works on smaller lots; building out is often simpler structurally. We'll compare both for your home. See <a href="home-additions.html" style="text-decoration:underline">home additions</a>.)],
+      LICENSED_FAQ,
+    ],
+  },
+  # ============================== HOME ADDITIONS
+  {
+    slug: "home-additions", short: "Addition",
+    title: "Home Additions in Seattle &amp; the Eastside",
+    meta: "Home additions in Seattle and the Eastside: room additions, bump-outs, primary suites, and larger kitchens and family rooms, designed and built by a licensed general contractor.",
+    eyebrow: "Home additions",
+    h1: "The room you're missing, <em>added on.</em>",
+    lede: "Room additions, bump-outs, primary suites, and bigger kitchens or family rooms, planned to match your home and built by one team from foundation to finish.",
+    tags: ["Room additions", "Bump-outs", "Primary suites", "Sunrooms", "Kitchen expansions"],
+    incl_h: "More space, <em>seamlessly joined.</em>",
+    incl_p: "The hardest part of an addition is where new meets old. We plan the roofline, floors, and finishes so the seam disappears.",
+    incl: [
+      ["Design &amp; permits", "Layout, drawings, engineering, and permits, with the size and placement checked against your lot's rules."],
+      ["Foundation &amp; framing", "Excavation, foundation, framing, and a roof tied into the existing house."],
+      ["Systems &amp; insulation", "Plumbing, electrical, heating, and insulation extended into the new space."],
+      ["Matching finishes", "Siding, roofing, windows, floors, and trim matched to what you already have."],
+    ],
+    gallery: [],
+    quote: :david,
+    faq: [
+      ["What is a bump-out?", "A bump-out is a small addition, often just a few feet deep, that extends one room, such as a kitchen or bathroom. It adds space without the scope of a full room addition."],
+      ["Will the addition match my house?", "That's the goal. We match the roofline, siding, windows, and interior finishes wherever possible, so the addition doesn't look added on."],
+      ["Do I need a permit for an addition?", "Yes. Additions need permits and inspections. We prepare the drawings and handle the permit process for you."],
+      LICENSED_FAQ,
+    ],
+  },
+  # ============================== NEW CONSTRUCTION
+  {
+    slug: "new-construction", short: "New construction",
+    title: "New Home Construction in Seattle &amp; the Eastside",
+    meta: "New home construction in Seattle and the Eastside: custom homes and teardown rebuilds, managed by a licensed general contractor from permits and site work to the final walkthrough.",
+    eyebrow: "New construction",
+    h1: "A new home, <em>built around you.</em>",
+    lede: "Custom homes and teardown rebuilds, managed by one team from permits and site work to the final walkthrough, with the same attention to finish as our remodels.",
+    tags: ["Custom homes", "Teardown rebuilds", "Site work", "Permits", "Interior finishes"],
+    incl_h: "One team, <em>from the ground up.</em>",
+    incl_p: "Building new means hundreds of decisions and dozens of trades. We keep them on one schedule and one budget, with one point of contact for you.",
+    incl: [
+      ["Planning &amp; permits", "We work from your architect's plans or bring in a designer and engineer, handle permits, and price the build before it starts."],
+      ["Site work &amp; foundation", "Demolition of an existing house if needed, excavation, utilities, and the foundation."],
+      ["Framing, roofing &amp; systems", "Structure, roof, windows, siding, plumbing, electrical, and HVAC, built and inspected in order."],
+      ["Interiors &amp; finishes", "Kitchens, bathrooms, flooring, trim, and paint, finished to the standard you see in our remodels."],
+    ],
+    gallery: [],
+    quote: :david,
+    faq: [
+      ["Do I need my own architect?", "Not necessarily. If you already have one, we're happy to build from their plans. If not, we can bring in a designer and engineer we work with."],
+      ["Can you tear down my existing house and rebuild?", "Yes. A teardown rebuild starts with a demolition permit and utility disconnects, then proceeds like any new home build."],
+      ["How do you keep a new build on budget?", "We price the project from complete plans, agree on the budget before work starts, and put any changes in writing before they happen."],
+      LICENSED_FAQ,
+    ],
+  },
+  # ============================== ROOFING
+  {
+    slug: "roofing", short: "Roofing",
+    title: "Roof Replacement &amp; Roofing in Seattle &amp; the Eastside",
+    meta: "Roof replacement and new roofing in Seattle and the Eastside: asphalt shingles, metal roofing, flashing, ventilation, and gutters, installed by a licensed general contractor.",
+    eyebrow: "Roofing",
+    h1: "A roof built for <em>Northwest rain.</em>",
+    lede: "Full roof replacements and new roofs for additions, in asphalt shingle or metal, with proper flashing and ventilation and gutters that carry the water away.",
+    tags: ["Roof replacement", "Asphalt shingles", "Metal roofing", "Flashing &amp; ventilation", "Gutters"],
+    incl_h: "Everything <em>under the shingles too.</em>",
+    incl_p: "A roof is only as good as what's under it. We inspect the decking, replace what's damaged, and get the flashing and ventilation right.",
+    incl: [
+      ["Tear-off &amp; decking", "We remove the old roofing down to the deck and replace any rotted or damaged sheathing."],
+      ["Underlayment &amp; flashing", "Waterproof underlayment, plus new flashing at chimneys, skylights, walls, and valleys, where most leaks start."],
+      ["Shingles or metal", "Architectural asphalt shingles or standing-seam metal, installed to the manufacturer's specifications."],
+      ["Ventilation &amp; gutters", "Roof vents to keep the attic dry, and new gutters and downspouts if yours need replacing."],
+    ],
+    gallery: [],
+    quote: :rebecca,
+    faq: [
+      ["Do I need a new roof or just a repair?", %(Widespread curling, cracking, or missing shingles, moss damage, and repeated leaks usually mean it's time to replace. A single leak or a few damaged shingles can often be repaired; for repairs, our sister company #{SISTER_LINK} can help.)],
+      ["Asphalt or metal roofing?", "Asphalt shingles cost less up front. Metal costs more but lasts longer and sheds rain and moss well. We'll go over the trade-offs for your home and budget."],
+      ["Do you handle permits for a roof replacement?", "Yes. Where your city requires a permit for a re-roof, we apply for it and schedule the inspections."],
+      LICENSED_FAQ,
+    ],
+  },
+  # ============================== SIDING
+  {
+    slug: "siding", short: "Siding",
+    title: "Siding Replacement &amp; Installation in Seattle &amp; the Eastside",
+    meta: "Siding replacement and installation in Seattle and the Eastside: fiber cement, wood, and vinyl siding, house wrap, trim, and exterior paint from a licensed general contractor.",
+    eyebrow: "Siding",
+    h1: "A new face <em>for your home.</em>",
+    lede: "Fiber cement, wood, and vinyl siding, installed over a proper weather barrier and finished with new trim and paint, so your home looks new and stays dry.",
+    tags: ["Fiber cement", "Wood siding", "Vinyl siding", "House wrap", "Trim &amp; paint"],
+    incl_h: "Siding that <em>keeps water out.</em>",
+    incl_p: "Siding is your home's rain jacket. We fix what's behind it before the new siding goes up.",
+    incl: [
+      ["Removal &amp; inspection", "We take off the old siding and repair any rotted sheathing or framing we find."],
+      ["Weather barrier", "New house wrap and flashing around windows and doors: the layer that actually keeps water out."],
+      ["New siding", "Fiber cement, wood, or vinyl siding, installed to the manufacturer's specifications."],
+      ["Trim &amp; paint", "Corner boards, window trim, soffits, and fascia, finished and painted."],
+    ],
+    gallery: [],
+    quote: :rebecca,
+    faq: [
+      ["What siding works best in the Seattle climate?", "Fiber cement is a popular choice here because it resists rot, moisture, and fire. Wood looks great but needs more upkeep. Vinyl costs least. We'll help you compare."],
+      ["Can you replace just part of the siding?", %(For small damaged sections, our sister company #{SISTER_LINK} handles siding repairs. We focus on full and large-area replacements.)],
+      ["Should I replace my windows at the same time?", %(It's a good time to. With the siding off, the flashing around new windows can be done properly. See <a href="window-replacement.html" style="text-decoration:underline">window replacement</a>.)],
+      LICENSED_FAQ,
+    ],
+  },
+  # ============================== DECKS
+  {
+    slug: "decks", short: "Deck",
+    title: "Deck Building &amp; Replacement in Seattle &amp; the Eastside",
+    meta: "Deck building and replacement in Seattle and the Eastside: composite and wood decks, stairs, railings, and covered decks, designed and built by a licensed general contractor.",
+    eyebrow: "Decks",
+    h1: "Outdoor living, <em>built to last.</em>",
+    lede: "New decks and deck replacements in composite or wood, with stairs, railings, and covers, built on solid footings and designed for how you'll use the space.",
+    tags: ["Composite decks", "Wood decks", "Stairs &amp; railings", "Covered decks", "Deck replacement"],
+    incl_h: "A deck that's <em>solid underfoot.</em>",
+    incl_p: "What you don't see matters most: the footings, the framing, and how the deck connects to your house.",
+    incl: [
+      ["Design &amp; permits", "Size, shape, and layout planned around your yard, with permits where they're required."],
+      ["Footings &amp; framing", "Concrete footings, treated framing, and a properly flashed connection to the house."],
+      ["Decking", "Low-maintenance composite or natural wood decking, in the color and style you choose."],
+      ["Stairs, railings &amp; covers", "Stairs, railings built to code, and optional covers or pergolas so you can use the deck in the rain."],
+    ],
+    gallery: [],
+    quote: :rebecca,
+    faq: [
+      ["Composite or wood decking?", "Composite costs more up front but doesn't need staining and resists rot. Wood costs less and looks natural but needs regular maintenance in our climate."],
+      ["Can you replace the boards but keep the frame?", "Sometimes. If the framing is sound, we can replace just the decking and railings. We inspect the frame first and tell you honestly."],
+      ["Do I need a permit for a deck?", "Many decks do, especially ones attached to the house or above a certain height. We check your city's rules and handle the permit."],
+      LICENSED_FAQ,
+    ],
+  },
+  # ============================== PATIOS & PAVERS
+  {
+    slug: "patios-and-pavers", short: "Patio",
+    title: "Paver Patios &amp; Walkways in Seattle &amp; the Eastside",
+    meta: "Paver patios, walkways, and hardscaping in Seattle and the Eastside: base preparation, drainage, pavers, steps, and borders from a licensed general contractor.",
+    eyebrow: "Patios &amp; pavers",
+    h1: "Hardscaping <em>that stays level.</em>",
+    lede: "Paver patios, walkways, steps, and fire-pit areas, built on a compacted base with drainage planned in, so they stay flat and dry for years.",
+    tags: ["Paver patios", "Walkways", "Steps", "Fire-pit areas", "Drainage"],
+    incl_h: "It starts <em>below the surface.</em>",
+    incl_p: "Pavers sink and shift when the base is skipped. We dig, compact, and grade properly first.",
+    incl: [
+      ["Layout &amp; grading", "We plan the shape and slope so water runs away from your home."],
+      ["Excavation &amp; base", "Excavation, fabric, and a compacted gravel base sized for the load."],
+      ["Pavers &amp; stone", "Concrete pavers or natural stone, laid in the pattern you choose, with edge restraints."],
+      ["Finishing", "Polymeric sand in the joints, plus steps, borders, and clean transitions to lawn or planting beds."],
+    ],
+    gallery: [],
+    quote: :david,
+    faq: [
+      ["Pavers or poured concrete?", %(Pavers cost more but can be repaired one piece at a time and come in many styles. Poured concrete costs less up front; see our <a href="concrete-work.html" style="text-decoration:underline">concrete</a> page for that option.)],
+      ["Will weeds grow between the pavers?", "Polymeric sand in the joints greatly reduces weeds and keeps the pavers locked in place."],
+      ["Can you add a cover over the patio?", "Yes. We can build a covered area or pergola over a patio so you can use it year-round."],
+      LICENSED_FAQ,
+    ],
+  },
+  # ============================== DRIVEWAYS
+  {
+    slug: "driveways", short: "Driveway",
+    title: "Driveway Replacement &amp; Installation in Seattle &amp; the Eastside",
+    meta: "Driveway replacement and installation in Seattle and the Eastside: concrete and paver driveways, removal, base, drainage, and aprons from a licensed general contractor.",
+    eyebrow: "Driveways",
+    h1: "A driveway <em>without the cracks.</em>",
+    lede: "Concrete and paver driveways, from tearing out the old one to a new base, drainage, and a clean finish, built to carry your cars for decades.",
+    tags: ["Concrete driveways", "Paver driveways", "Removal", "Base &amp; drainage", "Aprons &amp; walkways"],
+    incl_h: "Built for <em>the weight it carries.</em>",
+    incl_p: "Most driveway cracks come from a weak base or poor drainage. We fix both before the new surface goes down.",
+    incl: [
+      ["Removal &amp; haul-away", "We break out and haul away the old driveway."],
+      ["Base &amp; drainage", "A compacted gravel base and a slope that sends water away from the house and garage."],
+      ["Concrete or pavers", "Reinforced concrete with control joints, or interlocking pavers, in the finish you choose."],
+      ["Aprons &amp; connections", "Clean transitions to the street, garage, and walkways, with permits for street connections where required."],
+    ],
+    gallery: [],
+    quote: :david,
+    faq: [
+      ["How soon can I drive on new concrete?", "Usually about a week for ordinary cars, and longer for heavy vehicles. We'll give you exact timing for your pour and the weather."],
+      ["Can you widen my driveway?", "Often, yes, depending on your lot and your city's rules. We check before planning the new layout."],
+      ["Concrete or pavers for a driveway?", "Concrete costs less and is simple to maintain. Pavers cost more but are easy to repair and offer more design options."],
+      LICENSED_FAQ,
+    ],
+  },
+  # ============================== FOUNDATION REPAIR
+  {
+    slug: "foundation-repair", short: "Foundation",
+    title: "Foundation Repair in Seattle &amp; the Eastside",
+    meta: "Foundation repair in Seattle and the Eastside: crack repair, settlement, drainage, seismic retrofits, and structural work, engineered and permitted, from a licensed general contractor.",
+    eyebrow: "Foundation repair",
+    h1: "Fix the base <em>everything rests on.</em>",
+    lede: "Foundation cracks, settling, and water problems assessed with a structural engineer, then repaired, drained, and permitted by one team.",
+    tags: ["Crack repair", "Settlement", "Drainage", "Structural reinforcement", "Seismic retrofits"],
+    incl_h: "Engineered, <em>not guessed.</em>",
+    incl_p: "Foundation work should start with a diagnosis. We bring in a structural engineer so the fix matches the actual problem.",
+    incl: [
+      ["Assessment", "We inspect the cracks, settlement, and moisture, and bring in a structural engineer when the problem calls for it."],
+      ["Repair &amp; reinforcement", "Crack repair, new footings or wall sections, and reinforcement built to the engineer's plan."],
+      ["Drainage &amp; waterproofing", "Grading, drains, and waterproofing that keep water away from the foundation."],
+      ["Seismic retrofits", "Bolting and bracing that tie an older house to its foundation, to help it ride out an earthquake."],
+    ],
+    gallery: [],
+    quote: :rebecca,
+    faq: [
+      ["Are foundation cracks always serious?", "No. Thin hairline cracks from concrete shrinking are common. Wide, growing, or uneven cracks, sticking doors, and sloping floors are worth having checked."],
+      ["Do I need a structural engineer?", "For anything beyond minor cracks, yes. The engineer designs the repair, and we build it under permit."],
+      ["What is a seismic retrofit?", "It strengthens how an older house connects to its foundation, usually by bolting the frame to the foundation and bracing the crawl space walls. It's often recommended for older homes in our area."],
+      LICENSED_FAQ,
+    ],
+  },
+  # ============================== LANDSCAPING
+  {
+    slug: "landscaping", short: "Landscaping",
+    title: "Landscaping &amp; Yard Renovation in Seattle &amp; the Eastside",
+    meta: "Landscaping and yard renovation in Seattle and the Eastside: lawns, turf, planting beds, retaining walls, drainage, irrigation, and outdoor lighting from a licensed general contractor.",
+    eyebrow: "Landscaping",
+    h1: "A yard you'll <em>actually use.</em>",
+    lede: "Lawns, planting beds, retaining walls, drainage, irrigation, and lighting, planned together with your patio or deck so the whole yard works as one.",
+    tags: ["Lawns &amp; turf", "Planting beds", "Retaining walls", "Drainage", "Irrigation &amp; lighting"],
+    incl_h: "The whole yard, <em>in one plan.</em>",
+    incl_p: "Good landscaping starts with grading and drainage. The walls, plants, and lighting come after.",
+    incl: [
+      ["Grading &amp; drainage", "Shaping the yard so water drains away from your home, with drains where they're needed."],
+      ["Retaining walls", "Block or stone walls that turn slopes into usable, level space."],
+      ["Lawns &amp; planting", "New sod, artificial turf, or planting beds with plants suited to our climate."],
+      ["Irrigation &amp; lighting", "Drip and sprinkler systems, plus low-voltage lighting for paths and patios."],
+    ],
+    gallery: [],
+    quote: :david,
+    faq: [
+      ["Can you do the yard along with a deck or patio?", %(Yes, and it's the best way to do it. Planning the <a href="decks.html" style="text-decoration:underline">deck</a> or <a href="patios-and-pavers.html" style="text-decoration:underline">patio</a> and the landscaping together avoids tearing up new work later.)],
+      ["Do you install artificial turf?", "Yes. Artificial turf is a good option for shady or heavily used areas where grass struggles."],
+      ["Do retaining walls need a permit?", "Taller walls, and walls holding back a load such as a driveway, often need a permit and engineering. We check your city's rules."],
+      LICENSED_FAQ,
+    ],
+  },
+  # ============================== FENCING
+  {
+    slug: "fencing", short: "Fence",
+    title: "Fence Installation &amp; Replacement in Seattle &amp; the Eastside",
+    meta: "Fence installation and replacement in Seattle and the Eastside: wood, horizontal, and metal fences and gates, set on concrete posts by a licensed general contractor.",
+    eyebrow: "Fencing",
+    h1: "Privacy and style, <em>built straight.</em>",
+    lede: "Wood, horizontal, and metal fences and gates, set on concrete posts and built straight and level along your property line.",
+    tags: ["Wood fences", "Horizontal fences", "Metal fences", "Gates", "Fence replacement"],
+    incl_h: "A fence that <em>stays standing.</em>",
+    incl_p: "Most fences fail at the posts. We set ours in concrete and build the rest to match.",
+    incl: [
+      ["Layout", "We confirm the line with you, check height rules, and have underground utilities located before digging."],
+      ["Posts &amp; rails", "Posts set in concrete, with rails built straight and level, even on slopes."],
+      ["Fence panels", "Cedar, horizontal slat, or metal styles, built to the height and privacy you want."],
+      ["Gates &amp; hardware", "Walk and drive gates with sturdy hinges, latches, and locks."],
+    ],
+    gallery: [],
+    quote: :rebecca,
+    faq: [
+      ["How tall can my fence be?", "It depends on your city and where the fence sits on your lot; front yards usually have lower limits. We check the rules for your address."],
+      ["Do I need to know my property line?", "Yes. We build along the line you confirm, and a survey is the surest way to know where it is."],
+      ["Can you remove my old fence?", "Yes. Removing and hauling away the old fence is part of a replacement."],
+      LICENSED_FAQ,
+    ],
+  },
+  # ============================== PLUMBING
+  {
+    slug: "plumbing", short: "Plumbing",
+    title: "Remodel Plumbing &amp; Repiping in Seattle &amp; the Eastside",
+    meta: "Remodel plumbing and repiping in Seattle and the Eastside: fixture relocation, whole-house repiping, water heaters, and drain, sewer, and gas lines, done by licensed plumbers under permit.",
+    eyebrow: "Plumbing",
+    h1: "The pipes behind <em>a great remodel.</em>",
+    lede: "Moving fixtures, repiping older homes, new water heaters, and drain and sewer work, done by licensed plumbers under permit as part of your project.",
+    tags: ["Repiping", "Fixture relocation", "Water heaters", "Drain &amp; sewer lines", "Gas lines"],
+    incl_h: "Plumbing done <em>before the walls close.</em>",
+    incl_p: "The best time to upgrade plumbing is during a remodel, while the walls are open.",
+    incl: [
+      ["Fixture relocation", "Moving sinks, toilets, showers, and appliances to where your new layout needs them."],
+      ["Whole-house repiping", "Replacing old galvanized or failing pipes with new supply lines throughout the house."],
+      ["Water heaters", "Tank and tankless water heaters, sized for your household and installed to code."],
+      ["Drains, sewer &amp; gas", "New drain lines, sewer connections, and gas lines for ranges, fireplaces, and heaters."],
+    ],
+    gallery: [],
+    quote: :rebecca,
+    faq: [
+      ["Who does the plumbing work?", "Licensed plumbers, working under permit as part of our team. The work is inspected before the walls are closed."],
+      ["Do you handle small plumbing repairs?", %(For leaks, clogs, and other repairs, our sister company #{SISTER_LINK} is the right call. We focus on plumbing that's part of a remodel or upgrade.)],
+      ["Should I repipe my older home?", "If your home still has galvanized steel or polybutylene pipes, repiping is often worth it, especially if you're already opening walls for a remodel."],
+      LICENSED_FAQ,
+    ],
+  },
+  # ============================== ELECTRICAL
+  {
+    slug: "electrical", short: "Electrical",
+    title: "Remodel Electrical &amp; Upgrades in Seattle &amp; the Eastside",
+    meta: "Remodel electrical work in Seattle and the Eastside: panel upgrades, rewiring, lighting, EV chargers, and new circuits for kitchens and additions, done by licensed electricians under permit.",
+    eyebrow: "Electrical",
+    h1: "Power and light <em>where you need them.</em>",
+    lede: "Panel upgrades, rewiring, recessed and accent lighting, EV chargers, and new circuits for kitchens and additions, done by licensed electricians under permit.",
+    tags: ["Panel upgrades", "Rewiring", "Lighting", "EV chargers", "New circuits"],
+    incl_h: "Wiring that's <em>safe and up to date.</em>",
+    incl_p: "New kitchens, additions, and EV chargers often need more power than an older home has. We plan the electrical along with the rest of the project.",
+    incl: [
+      ["Panel &amp; service upgrades", "Larger panels and service upgrades for new appliances, heat pumps, and EV chargers."],
+      ["Rewiring", "Replacing old or unsafe wiring, such as knob-and-tube, while the walls are open."],
+      ["Lighting", "Recessed, pendant, under-cabinet, and exterior lighting, with switches and dimmers where you want them."],
+      ["Circuits &amp; EV chargers", "Dedicated circuits for kitchens and appliances, plus Level 2 EV charger installation."],
+    ],
+    gallery: [],
+    quote: :david,
+    faq: [
+      ["Who does the electrical work?", "Licensed electricians, working under permit as part of our team. The work is inspected before the walls are closed."],
+      ["Do you handle small electrical repairs?", %(For repairs and service calls, our sister company #{SISTER_LINK} is the right call. We focus on electrical work that's part of a remodel or upgrade.)],
+      ["Do I need a panel upgrade for an EV charger?", "Not always. It depends on your panel's capacity and what else it powers. We check your panel before installing the charger and tell you what's needed."],
+      LICENSED_FAQ,
+    ],
+  },
+  # ============================== HVAC
+  {
+    slug: "hvac", short: "HVAC",
+    title: "Heat Pumps, Mini-Splits &amp; HVAC in Seattle &amp; the Eastside",
+    meta: "Heating and cooling in Seattle and the Eastside: heat pumps, ductless mini-splits, furnaces, ductwork, and ventilation for remodels, additions, and ADUs, installed by licensed technicians.",
+    eyebrow: "Heating &amp; cooling",
+    h1: "Comfortable <em>in every season.</em>",
+    lede: "Heat pumps, ductless mini-splits, furnaces, and ductwork for remodels, additions, and ADUs, sized for your home and installed by licensed technicians.",
+    tags: ["Heat pumps", "Ductless mini-splits", "Furnaces", "Ductwork", "Ventilation"],
+    incl_h: "Heating and cooling, <em>sized right.</em>",
+    incl_p: "A system that's too big or too small wastes energy and never feels right. We size the equipment to the home, then install it properly.",
+    incl: [
+      ["Heat pumps", "Efficient heating and cooling in one system, a strong fit for our mild climate."],
+      ["Ductless mini-splits", "Heating and cooling for additions, ADUs, and rooms without ducts."],
+      ["Furnaces &amp; ductwork", "Furnace replacement and new or extended ductwork for remodeled spaces."],
+      ["Ventilation", "Bathroom and kitchen exhaust, plus fresh-air ventilation to control moisture."],
+    ],
+    gallery: [],
+    quote: :david,
+    faq: [
+      ["Is a heat pump a good choice in Seattle?", "Usually, yes. Our mild winters suit heat pumps well, and they cool the house in summer too."],
+      ["Can I heat and cool an addition without new ducts?", "Yes. A ductless mini-split is often the simplest way to heat and cool an addition, ADU, or converted space."],
+      ["Do you repair existing HVAC systems?", %(For service and repairs, our sister company #{SISTER_LINK} can help. We focus on new systems and replacements as part of a project.)],
+      LICENSED_FAQ,
+    ],
+  },
+  # ============================== INSULATION
+  {
+    slug: "insulation", short: "Insulation",
+    title: "Home Insulation &amp; Air Sealing in Seattle &amp; the Eastside",
+    meta: "Home insulation in Seattle and the Eastside: attic, wall, crawl space, and basement insulation, air sealing, and vapor barriers, installed by a licensed general contractor.",
+    eyebrow: "Insulation",
+    h1: "A warmer home <em>for less energy.</em>",
+    lede: "Attic, wall, crawl space, and basement insulation, with air sealing and vapor barriers, so your home stays comfortable and your heating bills come down.",
+    tags: ["Attic insulation", "Wall insulation", "Crawl spaces", "Air sealing", "Vapor barriers"],
+    incl_h: "Stop paying <em>to heat the outdoors.</em>",
+    incl_p: "Insulation works best with air sealing. We close the gaps first, then insulate.",
+    incl: [
+      ["Attics", "Blown-in or batt insulation to bring older attics up to current levels."],
+      ["Walls", "Insulation in open walls during a remodel, or blown into closed walls where possible."],
+      ["Crawl spaces &amp; basements", "Insulated floors and walls, plus vapor barriers that keep ground moisture out."],
+      ["Air sealing", "Sealing the gaps around lights, pipes, and the attic hatch, where heated air escapes."],
+    ],
+    gallery: [],
+    quote: :rebecca,
+    faq: [
+      ["How do I know if my home needs more insulation?", "Cold rooms, drafts, high heating bills, and an attic where you can see the tops of the ceiling joists are all signs."],
+      ["Can you insulate walls without opening them?", "Often, yes. Insulation can be blown into closed walls through small holes that are patched afterward."],
+      ["Are there rebates for insulation?", "Some utilities offer rebates for insulation and air sealing. Check with yours; we can provide the project details they ask for."],
+      LICENSED_FAQ,
+    ],
+  },
 ]
 
 PROCESS = <<~HTML
@@ -730,6 +1179,33 @@ def gallery_html(keys)
       <div class="reel">
     #{cards}
       </div>
+    </section>
+
+  HTML
+end
+
+# ---------------------------------------------------------------- financing (Acorn Finance)
+# Add  financing: { url: "...", project: "kitchen remodel" }  to a page in PAGES to show this section on it.
+# The logo lives in assets/partners/acorn-finance.svg (Acorn's own logo file, unchanged).
+def financing_html(f)
+  return "" unless f
+  <<~HTML
+    <!-- FINANCING -->
+    <section class="sheet sec fin" aria-labelledby="fin-t">
+      <div class="wrap fin-in">
+        <div class="fin-copy">
+          <p class="eyebrow">Financing available</p>
+          <h2 id="fin-t">Pay for your #{f[:project]} <em>over time.</em></h2>
+          <p>We partner with Acorn Finance so you can compare loan offers from multiple lenders for your #{f[:project]}. Checking your options won't affect your credit score.</p>
+          <a href="#{f[:url]}" target="_blank" rel="noopener" class="btn btn-ink">See financing options <span class="ar" aria-hidden="true">↗</span></a>
+        </div>
+        <a class="fin-card" href="#{f[:url]}" target="_blank" rel="noopener" aria-label="Acorn Finance: #{f[:project]} financing (opens in a new tab)">
+          <span class="mono">Financing partner</span>
+          <img src="assets/partners/acorn-finance.svg" width="438" height="155" alt="Acorn Finance">
+          <span class="go">Visit Acorn Finance <span aria-hidden="true">↗</span></span>
+        </a>
+      </div>
+      <div class="wrap"><p class="fin-fine">Financing is offered through Acorn Finance and its lending partners, not by Julius Remodeling Group. Acorn Finance is not a lender and does not make loans or credit decisions. Approval, rates, and terms depend on your credit and are set by the lender. Viewing offers uses a soft credit check; a lender may run a hard credit check if you choose to move forward with an offer.</p></div>
     </section>
 
   HTML
@@ -845,7 +1321,7 @@ def page(pg)
       </div>
     </section>
 
-    <!-- FAQ -->
+    #{financing_html(pg[:financing])}<!-- FAQ -->
     <section class="sheet sec" aria-labelledby="faq-t">
       <div class="wrap">
         <div class="faq">
@@ -1097,6 +1573,20 @@ def tail_html
 end
 
 LD_BUSINESS = ->(area, url) { %({"@context":"https://schema.org","@type":"GeneralContractor","name":"Julius Remodeling Group","image":"https://juliusremodeling.com/assets/logo.jpg","telephone":"+1-425-699-9636","url":"#{url}","address":{"@type":"PostalAddress","streetAddress":"800 Bellevue Way NE, Suite 500","addressLocality":"Bellevue","addressRegion":"WA","postalCode":"98004","addressCountry":"US"},"areaServed":#{area},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.98","ratingCount":"58","bestRating":"5"}}) }
+
+# Home page "Services" list: entries 06 onward, one per service group after Remodeling.
+HOME_SVC_BLURBS = {
+  "Additions &amp; new builds" => ["ADUs, second stories, additions, new homes", "More space on your lot: backyard cottages and ADUs, second-story and ground-level additions, and new custom homes."],
+  "Exterior &amp; outdoor" => ["Roofing, siding, decks, driveways, landscaping", "The outside of your home and yard: roofing, siding, windows, decks, patios, concrete, driveways, foundations, landscaping, and fencing."],
+  "Interior &amp; systems" => ["Flooring, carpentry, plumbing, electrical, HVAC", "Finish work and the systems behind the walls: flooring, carpentry, doors, stairs, drywall, plumbing, electrical, heating and cooling, and insulation."],
+}
+def home_svc_groups
+  SERVICE_GROUPS.drop(1).each_with_index.map { |(t, list), i|
+    sh, p = HOME_SVC_BLURBS.fetch(t)
+    links = list.map { |x| %(<a href="#{x[:slug]}.html">#{x[:name]} <span aria-hidden="true">→</span></a>) }.join
+    %(<details><summary><span class="mono">0#{i + 6}</span>#{t}<span class="sh">#{sh}</span><span class="pm" aria-hidden="true"></span></summary>\n        <div class="more"><p>#{p} Choose a service for the details.</p><div class="acts"><a href="consultation.html" class="btn btn-brass">Start with this <span class="ar" aria-hidden="true">→</span></a></div>\n          <div class="svc-links">#{links}</div></div></details>)
+  }.join("\n      ")
+end
 
 def city_page(area)
   c = CITY_PAGES.fetch(area[:slug])
@@ -1700,6 +2190,7 @@ File.write(File.join(ROOT, "newsletter.html"), newsletter_page)
     else
       s = s.sub("<!-- CTA BAND -->") { home_areas_section + "\n\n<!-- CTA BAND -->" }
     end
+    s = s.sub(%r{<details><summary><span class="mono">06</span>.*?</details>(?=\n    </div>\n  </div>\n</section>)}m) { home_svc_groups }
     s = s.sub(%r{<div class="areas">.*?</div>}m) {
       %(<div class="areas">\n          <span class="mono">Areas we serve</span>\n          <ul>#{AREAS.map { |a| %(<li><a href="#{a[:slug]}.html">#{a[:name]}</a></li>) }.join}</ul>\n        </div>)
     }

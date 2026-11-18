@@ -256,7 +256,8 @@ fieldset{border:0;margin:0;padding:0;min-width:0}
 
 /* ---------- Footer ---------- */
 footer{padding-top:clamp(80px,9vw,128px);border-top:1px solid var(--rule-d)}
-.fgrid{display:grid;grid-template-columns:1.3fr repeat(4,1fr);gap:40px;padding-bottom:64px}
+.fgrid{display:grid;grid-template-columns:1.3fr repeat(5,1fr);gap:36px;padding-bottom:64px}
+.fgrid ul + h4{margin-top:36px}
 .fgrid .tag{font-family:var(--display);font-weight:500;font-size:clamp(28px,2.6vw,38px);line-height:1.1}
 .fgrid .tag em{color:var(--gold)}
 .fgrid .sub{color:var(--muted-d);margin-top:16px;font-size:15px;max-width:22em}
@@ -664,3 +665,24 @@ html:has(dialog.claim[open]){overflow:hidden}
 .news > div{flex:1 1 420px}
 /* GoHighLevel hides an inline form until it reports ready; keep it visible so the box is never blank */
 .nl-card iframe{display:block!important;position:static!important;width:100%;border:0;opacity:1!important;visibility:visible!important;pointer-events:auto!important}
+
+/* ---------- Financing (Acorn Finance) ---------- */
+.fin{background:var(--stone)}
+.fin-in{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(32px,5vw,80px);align-items:center}
+.fin-copy h2{margin:0 0 24px;font-size:clamp(40px,5vw,72px)}
+.fin-copy h2 em{color:var(--brass)}
+.fin-copy p{color:var(--muted);max-width:32em;margin:0 0 28px}
+.fin-card{display:flex;flex-direction:column;align-items:center;gap:22px;padding:clamp(32px,4vw,56px);background:#fff;border:1px solid var(--rule);border-top:3px solid var(--gold);text-align:center;transition:box-shadow .25s,transform .25s}
+.fin-card:hover{box-shadow:0 18px 40px -24px rgba(27,25,21,.45);transform:translateY(-2px)}
+.fin-card .mono{color:var(--brass)}
+.fin-card img{width:min(260px,70%);height:auto}
+.fin-card .go{color:var(--ink);font-size:15px;border-bottom:1px solid var(--gold);padding-bottom:2px}
+.fin-fine{margin:clamp(32px,4vw,48px) 0 0;padding-top:20px;border-top:1px solid var(--rule);color:var(--muted);font-size:13px;line-height:1.6;max-width:72em}
+@media (max-width:860px){.fin-in{grid-template-columns:1fr}}
+
+/* ---------- Services menu: four groups ---------- */
+@media (min-width:1141px){
+  .menu .dd.svc{position:static}
+  .dd-panel.two.four{grid-template-columns:repeat(4,minmax(0,1fr));min-width:0;top:100%;left:50%;width:min(1040px,calc(100vw - 48px));margin-left:calc(min(1040px,calc(100vw - 48px)) / -2)}
+  .dd-panel.two.four::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:44px}
+}
