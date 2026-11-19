@@ -900,3 +900,14 @@ html.menu-open .music{display:none}
   .music:hover{background:none}
 }
 @media (prefers-reduced-motion:reduce){.music.on .mi svg{animation:none}}
+
+/* ---------- 24/7 phone line tags ---------- */
+.b247{display:inline-flex;align-items:center;gap:5px;margin-left:2px;padding:4px 7px 4px 6px;border-radius:3px;background:var(--gold);color:var(--night);font:600 10.5px/1 var(--body);letter-spacing:.06em;white-space:nowrap}
+.b247::before{content:"";width:6px;height:6px;border-radius:50%;background:#2f9e5b;box-shadow:0 0 0 0 rgba(47,158,91,.6);animation:m-live 2s infinite}
+@keyframes m-live{0%{box-shadow:0 0 0 0 rgba(47,158,91,.6)}70%{box-shadow:0 0 0 6px rgba(47,158,91,0)}100%{box-shadow:0 0 0 0 rgba(47,158,91,0)}}
+.btn-brass .b247,.mbar .f-cta .b247{background:var(--night);color:var(--gold)}
+.b247.sm{padding:3px 6px;font-size:10px;vertical-align:middle}
+.n247{margin:12px 0 0;font-size:14.5px;line-height:1.5;color:inherit;opacity:.85;max-width:30em}
+.n247 .b247{margin:0 6px 0 0;vertical-align:1px}
+@media (max-width:640px){.mbar .f-call .b247{padding:4px 6px}}
+@media (prefers-reduced-motion:reduce){.b247::before{animation:none}}

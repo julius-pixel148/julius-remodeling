@@ -200,3 +200,28 @@ var CONFIG = {
   if (pref === "on") play();                       // chose music before: try to continue right away
   else if (pref !== "off" && START_ON_FIRST_TAP) waitForTap();
 })();
+
+/* ===== 24/7 phone line: label every Call button and explain the AI receptionist =====
+   To remove the labels, set PHONE_247 to false. */
+(function(){
+  var PHONE_247 = true;
+  var NOTE = "Answered 24/7 by our AI receptionist. It can answer your questions and take down your project details any time, day or night, and our team follows up.";
+  if (!PHONE_247) return;
+  var tip = "Answered 24/7 by our AI receptionist";
+  // Small "24/7" tag on the Call buttons (hero, contact, bottom bar)
+  document.querySelectorAll("a.btn[data-tel], .mbar .f-call").forEach(function(a){
+    var s = document.createElement("span"); s.className = "b247"; s.textContent = "24/7"; s.title = tip;
+    a.appendChild(s); a.setAttribute("title", tip);
+  });
+  // A line under the phone number on the contact card
+  document.querySelectorAll(".card .v[data-tel]").forEach(function(v){
+    var p = document.createElement("p"); p.className = "n247";
+    p.innerHTML = '<span class="b247">24/7</span> ' + NOTE;
+    v.parentNode.appendChild(p);
+  });
+  // Footer: "24/7" after the phone number
+  document.querySelectorAll("footer li > a[data-tel]").forEach(function(a){
+    var s = document.createElement("span"); s.className = "b247 sm"; s.textContent = "24/7"; s.title = tip;
+    a.parentNode.appendChild(document.createTextNode(" ")); a.parentNode.appendChild(s);
+  });
+})();
