@@ -851,10 +851,10 @@ a.vend-card:hover{background:#fff}
 .rv.in.frame.photo img,.rv.in .frame.photo img,.rv.in.ph img,.rv.in .ba-pair img,.rv.in figure img{clip-path:inset(0);transform:none}
 /* Hover: photos zoom gently, cards lift */
 .proj .frame.photo img,.gal figure img,.refresh-ba img,.ba-pair img{transition:transform .9s cubic-bezier(.2,.7,.2,1)}
-.proj:hover .frame.photo img,.refresh-ba figure:hover img,.ba-pair figure:hover img{transform:scale(1.05)}
+@media (hover:hover){.proj:hover .frame.photo img,.refresh-ba figure:hover img,.ba-pair figure:hover img{transform:scale(1.05)}
 .card,.goal,.area-card,.vend-card,.promo-card,.opt{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,background .25s}
 .card:hover,.area-card:hover,.vend-card:hover,.promo-card:hover,.opt:hover{transform:translateY(-6px);box-shadow:0 22px 44px -26px rgba(14,13,11,.45)}
-.btn:hover .ar{transform:translateX(5px)}
+.btn:hover .ar{transform:translateX(5px)}}
 /* Phone call button gently pulses to draw the eye */
 @keyframes m-pulse{0%{box-shadow:0 0 0 0 rgba(201,168,94,.55)}70%{box-shadow:0 0 0 14px rgba(201,168,94,0)}100%{box-shadow:0 0 0 0 rgba(201,168,94,0)}}
 .mbar .f-cta{animation:m-pulse 2.6s 3s infinite}
@@ -863,3 +863,22 @@ a.vend-card:hover{background:#fff}
   .rv,.rv img{opacity:1!important;transform:none!important;clip-path:none!important}
   .card:hover,.area-card:hover,.vend-card:hover,.promo-card:hover,.opt:hover,.proj:hover .frame.photo img{transform:none}
 }
+
+/* ---------- Background music button (added by site.js) ---------- */
+.music{position:fixed;left:clamp(16px,2vw,28px);bottom:clamp(16px,2vw,28px);z-index:59;display:inline-flex;align-items:center;gap:12px;height:50px;padding:0 20px 0 18px;border-radius:25px;background:rgba(14,13,11,.9);color:var(--ivory);border:1px solid var(--gold);font:500 12px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.28);transition:background .2s,transform .2s}
+.music:hover{background:#000;transform:translateY(-2px)}
+.music:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.music .eq{display:flex;align-items:flex-end;gap:3px;height:16px;width:21px}
+.music .eq i{display:block;width:3px;height:4px;background:var(--gold);border-radius:1px;transition:height .3s}
+.music .x{display:none}
+.music.on .eq i{animation:m-eq .8s ease-in-out infinite alternate}
+.music.on .eq i:nth-child(2){animation-delay:-.3s}.music.on .eq i:nth-child(3){animation-delay:-.55s}.music.on .eq i:nth-child(4){animation-delay:-.15s}
+@keyframes m-eq{0%{height:3px}100%{height:16px}}
+.music-tip{position:absolute;left:0;bottom:calc(100% + 10px);white-space:nowrap;padding:9px 12px;background:var(--gold);color:var(--night);border-radius:3px;font-size:11px;letter-spacing:.1em;opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s;pointer-events:none}
+.music.tip .music-tip{opacity:1;transform:none}
+@media (max-width:640px){
+  .music{left:12px;bottom:calc(76px + env(safe-area-inset-bottom));height:46px;width:46px;padding:0;justify-content:center;border-radius:50%}
+  .music .music-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+}
+html.menu-open .music{display:none}
+@media (prefers-reduced-motion:reduce){.music.on .eq i{animation:none;height:10px}}
