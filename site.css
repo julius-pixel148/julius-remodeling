@@ -882,3 +882,21 @@ a.vend-card:hover{background:#fff}
 }
 html.menu-open .music{display:none}
 @media (prefers-reduced-motion:reduce){.music.on .eq i{animation:none;height:10px}}
+/* Music button icon: gold app-style tile with a music note (slash through it when muted) */
+.music{padding-left:6px}
+.music .eq{display:none}
+.music .mi{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:linear-gradient(145deg,#f0dba6 0%,#d6b874 45%,#a9873f 100%);color:var(--night);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 2px 6px rgba(0,0,0,.35);flex:none}
+.music .mi svg{display:block;transform-origin:50% 60%}
+.music .sl{transition:opacity .25s;opacity:1}
+.music .nt{transition:opacity .25s}
+.music:not(.on) .nt{opacity:.75}
+.music.on .sl{opacity:0}
+.music.on .mi svg{animation:m-note 1.2s ease-in-out infinite}
+@keyframes m-note{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-1.5px) rotate(-6deg)}75%{transform:translateY(-1.5px) rotate(6deg)}}
+@media (max-width:640px){
+  .music{width:50px;height:50px;padding:0;border-radius:14px;background:none;border:0;box-shadow:0 10px 26px rgba(0,0,0,.35)}
+  .music .mi{width:50px;height:50px;border-radius:14px}
+  .music .mi svg{width:31px;height:31px}
+  .music:hover{background:none}
+}
+@media (prefers-reduced-motion:reduce){.music.on .mi svg{animation:none}}
