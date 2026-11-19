@@ -112,7 +112,7 @@ var CONFIG = {
     });
   }, {rootMargin: "0px 0px -8% 0px", threshold: 0.08});
   document.querySelectorAll(sel).forEach(function(el){
-    if (el.closest(".hero, .page-top, .rv") || el.getBoundingClientRect().top < fold) return; // leave what's already on screen alone
+    if (el.closest(".hero, .page-top, .rv, .upg, .gw-terms") || el.getBoundingClientRect().top < fold) return; // leave what's already on screen alone
     // Items in the same row come in one after another
     var i = 0, s = el.previousElementSibling;
     while (s && i < 6) { if (s.className === el.className) i++; else break; s = s.previousElementSibling; }
@@ -224,4 +224,96 @@ var CONFIG = {
     var s = document.createElement("span"); s.className = "b247 sm"; s.textContent = "24/7"; s.title = tip;
     a.parentNode.appendChild(document.createTextNode(" ")); a.parentNode.appendChild(s);
   });
+})();
+
+/* ===== Monthly giveaway: days left, and the "Refer a friend" pop-up ===== */
+(function(){
+  var gw = document.querySelector(".gw[data-ends]");
+  if (gw) {
+    var end = new Date(gw.getAttribute("data-ends")), left = gw.querySelector(".gw-left");
+    var days = Math.ceil((end - new Date()) / 864e5);
+    if (left) {
+      if (isNaN(days)) {}
+      else if (days <= 0) { left.textContent = "This giveaway has ended"; gw.classList.add("ended"); left.hidden = false; }
+      else { left.textContent = days === 1 ? "Last day" : days + " days left"; left.hidden = false; }
+    }
+  }
+  var dlg = document.getElementById("refer");
+  if (!dlg || !dlg.showModal) return;
+  document.querySelectorAll("[data-refer]").forEach(function(b){
+    b.addEventListener("click", function(e){
+      e.preventDefault(); dlg.showModal();
+      var f = dlg.querySelector("iframe[data-src]"); // GoHighLevel referral form, if one is connected
+      if (f) { f.src = f.getAttribute("data-src"); f.removeAttribute("data-src"); var s = document.createElement("script"); s.src = "https://link.msgsndr.com/js/form_embed.js"; document.body.appendChild(s); }
+    });
+  });
+  dlg.querySelector(".x").addEventListener("click", function(){ dlg.close(); });
+  dlg.addEventListener("click", function(e){ if (e.target === dlg) dlg.close(); });
+  // Built-in referral form: opens the visitor's email app with everything filled in
+  var form = dlg.querySelector(".ref-form");
+  if (!form) return;
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var err = form.querySelector(".ref-err"), note = form.querySelector(".ref-note");
+    if (!form.checkValidity()) { err.hidden = false; var bad = form.querySelector(":invalid"); if (bad) bad.focus(); return; }
+    err.hidden = true;
+    var lines = [];
+    form.querySelectorAll("input:not([type=checkbox]), select").forEach(function(el){ lines.push(el.name + ": " + (el.value || "-")); });
+    lines.push("Friend agreed to be contacted: Yes");
+    var to = CONFIG.email || "", subject = "Referral: " + (form.querySelector("#rf-fname").value || "new customer");
+    var body = "New referral from the website giveaway page.\n\n" + lines.join("\n");
+    window.location.href = "mailto:" + to + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    note.innerHTML = "Your email app should open with the referral ready. Just press <b>Send</b>. Nothing opened? Call or text us at <a href=\"tel:" + (CONFIG.phone || "").replace(/[^\d+]/g, "") + "\">" + CONFIG.phone + "</a> or email <a href=\"mailto:" + to + "\">" + to + "</a>.";
+    note.hidden = false;
+  });
+})();
+
+/* ===== Bathroom upgrades: pick the ones you like, then send them with the consultation request ===== */
+(function(){
+  var cards = document.querySelectorAll(".upg[data-upg]");
+  if (!cards.length) return;
+  var sec = document.querySelector(".upgs"), kind = sec.getAttribute("data-kind") || "Bathroom";
+  var KEY = "jr-upgrades-" + kind.toLowerCase(), picked = [];
+  try { picked = JSON.parse(sessionStorage.getItem(KEY) || "[]"); } catch(e){}
+  var list = document.querySelector(".upg-list"), sends = document.querySelectorAll(".upg-send");
+  function names(){ return picked.map(function(id){ var c = document.querySelector('.upg[data-upg="' + id + '"]'); return c ? c.getAttribute("data-name") : null; }).filter(Boolean); }
+  function update(){
+    cards.forEach(function(c){
+      var on = picked.indexOf(c.getAttribute("data-upg")) > -1, b = c.querySelector(".upg-pick");
+      c.classList.toggle("on", on); b.setAttribute("aria-pressed", on ? "true" : "false");
+      b.querySelector(".t").textContent = on ? sec.getAttribute("data-picked") : sec.getAttribute("data-pick");
+    });
+    var n = names();
+    if (list) list.innerHTML = n.length ? n.length + " selected: " + n.map(function(t){ return '<span class="chipx">' + t.replace(/&/g, "&amp;").replace(/</g, "&lt;") + "</span>"; }).join("") : sec.getAttribute("data-none");
+    var href = n.length ? "consultation.html?type=" + kind + "&upgrades=" + encodeURIComponent(n.join("; ")) : "consultation.html";
+    sends.forEach(function(a){ a.href = href; var t = a.firstChild; if (t && t.nodeType === 3) t.nodeValue = n.length ? sec.getAttribute("data-send") + " " : "Book a free consultation "; });
+    try { sessionStorage.setItem(KEY, JSON.stringify(picked)); } catch(e){}
+  }
+  cards.forEach(function(c){
+    c.querySelector(".upg-pick").addEventListener("click", function(){
+      var id = c.getAttribute("data-upg"), i = picked.indexOf(id);
+      if (i > -1) picked.splice(i, 1); else picked.push(id);
+      update();
+    });
+  });
+  update();
+})();
+
+/* ===== Consultation page: show the upgrades picked on the bathroom page and pass them to the form =====
+   In GoHighLevel, give a form field the query key "upgrades" and it fills in automatically. */
+(function(){
+  var q, type; try { var sp = new URLSearchParams(location.search); q = sp.get("upgrades"); type = (sp.get("type") || "Bathroom").replace(/[^A-Za-z ]/g, ""); } catch(e){ return; }
+  var frame = document.querySelector(".form-card iframe");
+  if (!q || !frame) return;
+  var items = q.split(/;\s*/).filter(Boolean);
+  var box = document.createElement("div"); box.className = "upg-box";
+  box.innerHTML = '<span class="mono">' + type + ' upgrades you\'re interested in</span><ul></ul><p>Please mention these in the message box below so we can prepare for your consultation.</p><button type="button">Copy list</button>';
+  var ul = box.querySelector("ul");
+  items.forEach(function(t){ var li = document.createElement("li"); li.textContent = t; ul.appendChild(li); });
+  box.querySelector("button").addEventListener("click", function(){
+    var b = this, text = type + " upgrades I'm interested in: " + items.join(", ");
+    try { navigator.clipboard.writeText(text).then(function(){ b.textContent = "Copied"; setTimeout(function(){ b.textContent = "Copy list"; }, 1600); }); } catch(e){}
+  });
+  frame.parentNode.insertBefore(box, frame);
+  try { var u = new URL(frame.src); u.searchParams.set("upgrades", type + ": " + items.join(", ")); frame.src = u.toString(); } catch(e){}
 })();

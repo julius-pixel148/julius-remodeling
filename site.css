@@ -911,3 +911,202 @@ html.menu-open .music{display:none}
 .n247 .b247{margin:0 6px 0 0;vertical-align:1px}
 @media (max-width:640px){.mbar .f-call .b247{padding:4px 6px}}
 @media (prefers-reduced-motion:reduce){.b247::before{animation:none}}
+
+/* ---------- Monthly giveaway (Specials page) ---------- */
+.gw{background:var(--paper);padding-top:clamp(64px,7vw,110px)}
+.gw-head{max-width:880px;margin:0 auto clamp(40px,5vw,64px);text-align:center;display:flex;flex-direction:column;align-items:center;gap:20px}
+.gw-label{display:inline-flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px}
+.gw-label .mono{padding:8px 12px;border:1px solid var(--brass);color:var(--brass);border-radius:2px}
+.gw-label .gw-left{background:var(--night);border-color:var(--night);color:var(--gold)}
+.gw-gift-ico{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--night)}
+.gw-head h2{font-size:clamp(40px,5.2vw,76px)}
+.gw-head h2 em{color:var(--brass);display:block}
+.gw-head .lede{color:var(--muted);font-size:clamp(17px,1.4vw,20px);max-width:36em}
+.gw-ways{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:clamp(48px,6vw,88px)}
+.gw-way{position:relative;padding:clamp(26px,3vw,40px);background:var(--night);color:var(--ivory);border-top:3px solid var(--gold);display:flex;flex-direction:column;gap:12px;overflow:hidden}
+.gw-way .mono{color:var(--gold)}
+.gw-way b{font:500 clamp(48px,5.4vw,78px)/.95 var(--display);letter-spacing:-.01em;color:var(--gold)}
+.gw-way b em{font-style:normal;color:var(--ivory)}
+.gw-way h3{font-size:clamp(26px,2.4vw,34px)}
+.gw-way ul{margin:6px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+.gw-way li{position:relative;padding-left:22px;color:var(--muted-d);font-size:15.5px}
+.gw-way li::before{content:"";position:absolute;left:0;top:.62em;width:10px;height:1px;background:var(--gold)}
+.gw-choose{display:flex;align-items:center;gap:18px;margin-bottom:22px}
+.gw-choose::after{content:"";flex:1;height:1px;background:var(--rule)}
+.gw-choose .mono{color:var(--brass)}
+.gw-gifts{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2vw,28px)}
+.gw-gift{display:flex;flex-direction:column;background:#fbf9f4;border:1px solid var(--rule);overflow:hidden;transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s}
+.gw-media{position:relative;margin:0;aspect-ratio:16/10;overflow:hidden;background:var(--night)}
+.gw-media img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.gw-art{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;color:#fff;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.gw-art span{font:500 clamp(28px,3vw,42px)/1 var(--display);letter-spacing:.01em;text-align:center;padding:0 20px}
+.gw-gta .gw-media{background:radial-gradient(120% 90% at 80% 100%,#ff9d5c 0%,rgba(255,157,92,0) 55%),radial-gradient(90% 80% at 10% 0%,#7b3fb8 0%,rgba(123,63,184,0) 60%),linear-gradient(180deg,#2a1640 0%,#c8487a 70%,#f5a25d 100%)}
+.gw-gta .gw-art svg{color:#fff3e4;filter:drop-shadow(0 6px 18px rgba(0,0,0,.35))}
+.gw-act .gw-media{background:radial-gradient(70% 70% at 50% 50%,rgba(0,229,255,.25) 0%,rgba(0,229,255,0) 70%),linear-gradient(135deg,#07101f 0%,#0b1d3a 50%,#2a0b3d 100%)}
+.gw-act .gw-media::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(0,229,255,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(255,64,214,.16) 1px,transparent 1px);background-size:28px 28px;mask:linear-gradient(180deg,transparent,#000 40%,#000 70%,transparent)}
+.gw-act .gw-art svg{color:#7ff3ff;filter:drop-shadow(0 0 14px rgba(0,229,255,.8))}
+.gw-act .gw-art span{text-shadow:0 0 18px rgba(255,64,214,.7)}
+.gw-no{position:absolute;left:14px;top:14px;padding:7px 10px;background:var(--gold);color:var(--night)}
+.gw-body{display:flex;flex-direction:column;gap:12px;padding:clamp(24px,2.6vw,36px);flex:1}
+.gw-body > .mono{color:var(--brass)}
+.gw-body h3{font-size:clamp(30px,2.8vw,40px)}
+.gw-body p{color:var(--muted)}
+.gw-foot{margin-top:auto;padding-top:18px;border-top:1px solid var(--rule);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px 18px}
+.gw-foot a{font-size:15px;color:var(--ink);border-bottom:1px solid var(--brass);padding-bottom:2px}
+.gw-foot a:hover{color:var(--brass)}
+.gw-foot .mono{color:var(--muted)}
+@media (hover:hover){
+  .gw-gift:hover{transform:translateY(-6px);box-shadow:0 30px 60px -34px rgba(14,13,11,.55)}
+  .gw-gift:hover .gw-media img,.gw-gift:hover .gw-art{transform:scale(1.06)}
+}
+.gw-cta{margin-top:clamp(40px,5vw,72px);display:grid;grid-template-columns:minmax(0,1.2fr) auto;gap:24px 48px;align-items:center;padding:clamp(28px,3.6vw,52px);background:var(--night);color:var(--ivory)}
+.gw-cta h3{font-size:clamp(34px,3.6vw,52px);margin-bottom:10px}
+.gw-cta h3 em{color:var(--gold)}
+.gw-cta p{color:var(--muted-d);max-width:34em}
+.gw-cta .acts{display:flex;flex-wrap:wrap;gap:12px}
+.gw-terms{margin-top:28px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.gw-terms summary{display:flex;justify-content:space-between;padding:18px 0;font:500 12px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);grid-template-columns:none}
+.gw-terms summary::after{content:"+";font-size:18px;line-height:1}
+.gw-terms[open] summary::after{content:"–"}
+.gw-terms ul{margin:0 0 22px;padding-left:18px;display:grid;gap:6px;font-size:14px;color:var(--muted);max-width:60em}
+.gw.ended .gw-cta,.gw.ended .gw-ways{opacity:.55}
+@media (max-width:820px){.gw-ways,.gw-gifts,.gw-cta{grid-template-columns:1fr}}
+/* Referral pop-up */
+dialog.refer .ref-form{display:flex;flex-direction:column;gap:22px;background:#fff;padding:8px 26px 26px}
+.ref-form fieldset{display:grid;gap:18px}
+.ref-form legend{color:var(--brass);margin-bottom:14px}
+.ref-form .two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.ref-form label span{text-transform:none;letter-spacing:0;color:var(--muted)}
+.ref-form select{font:400 17px var(--body);color:var(--ink);background:transparent;border:0;border-bottom:1px solid rgba(27,25,21,.25);padding:8px 0 12px;border-radius:0;width:100%}
+.ref-form .nl-check{font-size:14.5px}
+.ref-err{color:#a3321f;font-size:14.5px}
+.ref-note{padding:14px 16px;background:var(--stone);font-size:14.5px;border-left:3px solid var(--gold)}
+.ref-note a{text-decoration:underline}
+@media (max-width:520px){.ref-form .two{grid-template-columns:1fr}}
+
+/* ---------- Bathroom upgrades (bathroom page) ---------- */
+.upgs{background:var(--paper-2)}
+.upg-sub{font:italic 500 clamp(24px,2.2vw,30px)/1.2 var(--display);color:var(--ink);margin-bottom:12px}
+.upg-build{display:flex;flex-wrap:wrap;align-items:center;gap:10px 24px;padding:18px 22px;margin-bottom:22px;background:var(--night);color:var(--ivory);border-left:3px solid var(--gold)}
+.upg-build .mono{color:var(--gold)}
+.upg-build p{color:var(--muted-d);font-size:15.5px}
+.upg-build b{color:var(--ivory);font-weight:500}
+.upg-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.upg{position:relative;display:flex;flex-direction:column;background:#fbf9f4;border:1px solid var(--rule);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .25s}
+.upg.on{border-color:var(--brass);box-shadow:0 0 0 2px var(--gold)}
+.upg-media{margin:0;aspect-ratio:4/3;overflow:hidden;background:var(--night)}
+.upg-media img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.upg-ico{display:grid;place-items:center;color:var(--gold);background:radial-gradient(80% 80% at 70% 20%,#2b261d 0%,#121110 70%)}
+.upg-ico svg{width:34%;height:auto;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.upg-body{display:flex;flex-direction:column;gap:10px;padding:20px 20px 22px;flex:1}
+.upg-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.upg-top .mono{color:var(--muted);font-size:10.5px}
+.upg-top .upg-opt{color:var(--brass)}
+.upg h3{font-size:clamp(22px,1.7vw,26px);line-height:1.1}
+.upg-body > p{color:var(--muted);font-size:15px}
+.upg details{border-top:1px solid var(--rule)}
+.upg details summary{display:flex;justify-content:space-between;align-items:center;padding:12px 0 4px;font:500 11.5px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+.upg details summary::after{content:"+";font-size:17px;color:var(--brass)}
+.upg details[open] summary::after{content:"–"}
+.upg details p{font-size:14.5px;color:var(--muted);padding:6px 0 2px}
+.upg-acts{margin-top:auto;padding-top:12px;display:flex;flex-direction:column;gap:10px}
+.upg-pick{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:13px 14px;border:1px solid var(--ink);background:transparent;color:var(--ink);font:500 12px var(--body);letter-spacing:.12em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:background .2s,color .2s,border-color .2s}
+.upg-pick .ck{width:14px;height:14px;border:1px solid currentColor;border-radius:2px;position:relative;flex:none}
+.upg-pick[aria-pressed="true"]{background:var(--ink);color:var(--gold);border-color:var(--ink)}
+.upg-pick[aria-pressed="true"] .ck{background:var(--gold);border-color:var(--gold)}
+.upg-pick[aria-pressed="true"] .ck::after{content:"";position:absolute;left:4px;top:1px;width:4px;height:8px;border:solid var(--night);border-width:0 2px 2px 0;transform:rotate(45deg)}
+.upg-ask{font-size:14px;color:var(--brass);text-align:center}
+.upg-ask:hover{text-decoration:underline}
+@media (hover:hover){
+  .upg:hover{transform:translateY(-5px);box-shadow:0 26px 50px -30px rgba(14,13,11,.5)}
+  .upg.on:hover{box-shadow:0 0 0 2px var(--gold),0 26px 50px -30px rgba(14,13,11,.5)}
+  .upg:hover .upg-media img{transform:scale(1.06)}
+  .upg:hover .upg-ico svg{transform:scale(1.1)}
+  .upg-pick:hover{border-color:var(--brass)}
+}
+.upg-fine{margin-top:18px;font-size:13.5px;color:var(--muted);max-width:60em}
+.upg-sum{position:sticky;bottom:16px;z-index:5;margin-top:22px}
+.upg-sum-in{display:flex;justify-content:space-between;align-items:center;gap:16px 28px;flex-wrap:wrap;padding:18px 22px;background:#fff;border:1px solid var(--rule);border-top:3px solid var(--gold);box-shadow:0 20px 40px -26px rgba(14,13,11,.45)}
+.upg-sum .mono{color:var(--brass)}
+.upg-list{font-size:15.5px;margin-top:4px}
+.upg-list .chipx{display:inline-block;margin:4px 6px 0 0;padding:5px 10px;background:var(--stone);border-radius:2px;font-size:13.5px}
+.upg-cta{margin-top:clamp(48px,6vw,80px);display:grid;grid-template-columns:minmax(0,1.2fr) auto;gap:24px 48px;align-items:center;padding:clamp(28px,3.6vw,52px);background:var(--night);color:var(--ivory)}
+.upg-cta h3{font-size:clamp(32px,3.4vw,48px);margin-bottom:10px}
+.upg-cta h3 em{color:var(--gold)}
+.upg-cta p{color:var(--muted-d);max-width:34em}
+.upg-cta .acts{display:flex;flex-wrap:wrap;gap:12px}
+@media (max-width:1180px){.upg-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:820px){.upg-cta{grid-template-columns:1fr}}
+@media (max-width:640px){.upg-grid{grid-template-columns:1fr}.upg-sum{position:static}}
+/* Consultation page: the upgrades someone picked on the bathroom page */
+.upg-box{margin:0 0 18px;padding:18px 20px;background:#fff;border:1px solid var(--rule);border-top:3px solid var(--gold)}
+.upg-box .mono{color:var(--brass)}
+.upg-box ul{margin:8px 0 10px;padding-left:18px;font-size:15.5px}
+.upg-box p{font-size:14px;color:var(--muted)}
+.upg-box button{margin-top:10px;font:500 11.5px var(--body);letter-spacing:.12em;text-transform:uppercase;padding:10px 14px;border:1px solid var(--ink);background:none;cursor:pointer;border-radius:2px}
+
+/* fixes: button elements styled like links; stacked upgrade CTA; tag row */
+button.btn{font-family:var(--body)}
+button.btn-line{background:transparent}
+.upg-cta{grid-template-columns:1fr}
+.upg-cta h3{max-width:18em}
+.upg-top{flex-direction:column;gap:3px}
+
+/* Kitchen upgrades: 3 + 2 layout, and the feature list inside "More details" */
+.upg-grid.five{grid-template-columns:repeat(6,minmax(0,1fr))}
+.upg-grid.five .upg{grid-column:span 2}
+.upg-grid.five .upg:nth-child(4),.upg-grid.five .upg:nth-child(5){grid-column:span 3}
+.upg-grid.five .upg:nth-child(n+4) .upg-media{aspect-ratio:16/9}
+.upg details ul{margin:6px 0 4px;padding-left:18px;font-size:14.5px;color:var(--muted);display:grid;gap:3px}
+.upg details ul + p{padding-top:6px;font-size:13.5px}
+@media (max-width:1180px){.upg-grid.five{grid-template-columns:repeat(2,minmax(0,1fr))}.upg-grid.five .upg,.upg-grid.five .upg:nth-child(4),.upg-grid.five .upg:nth-child(5){grid-column:auto}.upg-grid.five .upg:nth-child(5){grid-column:1/-1}.upg-grid.five .upg:nth-child(n+4) .upg-media{aspect-ratio:4/3}.upg-grid.five .upg:nth-child(5) .upg-media{aspect-ratio:16/7}}
+@media (max-width:640px){.upg-grid.five{grid-template-columns:1fr}.upg-grid.five .upg:nth-child(5) .upg-media{aspect-ratio:4/3}}
+
+.gw-cr{position:absolute;right:10px;bottom:8px;font-size:10.5px;letter-spacing:.04em;color:rgba(255,255,255,.75);text-shadow:0 1px 3px rgba(0,0,0,.8)}
+.gw-act .gw-media:has(img)::before{content:none}
+/* "OR" badge between the two gifts */
+.gw-choose b{color:var(--ink);font-weight:600}
+.gw-gifts{position:relative}
+.gw-gifts[data-or]::after{content:attr(data-or);position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;display:grid;place-items:center;width:58px;height:58px;border-radius:50%;background:var(--night);color:var(--gold);border:2px solid var(--gold);font:italic 500 24px/1 var(--display);box-shadow:0 10px 24px -8px rgba(0,0,0,.5);pointer-events:none}
+.gw-cr{right:auto;left:12px}
+
+/* ---------- Specials page: make the giveaway and the booking rewards stand out ---------- */
+.sp-jump{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:clamp(28px,3.6vw,44px);max-width:980px}
+.sp-tile{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px;padding:22px 24px 20px;border:1px solid var(--gold);border-radius:3px;color:var(--ivory);transition:transform .3s,box-shadow .3s}
+.sp-tile .mono{color:var(--gold)}
+.sp-tile b{font:500 clamp(34px,3.6vw,50px)/1 var(--display);color:var(--gold)}
+.sp-tile .t{font-size:15px;color:var(--ivory);opacity:.9}
+.sp-tile .t i{font-family:var(--display);color:var(--gold);padding:0 2px}
+.sp-tile .go{margin-top:8px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.sp-gw{background:linear-gradient(135deg,rgba(214,184,116,.22),rgba(214,184,116,.04) 60%),#15120d}
+.sp-rw{background:linear-gradient(135deg,#e9d29b,#d6b874 55%,#c4a15a);color:var(--night);border-color:#e9d29b}
+.sp-rw .mono,.sp-rw b,.sp-rw .go{color:var(--night)}
+.sp-rw .t{color:var(--night)}
+.sp-tile::after,.rw .promo-card::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-18deg);animation:m-shine 5s 1.5s infinite;pointer-events:none}
+.rw .promo-card:nth-child(2)::after{animation-delay:3.5s}
+@keyframes m-shine{0%{left:-60%}22%,100%{left:130%}}
+@media (hover:hover){.sp-tile:hover{transform:translateY(-4px);box-shadow:0 20px 40px -22px rgba(0,0,0,.7)}}
+@media (max-width:640px){.sp-jump{grid-template-columns:1fr}}
+
+/* Giveaway section: warm gold glow behind it, a glowing gift icon, gold-edged gift cards */
+.gw{background:radial-gradient(60% 40% at 50% 0%,rgba(214,184,116,.35),rgba(214,184,116,0) 70%),radial-gradient(50% 40% at 100% 60%,rgba(214,184,116,.16),rgba(214,184,116,0) 70%),var(--paper);border-bottom:1px solid var(--rule)}
+.gw-gift-ico{width:42px;height:42px;animation:m-glow 2.6s ease-in-out infinite}
+.gw-gift-ico svg{width:20px;height:20px}
+@keyframes m-glow{0%,100%{box-shadow:0 0 0 0 rgba(214,184,116,.6)}50%{box-shadow:0 0 0 10px rgba(214,184,116,0)}}
+.gw-gift{border:1px solid rgba(125,95,39,.35);box-shadow:0 30px 60px -40px rgba(14,13,11,.55)}
+@media (hover:hover){.gw-gift:hover{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 30px 60px -30px rgba(14,13,11,.6)}}
+
+/* Booking rewards: gold ticket-style cards with a ribbon */
+.rw{background:var(--paper-2)}
+.rw-head{max-width:760px;margin-bottom:clamp(36px,4.5vw,60px)}
+.rw-head h2{font-size:clamp(40px,5vw,72px);margin:6px 0 16px}
+.rw-head h2 em{color:var(--brass)}
+.rw-head .lede{color:var(--muted);font-size:clamp(17px,1.4vw,19px)}
+.rw .promo-card{position:relative;overflow:hidden;border-top:0;border:1px solid var(--gold);background:radial-gradient(90% 70% at 100% 0%,rgba(214,184,116,.28),rgba(214,184,116,0) 60%),var(--night);padding-top:clamp(48px,5vw,68px)}
+.rw .promo-card b{color:var(--gold);font-size:clamp(72px,8.4vw,128px);text-shadow:0 6px 30px rgba(214,184,116,.25)}
+.rw-rib{position:absolute;left:0;top:0;padding:9px 16px;background:linear-gradient(90deg,#e9d29b,#c4a15a);color:var(--night);font:600 11px var(--body);letter-spacing:.16em;text-transform:uppercase}
+.rw .promo-card .go{display:inline-flex;align-self:flex-start;padding:12px 18px;background:var(--gold);color:var(--night);font-weight:500;letter-spacing:.1em;text-transform:uppercase;font-size:12.5px;border-radius:2px}
+@media (prefers-reduced-motion:reduce){.sp-tile::after,.rw .promo-card::after,.gw-gift-ico{animation:none}}
+/* Booking rewards intro: easy to read on the beige background */
+.rw-head .lede{color:var(--ink);font-size:clamp(19px,1.7vw,23px);line-height:1.55;padding-left:18px;border-left:3px solid var(--gold)}
+.rw-head .lede b{color:var(--brass);font-weight:600}

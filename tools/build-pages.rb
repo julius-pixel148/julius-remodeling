@@ -524,6 +524,178 @@ BATH_EXTRA = <<~HTML
   </section>
 
 HTML
+# ---------------------------------------------------------------- bathroom page: "Upgrade Your Bathroom Experience"
+# Edit, replace, or add upgrades here. Each one becomes a card on the bathroom page.
+#   img:  a photo in assets/photos (only photos you own or have a license for). nil = a gold icon tile is shown instead.
+#   icon: the icon used when there is no photo (fan, heat, mirror, toilet, bench, niche, paper, panel).
+# Never put prices here: pricing depends on the product, existing conditions, and the project.
+BATH_UPGRADES = [
+  { id: "smart-fan", name: "Smart exhaust fan with LED light & Bluetooth speaker", tag: "Technology", icon: "fan", img: ["upg-bath-fan.jpg", 380, 311, "Ceiling exhaust fan with a glowing LED ring and a Bluetooth symbol"],
+    p: "A multifunction exhaust fan that clears steam and adds built-in LED lighting, Bluetooth audio, and modern controls.",
+    more: "We size the fan for your room so it moves enough air to protect paint and drywall from moisture, and vent it to the outside. Lighting, speaker, and control options vary by model, and we help you choose one that fits the ceiling and your wiring." },
+  { id: "floating-bench", name: "Floating shower bench", tag: "Shower", icon: "bench", img: ["upg-bath-bench.jpg", 376, 311, "Floating stone shower bench with warm LED light underneath"],
+    p: "A clean, modern bench built into the shower wall for comfort, shaving, and a spa-like look.",
+    more: "The bench is framed into the wall structure, waterproofed with the rest of the shower, and tiled to match. We plan its height, depth, and position with you during design." },
+  { id: "led-niche", name: "LED shower shampoo niche", tag: "Shower", icon: "niche", img: ["upg-bath-niche.jpg", 380, 311, "Recessed shower niche with LED accent lighting beside a rain shower head"],
+    p: "A recessed niche for shampoo and soap, with optional waterproof-rated LED accent lighting.",
+    more: "Niches are framed between the studs and fully waterproofed. With lighting, we use fixtures rated for wet locations, installed and wired by a licensed electrician." },
+  { id: "heated-floors", name: "Heated bathroom floors", tag: "Comfort", icon: "heat", img: ["upg-bath-heated.jpg", 372, 311, "Bathroom floor showing radiant heating lines under the tile and a wall thermostat set to 72 degrees"],
+    p: "Warm, comfortable floors from an electric radiant heating system under the tile, with a programmable thermostat.",
+    more: "The heating mat goes down under the tile and connects to a thermostat you can set to warm the floor before you wake up. We check the electrical circuit and plan the layout around the vanity, toilet, and tub." },
+  { id: "led-mirror", name: "LED bathroom mirror", tag: "Vanity", icon: "mirror", img: ["upg-bath-mirror.jpg", 380, 314, "Large backlit LED mirror with a touch button above a vanity"],
+    p: "A modern mirror with built-in lighting and touch controls, with optional anti-fog.",
+    more: "LED mirrors are hard-wired behind the mirror for a clean look with no visible cords. Features like anti-fog, dimming, and color temperature depend on the model you choose." },
+  { id: "wallpaper", name: "Designer wallpaper", tag: "Design", icon: "paper", img: ["upg-bath-wallpaper.jpg", 376, 314, "Bathroom accent wall with large tropical leaf designer wallpaper"],
+    p: "A one-of-a-kind accent wall with decorative wallpaper, including moisture-resistant options made for bathrooms.",
+    more: "We help you choose a wallpaper suited to bathroom humidity, prepare and prime the wall, and pair it with good ventilation so it lasts." },
+  { id: "wall-panels", name: "Decorative wall panels & custom wall designs", tag: "Design", icon: "panel", img: ["upg-bath-panels.jpg", 380, 314, "Fluted wood wall panels with LED lighting beside marble-look tile"],
+    p: "Modern wall panels, fluted designs, textured finishes, and custom accent walls, using materials made for bathrooms.",
+    more: "From fluted panels behind the vanity to a mosaic stripe in the shower, we design the accent with you and choose materials rated for the moisture in each area." },
+  { id: "smart-toilet", name: "Smart toilet & electronic bidet seat", tag: "Technology", icon: "toilet", img: ["upg-bath-toilet.jpg", 372, 314, "Smart toilet with an electronic bidet seat, soft night light, and a wall remote"],
+    p: "Comfort and hygiene with an electronic bidet seat or smart toilet. Available options include heated seating, adjustable water temperature, self-cleaning, and remote controls.",
+    more: "Most electronic bidet seats need an outlet near the toilet, which we add during the remodel. Features vary by model, and we help you compare options before ordering." },
+]
+
+BATH_ICONS = {
+  "fan"    => %(<circle cx="24" cy="24" r="17"/><circle cx="24" cy="24" r="3"/><path d="M24 21c-1-5 0-9 4-10 3 3 1 7-4 10zM27 25c5-1 9 0 10 4-3 3-7 1-10-4zM21 27c1 5 0 9-4 10-3-3-1-7 4-10zM21 23c-5 1-9 0-10-4 3-3 7-1 10 4z"/>),
+  "bench"  => %(<path d="M8 8v32M8 22h26v5H8"/><path d="M14 27v4M28 27v4"/>),
+  "niche"  => %(<rect x="11" y="8" width="26" height="32" rx="1"/><path d="M11 24h26"/><path d="M17 24v-7h4v7M25 24v-9h4v9"/>),
+  "heat"   => %(<path d="M6 38h36"/><path d="M14 31c-3-4 3-6 0-10s3-6 0-10M24 31c-3-4 3-6 0-10s3-6 0-10M34 31c-3-4 3-6 0-10s3-6 0-10"/>),
+  "mirror" => %(<rect x="12" y="6" width="24" height="32" rx="12"/><rect x="15.5" y="9.5" width="17" height="25" rx="8.5" stroke-dasharray="2 3"/><path d="M18 43h12"/>),
+  "paper"  => %(<rect x="10" y="6" width="28" height="36"/><path d="M18 12c3 3 0 6 3 9s0 6 3 9M28 12c3 3 0 6 3 9s0 6 3 9M10 16c3 2 0 5 3 7"/>),
+  "panel"  => %(<path d="M10 6v36M17 6v36M24 6v36M31 6v36M38 6v36"/>),
+  "toilet" => %(<path d="M14 8h14v12H14zM10 20h26c0 8-6 12-12 12h-2c-6 0-12-4-12-12zM18 32l-2 10h14l-2-10"/><path d="M33 13h5"/>),
+}
+
+def bath_upgrade_icon(name)
+  %(<svg viewBox="0 0 48 48" width="64" height="64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">#{UPGRADE_ICONS.fetch(name)}</svg>)
+end
+
+# ---------------------------------------------------------------- kitchen page: "Upgrade Your Kitchen Experience"
+# Same design and picker as the bathroom upgrades. Edit, replace, or add upgrades here.
+#   img:  [file in assets/photos, width, height, alt] for a photo you own or have a license for. nil = gold icon tile.
+#   list: the feature bullets shown when "More details" is opened.
+KITCHEN_UPGRADES = [
+  { id: "under-cabinet-led", name: "Under-cabinet LED lighting", tag: "Lighting", icon: "ucled", img: ["upg-kit-led.jpg", 488, 330, "Warm LED strip lighting under dark upper cabinets over a marble backsplash"],
+    p: "Modern LED lighting under the upper cabinets that lights up your countertops for cooking and prep.",
+    list: ["Continuous LED strip lighting", "Warm, neutral, or adjustable color", "Dimmable controls", "Wiring hidden in aluminum LED channels", "Smart lighting options"] },
+  { id: "pop-up-outlets", name: "Pop-up countertop outlets & wireless charging", tag: "Power", icon: "popup", img: ["upg-kit-popup.jpg", 520, 330, "Pop-up countertop outlet with USB ports raised from a stone countertop, next to a phone on a wireless charging pad"],
+    p: "Outlets that rise out of the countertop when you need them and retract flush when you don't.",
+    list: ["Retractable countertop power outlets", "Built-in USB-A and USB-C charging", "Wireless phone charging pads", "Modern flush-mounted designs", "Concealed electrical connections"],
+    note: "We only install products listed for countertop installation, wired by a licensed electrician to the electrical code." },
+  { id: "make-up-air", name: "Make-up air system for high-capacity range hoods", tag: "Ventilation", icon: "mua", img: ["upg-kit-mua.jpg", 506, 330, "Stainless range hood over a steaming pot, with a make-up air unit and duct bringing in fresh air"],
+    p: "A powerful range hood pushes a lot of air out of the house. A make-up air system brings fresh outdoor air back in to replace it, so the hood works properly.",
+    list: ["Make-up air for range hoods over 400 CFM, where required by code", "Fresh outdoor air supply", "Turns on automatically with the range hood", "Optional tempered (heated) make-up air", "Airflow balanced for proper ventilation"],
+    note: "Code requirements depend on your hood and your city. We size the system to your hood and handle the permit." },
+  { id: "pot-filler", name: "Pot filler faucet above the stove", tag: "Plumbing", icon: "potfill", img: ["upg-kit-potfiller.jpg", 636, 320, "Brushed gold wall-mounted pot filler faucet filling a stock pot on a gas cooktop"],
+    p: "A wall-mounted faucet right above the cooktop, so you can fill big pots where you cook.",
+    list: ["Fill large pots without carrying them from the sink", "Wall-mounted, folding faucet arm", "Brushed nickel, chrome, matte black, or brushed gold", "Water right where you cook", "Plumbing hidden in the wall"],
+    note: "We run a new water line inside the wall to the cooktop, installed and inspected under our license." },
+  { id: "waterfall", name: "Waterfall countertops", tag: "Countertops", icon: "waterfall", img: ["upg-kit-waterfall.jpg", 886, 320, "Kitchen island with a marble-look waterfall countertop running down the side"],
+    p: "The countertop continues straight down the side of the island or peninsula for a dramatic, modern centerpiece.",
+    list: ["Countertop runs vertically down the island side", "Quartz, porcelain, or natural stone", "Slab patterns and veining matched at the corner", "Custom fabrication and professional installation", "One-sided or two-sided waterfall"] },
+]
+
+UPGRADE_ICONS = BATH_ICONS.merge(
+  "ucled"     => %(<rect x="6" y="8" width="36" height="12" rx="1"/><path d="M6 20h36"/><path d="M12 24l-3 8M20 24l-1 8M28 24l1 8M36 24l3 8"/><path d="M4 40h40"/>),
+  "popup"     => %(<path d="M4 34h40"/><rect x="17" y="10" width="14" height="24" rx="2"/><path d="M21 16v4M27 16v4M22 26h4"/><path d="M24 4v3M20 5l1 2M28 5l-1 2"/>),
+  "mua"       => %(<path d="M17 6h14v8l8 10H9l8-10z"/><path d="M9 24h30"/><path d="M14 30c3 2 3 5 0 7M24 30c3 2 3 5 0 7M34 30c3 2 3 5 0 7"/><path d="M40 12h5M43 9l2 3-2 3"/>),
+  "potfill"   => %(<path d="M6 8v8h18v6"/><path d="M6 12h4"/><path d="M24 26v4"/><path d="M12 30h24v8a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4z"/><path d="M8 32h4M36 32h4"/>),
+  "waterfall" => %(<path d="M6 14h36v26"/><path d="M6 14v5h31v21h5"/><path d="M14 19l6 21M24 19l4 12"/>),
+)
+
+# Builds one upgrades section. Used by the bathroom and kitchen pages.
+def upgrade_section(o)
+  cards = o[:items].each_with_index.map { |u, i|
+    media = if u[:img]
+      f, w, h, alt = u[:img]
+      %(<figure class="upg-media"><img src="assets/photos/#{f}" width="#{w}" height="#{h}" loading="lazy" alt="#{alt}"></figure>)
+    else
+      %(<figure class="upg-media upg-ico">#{bath_upgrade_icon(u[:icon])}</figure>)
+    end
+    more = u[:list] ? %(<ul>#{u[:list].map { |t| "<li>#{t}</li>" }.join}</ul>#{u[:note] ? "<p>#{u[:note]}</p>" : ""}) : %(<p>#{u[:more]}</p>)
+    q = "consultation.html?type=#{o[:type]}&amp;upgrades=" + u[:name].gsub("&", "and").gsub(" ", "+")
+    <<~CARD.chomp
+      <article class="upg" data-upg="#{u[:id]}" data-name="#{u[:name]}">
+                #{media}
+                <div class="upg-body">
+                  <div class="upg-top"><span class="mono">#{format('%02d', i + 1)} · #{u[:tag]}</span><span class="upg-opt mono">Optional upgrade</span></div>
+                  <h3>#{u[:name].gsub(" & ", " &amp; ")}</h3>
+                  <p>#{u[:p]}</p>
+                  <details><summary>More details</summary>#{more}</details>
+                  <div class="upg-acts">
+                    <button type="button" class="upg-pick" aria-pressed="false"><span class="ck" aria-hidden="true"></span><span class="t">#{o[:pick]}</span></button>
+                    <a class="upg-ask" href="#{q}">Ask about this upgrade <span aria-hidden="true">→</span></a>
+                  </div>
+                </div>
+              </article>
+    CARD
+  }.join("\n          ")
+  <<~HTML
+    <!-- #{o[:type].upcase} UPGRADES -->
+    <section class="sheet sec upgs" id="upgrades" aria-labelledby="upg-t" data-kind="#{o[:type]}" data-pick="#{o[:pick]}" data-picked="#{o[:picked]}" data-send="#{o[:send]}" data-none="#{o[:none]}">
+      <div class="wrap">
+        <div class="head">
+          <div><p class="eyebrow">Optional upgrades</p><h2 id="upg-t">#{o[:h2]}</h2></div>
+          <div>
+            <p class="upg-sub">#{o[:sub]}</p>
+            <p>#{o[:intro]}</p>
+          </div>
+        </div>
+        <div class="upg-build">
+          <span class="mono">#{o[:build_t]}</span>
+          <p>Tap <b>#{o[:pick]}</b> on the upgrades you like. We'll send your picks with your free consultation request.</p>
+        </div>
+        <div class="upg-grid#{o[:items].size == 5 ? " five" : ""}">
+          #{cards}
+        </div>
+        <p class="upg-fine">These are optional upgrades, not part of a standard #{o[:type].downcase} remodel. Pricing depends on the products you choose, the existing conditions, and your project. Photos show example designs. Features vary by product and model. Electrical, plumbing, and ventilation work is installed to the applicable building codes, with permits where required.</p>
+        <div class="upg-sum" aria-live="polite">
+          <div class="upg-sum-in">
+            <div><span class="mono">#{o[:sum_t]}</span><p class="upg-list">#{o[:none]}</p></div>
+            <a class="btn btn-brass upg-send" href="consultation.html">Book a free consultation <span class="ar" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div class="upg-cta">
+          <div>
+            <h3>#{o[:cta_h]}</h3>
+            <p>#{o[:cta_p]}</p>
+          </div>
+          <div class="acts">
+            <a href="consultation.html" class="btn btn-brass upg-send">Book a free consultation <span class="ar" aria-hidden="true">→</span></a>
+            <a href="#{o[:cta2_href]}" class="btn btn-line">#{o[:cta2]}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  HTML
+end
+
+def bath_upgrades_html
+  upgrade_section(type: "Bathroom", items: BATH_UPGRADES,
+    h2: "Upgrade your <em>bathroom experience.</em>", sub: "More than a bathroom. Your personal retreat.",
+    intro: "Turn an everyday bathroom into a comfortable, modern, and luxurious space with upgrades that combine technology, function, and beautiful design.",
+    build_t: "Build your bathroom experience", sum_t: "Your bathroom experience",
+    pick: "Add to my bathroom", picked: "Added to my bathroom", send: "Send my picks with a free consultation",
+    none: "No upgrades selected yet. Tap <b>Add to my bathroom</b> on any card.",
+    cta_h: "Your bathroom. Your style. <em>Your experience.</em>",
+    cta_p: "From heated floors and smart technology to custom shower features and decorative finishes, we'll help you create a bathroom designed around your lifestyle.",
+    cta2: "Explore your bathroom upgrades", cta2_href: "#upg-t")
+end
+
+def kitchen_upgrades_html
+  upgrade_section(type: "Kitchen", items: KITCHEN_UPGRADES,
+    h2: "Upgrade your <em>kitchen experience.</em>", sub: "Smarter features. Better function. Beautiful design.",
+    intro: "Turn an everyday kitchen into a modern, functional, and luxurious space with upgrades that combine convenience, technology, and custom design.",
+    build_t: "Build your dream kitchen", sum_t: "Your kitchen wishlist",
+    pick: "Add to my kitchen wishlist", picked: "Added to my wishlist", send: "Get a consultation for my kitchen upgrades",
+    none: "Nothing on your wishlist yet. Tap <b>Add to my kitchen wishlist</b> on any card.",
+    cta_h: "Your kitchen. Your style. <em>Your experience.</em>",
+    cta_p: "From smart lighting and hidden charging to custom countertops and professional-grade ventilation, discover the upgrades that make your kitchen more beautiful, comfortable, and functional.",
+    cta2: "Explore kitchen remodeling services", cta2_href: "#incl-t")
+end
+
 QUOTES = {
   rebecca: ["What I appreciate most is their patience and professionalism. No matter how many questions I had, Noam always took the time to explain and never rushed the process. They’re always on site when they say they will be, take full responsibility for every detail, and truly stand behind their work. You can feel the integrity.", "Rebecca T.", "Seattle, WA"],
   david:   ["From the first meeting to the final walkthrough, you can tell Julius Remodeling Group runs as a true team. The designers, builders, and project managers all communicate smoothly. Everyone cares about the end result and it shows. Our home turned out even better than we imagined.", "David L.", "Mercer Island, WA"],
@@ -545,7 +717,7 @@ PAGES = [
     lede: "From repainting the cabinets you have to a fully custom kitchen: countertops, islands, sinks, plumbing, electrical, windows, and flooring for homes, condos, and apartments across Seattle and the Eastside, built by one team under one license.",
     tags: ["Cabinet repainting", "Semi-custom &amp; custom cabinets", "Countertops", "Islands", "Plumbing &amp; electrical", "Windows &amp; flooring"],
     photo: "kitchen-1",
-    extra: KITCHEN_BA,
+    extra: KITCHEN_BA + kitchen_upgrades_html,
     incl_h: "Everything the kitchen needs, <em>under one roof.</em>",
     incl_p: "From layout to the last outlet cover, one team plans and builds the whole kitchen. Choose any part, or all of it.",
     incl: [
@@ -635,7 +807,7 @@ PAGES = [
       },
     },
     gallery: ["bath-wetroom", "bath-1", "bath-dark-shower", "bath-dark-vanity", "bath-guest", "bath-dark-glass", "bath-gray-bench", "bath-white", "bath-subway", "bath-clay", "bath-warm", "bath-2", "bath-freestanding", "bath-tub", "bath-marble", "bath-pebble", "bath-vanity", "bath-shower", "bath-green"],
-    extra: BATH_EXTRA,
+    extra: BATH_EXTRA + bath_upgrades_html,
     quote: :rebecca,
     faq: [
       ["Do you build walk-in showers?", "Yes. Walk-in showers with custom tile, niches, and glass are one of our most requested projects. You can see two of them above."],
@@ -2282,9 +2454,164 @@ def promo_page(pr)
   HTML
 end
 
+# ---------------------------------------------------------------- monthly giveaway (Specials page)
+# UPDATE THIS EVERY MONTH: dates, headline, ways to qualify, gifts, and terms. Then rebuild.
+#   on: false        hides the whole section
+#   ends:            the section shows "X days left" and switches to "has ended" after this moment
+#   image:           a photo in assets/photos/ ONLY if you own it or have permission (official press/media kit, or a
+#                    licensed stock photo). nil = a designed gift tile is shown instead.
+GIVEAWAY = {
+  on: true,
+  month: "November 2026",
+  ends: "2026-11-30T23:59:59-08:00",
+  title: "November giveaways. <em>Your next project comes with a little extra fun.</em>",
+  sub: "Book a project or refer a friend, and get rewarded. For November 2026, choose one gift: Grand Theft Auto V or an Activate gaming experience.",
+  ways: [
+    { k: "Option 1", big: "$10,000<em>+</em>", h: "Book a remodeling project",
+      items: ["Sign a remodeling contract valued over $10,000 during November 2026.", "Choose one of the two gifts below."] },
+    { k: "Option 2", big: "Referrals", h: "Refer a friend · $10K+ project",
+      items: ["Refer a new customer to Julius Remodeling Group.", "When they sign a remodeling contract over $10,000, you get a gift.", "Their project must be over $10,000 before taxes, the same as Option 1.", "Choose one of the two gifts below."] },
+  ],
+  gifts: [
+    { no: "Gift 1", name: "Grand Theft Auto V", by: "Rockstar Games", theme: "gta", image: "assets/photos/giveaway-gta-v.jpg", w: 1106, h: 690, credit: "Image © Rockstar Games", alt: "Grand Theft Auto V cover art on a gold map of Los Santos",
+      desc: "One of the best-selling video games of all time. Explore the huge open world of Los Santos and Blaine County, switch between three main characters, and pull off heists in story mode or online.",
+      link: "https://www.rockstargames.com/gta-v", link_t: "Official Grand Theft Auto V site", note: "Rated M for Mature 17+" },
+    { no: "Gift 2", name: "Activate gaming experience", by: "Activate · Tukwila, WA", theme: "act", image: "assets/photos/giveaway-activate.jpg", w: 1093, h: 683, credit: "Photo © Activate", alt: "Friends throwing glowing balls at targets in a neon-lit Activate game room",
+      desc: "A real-life, interactive game experience for you and your crew. Move through game rooms full of light, sound, and physical challenges that test your speed, strategy, and teamwork.",
+      link: "https://playactivate.com/location/tukwila-seattle", link_t: "Activate Tukwila location", note: "Great for families and friends" },
+  ],
+  terms: [
+    "Promotion valid November 1–30, 2026.",
+    "Remodeling contracts must exceed $10,000 before taxes. This applies to both booked projects and referrals.",
+    "A signed contract is required to qualify.",
+    "Referral gifts are awarded only after the referred customer signs a remodeling contract over $10,000.",
+    "One gift per qualifying contract or successful referral. You choose one: Grand Theft Auto V or the Activate gaming experience, not both.",
+    "Gifts are subject to availability.",
+    "The Grand Theft Auto V platform and Activate experience details will be coordinated with the recipient.",
+    "Grand Theft Auto V is rated M for Mature (17+). Gift recipients must be 18 or older.",
+    "Gifts have no cash redemption value.",
+    "Grand Theft Auto V is a trademark of Take-Two Interactive Software. Activate is a trademark of its owner. Julius Remodeling Group is not affiliated with, sponsored, or endorsed by Rockstar Games, Take-Two Interactive, or Activate.",
+    "Julius Remodeling Group reserves the right to modify or discontinue the promotion, subject to applicable laws and commitments already made.",
+  ],
+}
+# Referral form: set to a GoHighLevel form id to show that form in the pop-up instead.
+# nil = the built-in form, which opens the visitor's email app with the referral filled in, addressed to your email.
+REFERRAL_FORM_ID = nil
+REFERRAL_PROJECTS = ["Kitchen", "Bathroom", "Basement", "Whole-home remodel", "ADU or addition", "Exterior or outdoor", "Other", "Not sure yet"]
+
+GIFT_ART = {
+  "gta" => %(<svg viewBox="0 0 120 80" width="150" height="100" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M30 22h60c10 0 16 8 18 20l3 16c1 8-8 12-14 6l-10-10H33L23 64c-6 6-15 2-14-6l3-16c2-12 8-20 18-20z"/><path d="M36 34v14M29 41h14"/><circle cx="80" cy="36" r="3"/><circle cx="88" cy="44" r="3"/></svg>),
+  "act" => %(<svg viewBox="0 0 120 80" width="150" height="100" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M66 6L38 44h22l-6 30 28-40H60z"/><path d="M18 22l8 4M14 42h9M18 62l8-4M102 22l-8 4M106 42h-9M102 62l-8-4"/></svg>),
+}
+
+def giveaway_section
+  g = GIVEAWAY
+  return "" unless g[:on]
+  ways = g[:ways].map { |w|
+    %(<div class="gw-way"><span class="mono">#{w[:k]}</span><b>#{w[:big]}</b><h3>#{w[:h]}</h3><ul>#{w[:items].map { |t| "<li>#{t}</li>" }.join}</ul></div>)
+  }.join("\n          ")
+  gifts = g[:gifts].map { |x|
+    media = x[:image] ? %(<img src="#{x[:image]}" width="#{x[:w]}" height="#{x[:h]}" loading="lazy" alt="#{x[:alt]}">#{x[:credit] ? %(<span class="gw-cr">#{x[:credit]}</span>) : ""}) : %(<div class="gw-art">#{GIFT_ART[x[:theme]]}<span>#{x[:name]}</span></div>)
+    <<~CARD.chomp
+      <article class="gw-gift gw-#{x[:theme]}">
+                <figure class="gw-media">#{media}<span class="mono gw-no">#{x[:no]}</span></figure>
+                <div class="gw-body">
+                  <span class="mono">#{x[:by]}</span>
+                  <h3>#{x[:name]}</h3>
+                  <p>#{x[:desc]}</p>
+                  <div class="gw-foot"><a href="#{x[:link]}" target="_blank" rel="noopener">#{x[:link_t]} <span aria-hidden="true">↗</span></a><span class="mono">#{x[:note]}</span></div>
+                </div>
+              </article>
+    CARD
+  }.join("\n          ")
+  terms = g[:terms].map { |t| "<li>#{t}</li>" }.join("\n              ")
+  <<~HTML
+    <!-- GIVEAWAY -->
+    <section class="sheet sec gw" id="giveaway" aria-labelledby="gw-t" data-ends="#{g[:ends]}">
+      <div class="wrap">
+        <div class="gw-head">
+          <div class="gw-label"><span class="gw-gift-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v9h14v-9M12 8c-2-4-6-4-6-1s4 1 6 1zM12 8c2-4 6-4 6-1s-4 1-6 1z"/></svg></span><span class="mono">#{g[:month]} · Limited time</span><span class="mono gw-left" hidden></span></div>
+          <h2 id="gw-t">#{g[:title]}</h2>
+          <p class="lede">#{g[:sub]}</p>
+        </div>
+        <div class="gw-ways">
+          #{ways}
+        </div>
+        <div class="gw-choose"><span class="mono">Choose one gift: Gift 1 <b>or</b> Gift 2</span></div>
+        <div class="gw-gifts" data-or="or">
+          #{gifts}
+        </div>
+        <div class="gw-cta">
+          <div>
+            <h3>Ready to get <em>rewarded?</em></h3>
+            <p>Whether you're planning your next remodeling project or know someone who is, Julius Remodeling Group wants to thank you.</p>
+          </div>
+          <div class="acts">
+            <a href="consultation.html" class="btn btn-brass">Book a free consultation <span class="ar" aria-hidden="true">→</span></a>
+            <button type="button" class="btn btn-line" data-refer>Refer a friend</button>
+          </div>
+        </div>
+        <details class="gw-terms">
+          <summary>Terms &amp; conditions</summary>
+          <ul>
+              #{terms}
+          </ul>
+        </details>
+      </div>
+    </section>
+
+  HTML
+end
+
+def referral_dialog
+  return "" unless GIVEAWAY[:on]
+  if REFERRAL_FORM_ID
+    url = "https://api.leadconnectorhq.com/widget/form/#{REFERRAL_FORM_ID}"
+    body = %(<iframe data-src="#{url}" id="inline-#{REFERRAL_FORM_ID}" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-trigger-value="" data-activation-type="alwaysActivated" data-activation-value="" data-deactivation-type="neverDeactivate" data-deactivation-value="" data-form-name="Referral" data-height="760" data-layout-iframe-id="inline-#{REFERRAL_FORM_ID}" data-form-id="#{REFERRAL_FORM_ID}" style="height:760px;min-height:760px" title="Referral form"></iframe>)
+  else
+    opts = REFERRAL_PROJECTS.map { |o| "<option>#{o}</option>" }.join
+    body = <<~FORM.chomp
+      <form class="ref-form" novalidate>
+            <fieldset><legend class="mono">About you</legend>
+              <div class="field"><label for="rf-name">Your name</label><input id="rf-name" name="Your name" autocomplete="name" required></div>
+              <div class="two"><div class="field"><label for="rf-phone">Your phone</label><input id="rf-phone" name="Your phone" type="tel" autocomplete="tel" required></div>
+              <div class="field"><label for="rf-email">Your email</label><input id="rf-email" name="Your email" type="email" autocomplete="email" required></div></div>
+            </fieldset>
+            <fieldset><legend class="mono">Who you're referring</legend>
+              <div class="field"><label for="rf-fname">Their name</label><input id="rf-fname" name="Friend's name" autocomplete="off" required></div>
+              <div class="field"><label for="rf-fcontact">Their phone or email</label><input id="rf-fcontact" name="Friend's phone or email" autocomplete="off" required></div>
+              <div class="field"><label for="rf-proj">Project type <span>(optional)</span></label><select id="rf-proj" name="Project type"><option value="">Choose one</option>#{opts}</select></div>
+            </fieldset>
+            <label class="nl-check"><input type="checkbox" name="consent" required><span>I confirm that the person I'm referring has agreed to be contacted by Julius Remodeling Group about their project.</span></label>
+            <p class="ref-err" role="alert" hidden>Please fill in the required fields and check the box.</p>
+            <button type="submit" class="btn btn-ink">Send my referral <span class="ar" aria-hidden="true">→</span></button>
+            <p class="ref-note" role="status" hidden></p>
+            <p class="nl-fine">We'll only use this information to contact your friend about their project and to send your gift. See our <a href="privacy-policy.html">Privacy Policy</a>.</p>
+          </form>
+    FORM
+  end
+  <<~HTML
+    <dialog class="claim refer" id="refer" aria-labelledby="refer-t">
+      <div class="hd">
+        <div><span class="mono">#{GIVEAWAY[:month]} giveaway</span><h2 id="refer-t">Refer a friend</h2></div>
+        <button type="button" class="x" aria-label="Close">×</button>
+      </div>
+      #{body}
+    </dialog>
+  HTML
+end
+
+# Two tiles at the top of the Specials page: one for the monthly giveaway, one for the booking rewards
+def specials_jump
+  best = PROMOS.map { |pr| pr[:amount].delete("$,").to_i }.max
+  gw = GIVEAWAY[:on] ? %(<a class="sp-tile sp-gw" href="#giveaway"><span class="mono">#{GIVEAWAY[:month]} giveaway</span><b>Free gift</b><span class="t">#{GIVEAWAY[:gifts].map { |g| g[:name] }.join(" <i>or</i> ")}</span><span class="go">See the giveaway ↓</span></a>) : ""
+  rw = %(<a class="sp-tile sp-rw" href="#rewards"><span class="mono">Booking rewards</span><b>Up to $#{best.to_s.reverse.scan(/\d{1,3}/).join(",").reverse}</b><span class="t">toward finish materials for your kitchen or bathroom</span><span class="go">See the rewards ↓</span></a>)
+  %(<div class="sp-jump">#{gw}#{rw}</div>)
+end
+
 def promos_hub
   cards = PROMOS.map { |pr|
-    %(<a class="promo-card" href="#{pr[:slug]}.html"><span class="mono">#{pr[:label]}</span><b>#{pr[:amount]}</b><span class="pc-for">toward finish materials</span><p>#{pr[:blurb]}</p><span class="go">See this offer <span aria-hidden="true">→</span></span></a>)
+    %(<a class="promo-card" href="#{pr[:slug]}.html"><span class="rw-rib">Booking reward</span><span class="mono">#{pr[:label]}</span><b>#{pr[:amount]}</b><span class="pc-for">toward finish materials</span><p>#{pr[:blurb]}</p><span class="go">See this offer <span aria-hidden="true">→</span></span></a>)
   }.join("\n          ")
   <<~HTML
     #{head_html("Specials", "Current remodeling specials from Julius Remodeling Group: #{PROMOS.map { |pr| "#{pr[:amount]} toward finish materials for a #{pr[:project]}" }.join(', ')}. Serving Seattle and the Eastside.", promo_ld("Specials", "specials"))}
@@ -2299,11 +2626,17 @@ def promos_hub
         <p class="eyebrow">#{HOLIDAY[:on] ? HOLIDAY[:eyebrow] : "Specials"}</p>
         <h1 id="h1">#{HOLIDAY[:on] ? "Holiday <em>specials.</em>" : "Current <em>specials.</em>"}</h1>
         <p class="lede">#{HOLIDAY[:on] ? HOLIDAY[:hub_lede] + " " : ""}Limited-time offers on remodeling projects across Seattle and the Eastside. Choose an offer to see the details and how to claim it.</p>
+        #{specials_jump}
       </div>
     </section>
 
-    <section class="sheet sec" aria-label="Current offers" style="padding-top:clamp(56px,6vw,96px)">
+    #{giveaway_section}<section class="sheet sec rw" id="rewards" aria-labelledby="rw-t">
       <div class="wrap">
+        <div class="rw-head">
+          <p class="eyebrow">Booking rewards</p>
+          <h2 id="rw-t">Book your remodel. <em>Get rewarded.</em></h2>
+          <p class="lede">Book a kitchen or bathroom remodel and we put <b>real money toward your finish materials</b>: tile, countertops, fixtures, lighting, and more.</p>
+        </div>
         <div class="promo-grid">
           #{cards}
         </div>
@@ -2321,6 +2654,7 @@ def promos_hub
 
     #{footer}
 
+    #{referral_dialog}
     #{tail_html}
   HTML
 end
