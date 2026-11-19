@@ -148,7 +148,7 @@ var CONFIG = {
    the button (never on their first tap), set START_ON_FIRST_TAP to false. */
 (function(){
   var MUSIC_ON = true, START_ON_FIRST_TAP = true, VOLUME = 0.35;
-  var SRC = "assets/music/julius-we-care-for-your-home.mp3";
+  var SRC = "assets/music/julius-build-with-pride.mp3";
   if (!MUSIC_ON || !window.Audio) return;
   function get(k, s){ try { return (s ? sessionStorage : localStorage).getItem(k); } catch(e){ return null; } }
   function put(k, v, s){ try { (s ? sessionStorage : localStorage).setItem(k, v); } catch(e){} }
