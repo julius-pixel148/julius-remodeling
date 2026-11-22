@@ -105,13 +105,57 @@ HOLIDAY = {
   eyebrow: "Black Friday &amp; holiday season",
   hub_lede: "Our Black Friday and holiday season specials are here.",
 }
+# ---------------------------------------------------------------- Thanksgiving theme
+# on: true  = autumn top bar on every page, falling leaves and a "Thankful" section on the home page,
+#             and the holiday specials section in autumn colors.
+# on: false = back to the normal Black Friday look. Change it and rebuild.
+THANKSGIVING = { on: true }
+TG_LEAF = "M0-13C3-10 4-7 3-4 6-6 9-6 12-5 10-2 8 0 5 1 8 3 9 6 9 9 6 9 3 8 1 6 1 9 0 12 0 14-1 12-1 9-1 6-3 8-6 9-9 9-9 6-8 3-5 1-8 0-10-2-12-5-9-6-6-6-3-4-4-7-3-10 0-13Z"
+def tg_leaves
+  leaves = (0...16).map { |i|
+    x = (i * 6.3 + (i.odd? ? 2 : 0)) % 100
+    dur = 11 + (i * 7 % 9)
+    delay = -(i * 1.7 % 14).round(1)
+    size = [0.9, 1.3, 0.7, 1.1, 1.6, 0.8][i % 6]
+    color = ["#c8641e", "#d9a441", "#a8402a", "#e0913a", "#8a3b12", "#d6b874"][i % 6]
+    %(<i style="left:#{x.round(1)}%;animation-duration:#{dur}s;animation-delay:#{delay}s;--s:#{size}"><svg viewBox="-14 -14 28 30" width="26" height="28"><path d="#{TG_LEAF}" fill="#{color}"/><path d="M0 12v6" stroke="#{color}" stroke-width="1.4"/></svg></i>)
+  }.join
+  %(<div class="tg-leaves" aria-hidden="true">#{leaves}</div>)
+end
+def home_thanks_section
+  return "<!-- THANKSGIVING -->\n<!-- /THANKSGIVING -->" unless THANKSGIVING[:on]
+  <<~HTML.chomp
+    <!-- THANKSGIVING -->
+    <section class="tg-thanks" aria-labelledby="tg-t">
+      #{tg_leaves}
+      <svg class="tg-corner" viewBox="-14 -14 28 30" aria-hidden="true"><path d="#{TG_LEAF}" fill="#b4532a"/></svg>
+      <div class="wrap">
+        <figure><img src="assets/photos/team-family.jpg?v=2" width="1274" height="1336" loading="lazy" alt="The Julius Remodeling family and team in matching Julius shirts"><figcaption>From our family to yours.</figcaption></figure>
+        <div>
+          <p class="eyebrow">Happy Thanksgiving</p>
+          <h2 id="tg-t">Thankful for <em>every home we've worked in.</em></h2>
+          <p>This Thanksgiving, we want to say thank you. After more than 1,500 projects across Seattle and the Eastside, we're grateful for every homeowner who trusted us with their home, and for every referral that keeps our small family business growing.</p>
+          <p>Wishing you a warm, happy holiday with the people you love.</p>
+          <p class="sig">The Julius family &amp; team</p>
+          <div class="acts">
+            <a href="specials.html" class="btn btn-rust">See our Black Friday specials <span class="ar" aria-hidden="true">→</span></a>
+            <a href="consultation.html" class="btn btn-line-n">Book a free consultation</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /THANKSGIVING -->
+  HTML
+end
+
 def holiday_max_amount
   PROMOS.max_by { |pr| pr[:amount].delete("^0-9").to_i }[:amount]
 end
 def holiday_bar(current)
   return "" unless HOLIDAY[:on]
   return "" if %w[specials consultation].include?(current.to_s)
-  %(\n      <a class="hbar" href="specials.html"><span class="hb-tag">#{HOLIDAY[:tag]}</span><span class="hb-long">Holiday specials: up to #{holiday_max_amount} toward finish materials for your remodel</span><span class="hb-short">Holiday specials are here</span><span class="hb-go">See the specials <span aria-hidden="true">→</span></span></a>)
+  return %(\n      <a class="hbar tg" href="specials.html"><span class="hb-tag">Happy Thanksgiving</span><span class="hb-long">Grateful for you. Black Friday specials: up to #{holiday_max_amount} toward finish materials</span><span class="hb-short">Black Friday specials are here</span><span class="hb-go">See the specials <span aria-hidden="true">→</span></span></a>) if THANKSGIVING[:on]
+%(\n      <a class="hbar" href="specials.html"><span class="hb-tag">#{HOLIDAY[:tag]}</span><span class="hb-long">Holiday specials: up to #{holiday_max_amount} toward finish materials for your remodel</span><span class="hb-short">Holiday specials are here</span><span class="hb-go">See the specials <span aria-hidden="true">→</span></span></a>)
 end
 HOL_STARS = [[70, 60, 1.0], [210, 300, 0.6], [520, 40, 0.7], [760, 330, 0.9], [980, 90, 1.2], [1130, 260, 0.6], [1250, 140, 0.8], [400, 210, 0.5], [880, 200, 0.5]]
 def home_holiday_section
@@ -124,11 +168,11 @@ def home_holiday_section
   }.join
   <<~HTML.chomp
     <!-- HOLIDAY -->
-    <section class="hol" aria-labelledby="hol-t">
+    <section class="hol#{THANKSGIVING[:on] ? " tg" : ""}" aria-labelledby="hol-t">
       <svg class="hol-stars" viewBox="0 0 1320 380" preserveAspectRatio="xMidYMid slice" aria-hidden="true">#{stars}</svg>
       <div class="wrap hol-in">
         <div class="hol-copy">
-          <p class="hol-tag"><span>#{HOLIDAY[:tag]}</span><span>Holiday season</span></p>
+          <p class="hol-tag"><span>#{HOLIDAY[:tag]}</span><span>#{THANKSGIVING[:on] ? "Thanksgiving week" : "Holiday season"}</span></p>
           <h2 id="hol-t">The season for <em>a new space.</em></h2>
           <p>This holiday season, our specials put real money toward the finish materials for your remodel. Claim one, book your free consultation, and start the new year with the room you've been waiting for.</p>
           <div class="hol-acts"><a href="specials.html" class="btn btn-brass">Explore the specials <span class="ar" aria-hidden="true">→</span></a><a href="consultation.html" class="btn btn-line">Book a free consultation</a></div>
@@ -2841,6 +2885,17 @@ File.write(File.join(ROOT, "about.html"), about_page)
   s = s.sub(%r{<header class="top[^"]*" id="hdr">.*?</header>}m) { header(cur, home: home) }
   s = s.sub(%r{<footer class="dark">.*?</footer>}m) { footer(home: home) }
   if home
+    if s.include?("<!-- THANKSGIVING -->")
+      s = s.sub(%r{<!-- THANKSGIVING -->.*?<!-- /THANKSGIVING -->}m) { home_thanks_section }
+    else
+      s = s.sub("<!-- HOLIDAY -->") { home_thanks_section + "\n\n<!-- HOLIDAY -->" }
+    end
+    s = s.sub(%r{\n  <!-- TG-LEAVES -->.*?<!-- /TG-LEAVES -->}m, "")
+    hero_on = %(<section class="hero dark photo tg" aria-labelledby="h1">\n  <!-- TG-LEAVES -->#{tg_leaves}<!-- /TG-LEAVES -->)
+    hero_off = %(<section class="hero dark photo" aria-labelledby="h1">)
+    s = s.sub(%r{<section class="hero dark photo(?: tg)?" aria-labelledby="h1">}) { THANKSGIVING[:on] ? hero_on : hero_off }
+    eb = THANKSGIVING[:on] ? "Happy Thanksgiving" : "Home remodeling"
+    s = s.sub(%r{<p class="eyebrow">(?:Home remodeling|Happy Thanksgiving) · Seattle &amp; the Eastside</p>}) { %(<p class="eyebrow">#{eb} · Seattle &amp; the Eastside</p>) }
     if s.include?("<!-- HOLIDAY -->")
       s = s.sub(%r{<!-- HOLIDAY -->.*?<!-- /HOLIDAY -->}m) { home_holiday_section }
     else
@@ -2919,3 +2974,17 @@ Dir.glob(File.join(ROOT, "*.html")).sort.each do |path|
   File.write(path, n) if n != t
 end
 puts "photo version #{PHOTO_VERSION} applied"
+
+# Cache-busting: every page loads site.css and site.js with a version that changes whenever the file changes,
+# so browsers never mix a new page with an old saved copy of the styles or scripts.
+require "digest"
+ASSET_VER = {
+  "site.css" => Digest::MD5.file(File.join(ROOT, "site.css")).hexdigest[0, 8],
+  "site.js"  => Digest::MD5.file(File.join(ROOT, "site.js")).hexdigest[0, 8],
+}
+Dir[File.join(ROOT, "*.html")].each do |path|
+  t = File.read(path)
+  n = t.gsub(%r{(href|src)="(site\.(?:css|js))(?:\?v=[0-9a-f]+)?"}) { %(#{$1}="#{$2}?v=#{ASSET_VER[$2]}") }
+  File.write(path, n) if n != t
+end
+puts "site.css/site.js version #{ASSET_VER["site.css"]}/#{ASSET_VER["site.js"]} applied"
