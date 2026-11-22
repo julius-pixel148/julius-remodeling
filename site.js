@@ -159,7 +159,13 @@ var CONFIG = {
   b.type = "button"; b.className = "music";
   b.innerHTML = '<span class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path class="nt" d="M9.2 17.6V7.1l10.3-2.6v10.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path class="nt" d="M9.2 7.1l10.3-2.6v2.9L9.2 10z" fill="currentColor"/><ellipse class="nt" cx="6.6" cy="17.7" rx="2.9" ry="2.3" fill="currentColor"/><ellipse class="nt" cx="16.9" cy="15" rx="2.9" ry="2.3" fill="currentColor"/><line class="sl" x1="3.5" y1="3.5" x2="20.5" y2="20.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></span><span class="music-t">Music</span><span class="music-tip" aria-hidden="true">Tap to mute</span>';
   a.addEventListener("error", function(){ b.remove(); }); // file missing: hide the button
-  document.body.appendChild(b);
+// Sits in the header next to the menu, so it never covers page content
+var hdrWrap = document.querySelector("#hdr > .wrap");
+if (hdrWrap) {
+  var grp = document.createElement("div"); grp.className = "hdr-r";
+  var cta = hdrWrap.querySelector(":scope > .btn"), burger = hdrWrap.querySelector(":scope > .burger");
+  hdrWrap.appendChild(grp); grp.appendChild(b); if (cta) grp.appendChild(cta); if (burger) grp.appendChild(burger);
+} else document.body.appendChild(b);
   function ui(){
     b.classList.toggle("on", playing);
     b.setAttribute("aria-pressed", playing ? "true" : "false");

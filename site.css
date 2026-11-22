@@ -1152,3 +1152,15 @@ button.btn-line{background:transparent}
 @media (max-width:860px){.tg-thanks .wrap{grid-template-columns:1fr}}
 @media (max-width:640px){.tg-leaves i:nth-child(n+9){display:none}}
 @media (prefers-reduced-motion:reduce){.tg-leaves{display:none}}
+
+/* Overlap fixes: music button lives in the header; no falling leaves over the top-section text */
+.hdr-r{display:flex;align-items:center;gap:14px;margin-left:auto;flex:none}
+.top .music{position:relative;left:auto;bottom:auto;width:42px;height:42px;padding:0;border:0;border-radius:11px;background:none;box-shadow:none;justify-content:center;gap:0}
+.top .music:hover{background:none;transform:none}
+.top .music .mi{width:42px;height:42px;border-radius:11px}
+.top .music .mi svg{width:24px;height:24px}
+.top .music .music-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.top .music .music-tip{left:auto;right:0;bottom:auto;top:calc(100% + 10px)}
+html.menu-open .top .music{display:grid}
+.hero.tg .tg-leaves{left:auto;width:100%}
+@media (max-width:860px){.hero.tg .tg-leaves{display:none}}

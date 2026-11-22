@@ -111,9 +111,9 @@ HOLIDAY = {
 # on: false = back to the normal Black Friday look. Change it and rebuild.
 THANKSGIVING = { on: true }
 TG_LEAF = "M0-13C3-10 4-7 3-4 6-6 9-6 12-5 10-2 8 0 5 1 8 3 9 6 9 9 6 9 3 8 1 6 1 9 0 12 0 14-1 12-1 9-1 6-3 8-6 9-9 9-9 6-8 3-5 1-8 0-10-2-12-5-9-6-6-6-3-4-4-7-3-10 0-13Z"
-def tg_leaves
-  leaves = (0...16).map { |i|
-    x = (i * 6.3 + (i.odd? ? 2 : 0)) % 100
+def tg_leaves(from = 0, to = 100, count = 16)
+  leaves = (0...count).map { |i|
+    x = from + ((i * 6.3 + (i.odd? ? 2 : 0)) % 100) * (to - from) / 100.0
     dur = 11 + (i * 7 % 9)
     delay = -(i * 1.7 % 14).round(1)
     size = [0.9, 1.3, 0.7, 1.1, 1.6, 0.8][i % 6]
@@ -2891,7 +2891,7 @@ File.write(File.join(ROOT, "about.html"), about_page)
       s = s.sub("<!-- HOLIDAY -->") { home_thanks_section + "\n\n<!-- HOLIDAY -->" }
     end
     s = s.sub(%r{\n  <!-- TG-LEAVES -->.*?<!-- /TG-LEAVES -->}m, "")
-    hero_on = %(<section class="hero dark photo tg" aria-labelledby="h1">\n  <!-- TG-LEAVES -->#{tg_leaves}<!-- /TG-LEAVES -->)
+    hero_on = %(<section class="hero dark photo tg" aria-labelledby="h1">\n  <!-- TG-LEAVES -->#{tg_leaves(58, 98, 10)}<!-- /TG-LEAVES -->)
     hero_off = %(<section class="hero dark photo" aria-labelledby="h1">)
     s = s.sub(%r{<section class="hero dark photo(?: tg)?" aria-labelledby="h1">}) { THANKSGIVING[:on] ? hero_on : hero_off }
     eb = THANKSGIVING[:on] ? "Happy Thanksgiving" : "Home remodeling"
