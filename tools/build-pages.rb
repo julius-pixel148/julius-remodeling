@@ -344,15 +344,15 @@ end
 # ---------------------------------------------------------------- shared bits
 # Photos shown on the site live in assets/photos/ (web-sized copies). The originals stay in assets/work/, which is not uploaded.
 PHOTOS = {
-  "bath-1"  => { src: "assets/photos/bath-1.jpg", w: 947, h: 1400, tag: "Bathroom", title: "Sage &amp; brass bathroom", sub: "Custom tile, recessed niches, brass fixtures, new vanity",
+  "bath-1"  => { src: "assets/photos/sage-brass-bathroom-remodel.jpg", w: 947, h: 1400, tag: "Bathroom", title: "Sage &amp; brass bathroom", sub: "Custom tile, recessed niches, brass fixtures, new vanity",
                  alt: "Remodeled bathroom with sage subway tile, brass-framed glass shower doors, floral wallpaper, and a white vanity with brass pulls" },
-  "bath-2"  => { src: "assets/photos/bath-2.jpg", w: 768, h: 1024, tag: "Bathroom", title: "Walk-in shower remodel", sub: "Marble-look tile, pebble floor, frameless glass, full waterproofing",
+  "bath-2"  => { src: "assets/photos/walk-in-shower-marble-tile.jpg", w: 768, h: 1024, tag: "Bathroom", title: "Walk-in shower remodel", sub: "Marble-look tile, pebble floor, frameless glass, full waterproofing",
                  alt: "Walk-in shower with large marble-look tile, pebble floor, frameless glass, and matte black fixtures beside a floating vanity" },
-  "kitchen-1" => { src: "assets/photos/kitchen-1.jpg", w: 1320, h: 863, land: true, tag: "Kitchen", title: "Gray shaker &amp; brass kitchen", sub: "Shaker cabinets, quartz counters, farmhouse sink, gas range, LVP flooring",
+  "kitchen-1" => { src: "assets/photos/gray-shaker-kitchen-remodel.jpg", w: 1320, h: 863, land: true, tag: "Kitchen", title: "Gray shaker &amp; brass kitchen", sub: "Shaker cabinets, quartz counters, farmhouse sink, gas range, LVP flooring",
                  alt: "Remodeled kitchen with gray shaker cabinets, brass pulls, white quartz countertops, a farmhouse sink with a brass faucet, and a stainless gas range" },
-  "kitchen-2" => { src: "assets/photos/kitchen-2.jpg", w: 1320, h: 860, land: true, tag: "Kitchen", title: "Peninsula &amp; coffee bar", sub: "Quartz peninsula, open shelving, tile backsplash, recessed lighting",
+  "kitchen-2" => { src: "assets/photos/kitchen-peninsula-coffee-bar.jpg", w: 1320, h: 860, land: true, tag: "Kitchen", title: "Peninsula &amp; coffee bar", sub: "Quartz peninsula, open shelving, tile backsplash, recessed lighting",
                  alt: "Kitchen with a white quartz peninsula and brass pull-down faucet, a built-in coffee bar with floating shelves, and gray shaker cabinets" },
-  "kitchen-3" => { src: "assets/photos/kitchen-3.jpg", w: 1293, h: 875, land: true, tag: "Kitchen", title: "Open-concept kitchen &amp; living", sub: "Open layout, new peninsula, recessed lighting, flooring throughout",
+  "kitchen-3" => { src: "assets/photos/open-concept-kitchen-living-room.jpg", w: 1293, h: 875, land: true, tag: "Kitchen", title: "Open-concept kitchen &amp; living", sub: "Open layout, new peninsula, recessed lighting, flooring throughout",
                  alt: "Open-concept kitchen and living room with gray shaker cabinets, a white peninsula, recessed lights, and gray wood-look flooring" },
   "basement-stairs-gray" => { src: "assets/photos/basement-stairs-gray.jpg", w: 1320, h: 813, land: true, tag: "Basement", title: "Modern basement, open stairs", sub: "Floating wood stairs with a black steel railing, gray accent wall, recessed lighting, patterned carpet",
                  alt: "Finished basement with a gray accent wall, floating light wood stairs with a black horizontal-bar railing, recessed lights, and light patterned carpet" },
@@ -395,33 +395,33 @@ PHOTOS = {
   "laundry" => { src: "assets/photos/laundry.jpg", w: 1290, h: 1900, tag: "Laundry room", title: "Laundry room build-out", sub: "Custom cabinetry, tile backsplash, new lighting and flooring",
                  alt: "Laundry room with stacked washer and dryer, white custom cabinetry with brass pulls, and a burgundy tile backsplash" },
   # --- added November 2026 (files keep their camera names) ---
-  "kitchen-wood" => { src: "assets/photos/IMG_2879.jpg", w: 1320, h: 985, land: true, tag: "Kitchen", title: "Warm wood kitchen with waterfall island", sub: "Flat-panel wood cabinets, quartz waterfall island, open shelving, exposed beams, wood flooring",
+  "kitchen-wood" => { src: "assets/photos/wood-kitchen-waterfall-island.jpg", w: 1320, h: 985, land: true, tag: "Kitchen", title: "Warm wood kitchen with waterfall island", sub: "Flat-panel wood cabinets, quartz waterfall island, open shelving, exposed beams, wood flooring",
                  alt: "Open kitchen with flat-panel natural wood cabinets, a white quartz waterfall island with a black faucet, open shelves, exposed ceiling beams, and light wood flooring" },
-  "kitchen-dark" => { src: "assets/photos/IMG_2906.jpg", w: 1320, h: 865, land: true, tag: "Kitchen", title: "Dark wood &amp; stone kitchen", sub: "Dark wood cabinets, stone waterfall island with seating, pendant lighting, stainless appliances",
+  "kitchen-dark" => { src: "assets/photos/dark-wood-stone-kitchen.jpg", w: 1320, h: 865, land: true, tag: "Kitchen", title: "Dark wood &amp; stone kitchen", sub: "Dark wood cabinets, stone waterfall island with seating, pendant lighting, stainless appliances",
                  alt: "Kitchen with dark wood cabinets, a stone waterfall island with four stools, pendant lights, a stainless refrigerator, and high windows above the cabinets" },
-  "kitchen-dark-2" => { src: "assets/photos/IMG_2907.jpg", w: 1320, h: 865, land: true, tag: "Kitchen", title: "Island seating for four", sub: "Stone island and backsplash, built-in microwave, tall pantry cabinets, high windows",
+  "kitchen-dark-2" => { src: "assets/photos/kitchen-island-seating.jpg", w: 1320, h: 865, land: true, tag: "Kitchen", title: "Island seating for four", sub: "Stone island and backsplash, built-in microwave, tall pantry cabinets, high windows",
                  alt: "Dark wood kitchen seen from the living room, with a stone island and four stools, three pendant lights, a built-in microwave, and a row of high windows" },
-  "kitchen-open" => { src: "assets/photos/IMG_2905.jpg", w: 1320, h: 874, land: true, tag: "Kitchen &amp; living", title: "Open kitchen &amp; living room", sub: "Kitchen open to the living area, stone island, pendant and recessed lighting, wood flooring",
+  "kitchen-open" => { src: "assets/photos/open-kitchen-living-room.jpg", w: 1320, h: 874, land: true, tag: "Kitchen &amp; living", title: "Open kitchen &amp; living room", sub: "Kitchen open to the living area, stone island, pendant and recessed lighting, wood flooring",
                  alt: "Open kitchen and living area with dark wood cabinets, a stone island with stools, pendant lights, recessed lighting, and light wood flooring" },
-  "bath-white" => { src: "assets/photos/IMG_2870.jpg", w: 1320, h: 877, land: true, tag: "Bathroom", title: "Black &amp; white bathroom", sub: "Stacked white tile shower with niche, sliding glass door, vessel sink vanity, matte black fixtures",
+  "bath-white" => { src: "assets/photos/black-white-bathroom-remodel.jpg", w: 1320, h: 877, land: true, tag: "Bathroom", title: "Black &amp; white bathroom", sub: "Stacked white tile shower with niche, sliding glass door, vessel sink vanity, matte black fixtures",
                  alt: "Bathroom with a walk-in shower in stacked white tile, a sliding glass door on a black rail, a white vanity with a vessel sink and black faucet, and gray floor tile" },
-  "bath-shower" => { src: "assets/photos/IMG_2901.jpg", w: 1320, h: 1756, tag: "Bathroom", title: "Large-format tile shower", sub: "Floor-to-ceiling stone-look tile, rain head, body sprays, recessed niche, mosaic floor",
+  "bath-shower" => { src: "assets/photos/large-format-tile-shower.jpg", w: 1320, h: 1756, tag: "Bathroom", title: "Large-format tile shower", sub: "Floor-to-ceiling stone-look tile, rain head, body sprays, recessed niche, mosaic floor",
                  alt: "Walk-in shower with floor-to-ceiling beige stone-look tile, a black rain shower head, body sprays and hand shower, a recessed niche, a window, and a mosaic tile floor" },
-  "bath-warm" => { src: "assets/photos/IMG_2902.jpg", w: 1320, h: 978, land: true, tag: "Bathroom", title: "Warm tile shower bathroom", sub: "Tiled shower with niche and frameless glass, white vanity with quartz top, matte black fixtures",
+  "bath-warm" => { src: "assets/photos/warm-tile-shower-bathroom.jpg", w: 1320, h: 978, land: true, tag: "Bathroom", title: "Warm tile shower bathroom", sub: "Tiled shower with niche and frameless glass, white vanity with quartz top, matte black fixtures",
                  alt: "Bathroom with a shower in warm beige square tile, frameless glass, a mosaic floor, a white vanity with a quartz top, and matte black faucets and hardware" },
-  "bath-green" => { src: "assets/photos/IMG_2904.jpg", w: 1320, h: 972, land: true, tag: "Bathroom", title: "Sage green tub bathroom", sub: "Soaking tub with wood-look tile surround, long quartz vanity, matte black fixtures",
+  "bath-green" => { src: "assets/photos/sage-green-bathroom-soaking-tub.jpg", w: 1320, h: 972, land: true, tag: "Bathroom", title: "Sage green tub bathroom", sub: "Soaking tub with wood-look tile surround, long quartz vanity, matte black fixtures",
                  alt: "Bathroom with sage green walls, a white tub with a wood-look tile surround, a long white quartz vanity with a black faucet, and light floor tile" },
-  "floor-great" => { src: "assets/photos/IMG_2880.jpg", w: 1320, h: 977, land: true, tag: "Flooring", title: "Wood flooring, great room", sub: "Wide-plank wood flooring through the main living area, new baseboards and trim",
+  "floor-great" => { src: "assets/photos/wide-plank-wood-flooring.jpg", w: 1320, h: 977, land: true, tag: "Flooring", title: "Wood flooring, great room", sub: "Wide-plank wood flooring through the main living area, new baseboards and trim",
                  alt: "Large open living room with light wide-plank wood flooring, white walls, recessed lights, and a dark built-in mudroom bench by the door" },
-  "floor-plank" => { src: "assets/photos/IMG_2869.jpg", w: 1320, h: 866, land: true, tag: "Flooring", title: "Wood-look plank flooring", sub: "Gray wood-look plank flooring, new baseboards, closet doors, fresh paint",
+  "floor-plank" => { src: "assets/photos/gray-wood-look-plank-flooring.jpg", w: 1320, h: 866, land: true, tag: "Flooring", title: "Wood-look plank flooring", sub: "Gray wood-look plank flooring, new baseboards, closet doors, fresh paint",
                  alt: "Bedroom with gray wood-look plank flooring, white baseboards and closet doors, and an open door to a tiled bathroom" },
-  "floor-bedroom" => { src: "assets/photos/IMG_2885.jpg", w: 1320, h: 990, land: true, tag: "Flooring", title: "Bedroom wood flooring", sub: "Wide-plank wood flooring, new baseboards, ceiling fan and lighting",
+  "floor-bedroom" => { src: "assets/photos/bedroom-wood-flooring.jpg", w: 1320, h: 990, land: true, tag: "Flooring", title: "Bedroom wood flooring", sub: "Wide-plank wood flooring, new baseboards, ceiling fan and lighting",
                  alt: "Bedroom with light wide-plank wood flooring, white walls, two black-framed windows, and a white ceiling fan" },
-  "door-barn" => { src: "assets/photos/IMG_2881.jpg", w: 1320, h: 982, land: true, tag: "Doors", title: "Sliding barn door", sub: "Black-framed glass barn door on a top rail, new trim, wood flooring",
+  "door-barn" => { src: "assets/photos/glass-sliding-barn-door.jpg", w: 1320, h: 982, land: true, tag: "Doors", title: "Sliding barn door", sub: "Black-framed glass barn door on a top rail, new trim, wood flooring",
                  alt: "Room with a black-framed frosted glass barn door sliding on a top rail, three black-framed windows, a ceiling fan, and light wood flooring" },
-  "door-interior" => { src: "assets/photos/IMG_2886.jpg", w: 1320, h: 988, land: true, tag: "Doors", title: "New interior doors", sub: "Five-panel interior doors, matte black hardware, new casing and baseboards",
+  "door-interior" => { src: "assets/photos/five-panel-interior-doors.jpg", w: 1320, h: 988, land: true, tag: "Doors", title: "New interior doors", sub: "Five-panel interior doors, matte black hardware, new casing and baseboards",
                  alt: "Bedroom with two white five-panel interior doors with matte black handles, white trim, and light wood flooring" },
-  "builtin-mudroom" => { src: "assets/photos/IMG_2882.jpg", w: 1320, h: 987, land: true, tag: "Interior finish", title: "Built-in mudroom bench", sub: "Custom built-in bench and cubbies, arched opening, new trim and baseboards",
+  "builtin-mudroom" => { src: "assets/photos/built-in-mudroom-bench.jpg", w: 1320, h: 987, land: true, tag: "Interior finish", title: "Built-in mudroom bench", sub: "Custom built-in bench and cubbies, arched opening, new trim and baseboards",
                  alt: "Entry with a dark custom built-in mudroom bench and cubbies, an arched opening, and light wood flooring running through to the kitchen" },
   # --- added from the sorted folders in assets/work ---
   "bath-gray-bench" => { src: "assets/photos/bath-gray-bench.jpg", w: 1200, h: 1600, tag: "Bathroom", title: "Walk-in shower with bench", sub: "Gray plank tile, floating bench, pebble mosaic niche, rain head and hand shower",
@@ -1701,7 +1701,7 @@ def page(pg)
     <meta property="og:image" content="assets/logo.jpg">
     <meta name="twitter:card" content="summary">
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"Service","serviceType":"#{service_type}","provider":{"@type":"GeneralContractor","name":"Julius Remodeling Group","telephone":"+1-425-699-9636","url":"https://juliusremodeling.com/"},"areaServed":["Seattle","Bellevue","Mercer Island","Eastside"],"url":"https://juliusremodeling.com/#{pg[:slug]}"}
+    {"@context":"https://schema.org","@type":"Service","serviceType":"#{service_type}","provider":{"@type":"GeneralContractor","@id":"https://www.juliusremodeling.com/#business","name":"Julius Remodeling Group","telephone":"+1-425-699-9636","url":"https://www.juliusremodeling.com/"},"areaServed":#{AREAS.map { |a| %({"@type":"City","name":"#{a[:name]}, WA"}) }.join(",").then { |x| "[#{x}]" }},"url":"https://www.juliusremodeling.com/#{pg[:slug]}"}
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2031,7 +2031,7 @@ def tail_html
   %(<nav class="mbar" aria-label="Quick actions"><a href="tel:" data-tel class="f-call"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg><span>Call <span class="num" data-k="phone">(425) 699-9636</span></span></a><a href="consultation.html" class="f-cta">Free consultation <span aria-hidden="true">→</span></a></nav>\n\n<script src="site.js"></script>\n</body>\n</html>\n)
 end
 
-LD_BUSINESS = ->(area, url) { %({"@context":"https://schema.org","@type":"GeneralContractor","name":"Julius Remodeling Group","image":"https://juliusremodeling.com/assets/logo.jpg","telephone":"+1-425-699-9636","url":"#{url}","address":{"@type":"PostalAddress","streetAddress":"800 Bellevue Way NE, Suite 500","addressLocality":"Bellevue","addressRegion":"WA","postalCode":"98004","addressCountry":"US"},"areaServed":#{area},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.98","ratingCount":"58","bestRating":"5"}}) }
+LD_BUSINESS = ->(area, url) { %({"@context":"https://schema.org","@type":"GeneralContractor","name":"Julius Remodeling Group","image":"https://www.juliusremodeling.com/assets/logo.jpg","telephone":"+1-425-699-9636","url":"#{url}","address":{"@type":"PostalAddress","streetAddress":"800 Bellevue Way NE, Suite 500","addressLocality":"Bellevue","addressRegion":"WA","postalCode":"98004","addressCountry":"US"},"areaServed":#{area},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.98","ratingCount":"58","bestRating":"5"}}) }
 
 # Home page "Services" list: entries 06 onward, one per service group after Remodeling.
 HOME_SVC_BLURBS = {
@@ -2065,7 +2065,7 @@ def city_page(area)
   ].each_with_index.map { |(qq, a), i| %(<details#{i.zero? ? ' open' : ''}><summary><span class="mono">0#{i + 1}</span>#{qq}<span class="pm" aria-hidden="true"></span></summary>\n          <p>#{a}</p></details>) }.join("\n        ")
   title = "Home Remodeling in #{city}, WA"
   meta = "Kitchen, bathroom, basement, and whole-home remodeling in #{city}, WA. Licensed, insured, and bonded general contractor serving #{c[:hoods].first(3).join(', ')}, and all of #{city}."
-  ld = LD_BUSINESS.(%({"@type":"City","name":"#{city}, WA"}), "https://juliusremodeling.com/#{area[:slug]}")
+  ld = LD_BUSINESS.(%({"@type":"City","name":"#{city}, WA"}), "https://www.juliusremodeling.com/#{area[:slug]}")
 
   <<~HTML
     #{head_html(title, meta, ld)}
@@ -2199,7 +2199,7 @@ def areas_hub
     c = CITY_PAGES[a[:slug]]
     %(<a class="area-card" href="#{a[:slug]}.html"><span class="mono">#{c[:hoods].first(3).join(' · ')}</span><b>#{a[:name]}</b><span class="go">Remodeling in #{a[:name]} <span aria-hidden="true">→</span></span></a>)
   }.join("\n      ")
-  ld = LD_BUSINESS.("[" + AREAS.map { |a| %({"@type":"City","name":"#{a[:name]}, WA"}) }.join(",") + "]", "https://juliusremodeling.com/service-areas")
+  ld = LD_BUSINESS.("[" + AREAS.map { |a| %({"@type":"City","name":"#{a[:name]}, WA"}) }.join(",") + "]", "https://www.juliusremodeling.com/service-areas")
   <<~HTML
     #{head_html("Service Areas: Seattle &amp; the Eastside", "Julius Remodeling Group serves Seattle, Bellevue, Mercer Island, Kirkland, Redmond, Sammamish, Issaquah, Bothell, Renton, and Shoreline with kitchen, bathroom, basement, and whole-home remodeling.", ld)}
     <body>
@@ -2263,7 +2263,7 @@ end
 
 def terms_page
   tel = %(<a href="tel:" data-tel data-k="phone">[Phone]</a>)
-  ld = %({"@context":"https://schema.org","@type":"WebPage","name":"Terms and Conditions","url":"https://juliusremodeling.com/terms-and-conditions","publisher":{"@type":"Organization","name":"Julius Remodeling Group"}})
+  ld = %({"@context":"https://schema.org","@type":"WebPage","name":"Terms and Conditions","url":"https://www.juliusremodeling.com/terms-and-conditions","publisher":{"@type":"Organization","name":"Julius Remodeling Group"}})
   <<~HTML
     #{head_html("Terms &amp; Conditions", "Terms and conditions, including SMS terms, for Julius Remodeling Group: how to opt out of text messages, how to get help, message rates, and how your phone number is handled.", ld)}
     <body>
@@ -2314,7 +2314,7 @@ end
 # ---------------------------------------------------------------- privacy policy page
 def privacy_page
   ul = ->(items) { "<ul>" + items.map { |i| "<li>#{i}</li>" }.join + "</ul>" }
-  ld = %({"@context":"https://schema.org","@type":"WebPage","name":"Privacy Policy","url":"https://juliusremodeling.com/privacy-policy","publisher":{"@type":"Organization","name":"Julius Remodeling Group"}})
+  ld = %({"@context":"https://schema.org","@type":"WebPage","name":"Privacy Policy","url":"https://www.juliusremodeling.com/privacy-policy","publisher":{"@type":"Organization","name":"Julius Remodeling Group"}})
   <<~HTML
     #{head_html("Privacy Policy", "How Julius Remodeling Group collects, uses, shares, and protects your information, including phone numbers and text messaging consent.", ld)}
     <body>
@@ -2414,7 +2414,7 @@ PROMOS = [
 PROMO_TIMER = %(<script src="https://widgets.leadconnectorhq.com/cdt/remoteEntry.js" timerId=6af4cf7678a6a6baacefb635 position="left" altText="Countdown Timer" data-v2='true'></script>)
 
 def promo_ld(name, slug)
-  %({"@context":"https://schema.org","@type":"WebPage","name":"#{name}","url":"https://juliusremodeling.com/#{slug}","publisher":{"@type":"Organization","name":"Julius Remodeling Group"}})
+  %({"@context":"https://schema.org","@type":"WebPage","name":"#{name}","url":"https://www.juliusremodeling.com/#{slug}","publisher":{"@type":"Organization","name":"Julius Remodeling Group"}})
 end
 
 def promo_page(pr)
@@ -2746,7 +2746,7 @@ def newsletter_form
 end
 
 def newsletter_page
-  ld = %({"@context":"https://schema.org","@type":"WebPage","name":"Newsletter","url":"https://juliusremodeling.com/newsletter","publisher":{"@type":"Organization","name":"Julius Remodeling Group"}})
+  ld = %({"@context":"https://schema.org","@type":"WebPage","name":"Newsletter","url":"https://www.juliusremodeling.com/newsletter","publisher":{"@type":"Organization","name":"Julius Remodeling Group"}})
   <<~HTML
     #{head_html("Newsletter Sign-Up", "Sign up for the Julius Remodeling Group newsletter: new specials first, recent projects, and before-and-afters from Seattle and the Eastside.", ld)}
     <body>
@@ -2792,7 +2792,7 @@ end
 
 # ---------------------------------------------------------------- about page (about.html)
 def about_page
-  ld = %({"@context":"https://schema.org","@type":"AboutPage","name":"About Julius Remodeling Group","url":"https://juliusremodeling.com/about","publisher":{"@type":"Organization","name":"Julius Remodeling Group"}})
+  ld = %({"@context":"https://schema.org","@type":"AboutPage","name":"About Julius Remodeling Group","url":"https://www.juliusremodeling.com/about","publisher":{"@type":"Organization","name":"Julius Remodeling Group"}})
   goals = [
     ["01", "Vision", "Understand your vision", "We start by listening: what you want, what you need, and how you live in your home."],
     ["02", "Budget", "Work with your budget and schedule", "We plan around the number and the timing that work for you, and we're honest about what fits."],
@@ -2875,7 +2875,7 @@ File.write(File.join(ROOT, "privacy-policy.html"), privacy_page)
 PROMOS.each { |pr| File.write(File.join(ROOT, "#{pr[:slug]}.html"), promo_page(pr)) }
 File.write(File.join(ROOT, "specials.html"), promos_hub)
 # The old address keeps working: promotions.html sends visitors to specials.html (vercel.json also redirects /promotions).
-File.write(File.join(ROOT, "promotions.html"), %(<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<title>Specials · Julius Remodeling Group</title>\n<meta name="robots" content="noindex">\n<link rel="canonical" href="https://juliusremodeling.com/specials">\n<meta http-equiv="refresh" content="0; url=specials.html">\n</head>\n<body>\n<p>This page has moved to <a href="specials.html">Specials</a>.</p>\n</body>\n</html>\n))
+File.write(File.join(ROOT, "promotions.html"), %(<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<title>Specials · Julius Remodeling Group</title>\n<meta name="robots" content="noindex">\n<link rel="canonical" href="https://www.juliusremodeling.com/specials">\n<meta http-equiv="refresh" content="0; url=specials.html">\n</head>\n<body>\n<p>This page has moved to <a href="specials.html">Specials</a>.</p>\n</body>\n</html>\n))
 File.write(File.join(ROOT, "newsletter.html"), newsletter_page)
 File.write(File.join(ROOT, "about.html"), about_page)
 
@@ -2933,7 +2933,7 @@ puts "built #{PAGES.size} service pages, #{AREAS.size} city pages, and service-a
 # sitemap.xml for search engines (the hidden consultation page is left out on purpose)
 urls = [""] + ALL.map { |s| s[:slug] } + ["service-areas"] + AREAS.map { |a| a[:slug] } + ["about", "specials", "newsletter"] + PROMOS.map { |pr| pr[:slug] } + ["terms-and-conditions", "privacy-policy"]
 File.write(File.join(ROOT, "sitemap.xml"), %(<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n) +
-  urls.map { |u| "  <url><loc>https://juliusremodeling.com/#{u}</loc></url>" }.join("\n") + "\n</urlset>\n")
+  urls.map { |u| "  <url><loc>https://www.juliusremodeling.com/#{u}</loc></url>" }.join("\n") + "\n</urlset>\n")
 puts "wrote sitemap.xml (#{urls.size} pages)"
 
 # Google tag (container GTM-PFW84R3L): goes right after <head> on every page, once.
@@ -2974,6 +2974,140 @@ Dir.glob(File.join(ROOT, "*.html")).sort.each do |path|
   File.write(path, n) if n != t
 end
 puts "photo version #{PHOTO_VERSION} applied"
+
+
+# ================================================================ SEO
+# Main keyword for the site: "home remodeling Seattle". Each service page targets "<service> in Seattle".
+# Titles stay under 60 characters and descriptions under 160 so Google shows them in full.
+# To change a page's title or description for search, edit it here (not in the page entry above).
+SITE = "https://www.juliusremodeling.com"
+BRAND = "Julius Remodeling"
+SEO = {
+  "index"                     => ["Home Remodeling Seattle &amp; Bellevue | #{BRAND}", "Home remodeling in Seattle, Bellevue, and the Eastside: kitchens, bathrooms, basements, and whole homes. Family owned, licensed, and bonded. Free consultation."],
+  "kitchen-remodeling"        => ["Kitchen Remodeling in Seattle | #{BRAND}", "Kitchen remodeling in Seattle and the Eastside: cabinets, countertops, islands, plumbing, electrical, and flooring. One licensed team. Free consultation."],
+  "bathroom-remodeling"       => ["Bathroom Remodeling in Seattle | #{BRAND}", "Bathroom remodeling in Seattle and the Eastside: walk-in showers, tub-to-shower conversions, custom tile, waterproofing, and vanities. Free consultation."],
+  "basement-remodeling"       => ["Basement Remodeling in Seattle | #{BRAND}", "Basement remodeling and finishing in Seattle and the Eastside: guest suites, bathrooms, kitchenettes, egress windows, and structural work."],
+  "whole-home-remodeling"     => ["Whole-Home Remodeling Seattle | #{BRAND}", "Whole-home remodeling in Seattle and the Eastside. Several rooms or the whole house, planned as one design, on one schedule and one budget."],
+  "condo-remodeling"          => ["Condo Remodeling in Seattle | #{BRAND}", "Condo and apartment remodeling in Seattle and Bellevue. HOA approvals, insurance certificates, and building rules handled by one licensed team."],
+  "adu-dadu"                  => ["ADU &amp; DADU Builder in Seattle | #{BRAND}", "ADU and DADU builder in Seattle and the Eastside: backyard cottages, attached ADUs, and garage or basement conversions, from permits to move-in."],
+  "second-story-additions"    => ["Second-Story Additions Seattle | #{BRAND}", "Second-story additions in Seattle and the Eastside: engineering, permits, framing, roofing, and finished bedrooms and baths from one licensed contractor."],
+  "home-additions"            => ["Home Additions in Seattle | #{BRAND}", "Home additions in Seattle and the Eastside: room additions, bump-outs, primary suites, and bigger kitchens, designed and built by a licensed contractor."],
+  "new-construction"          => ["New Home Construction Seattle | #{BRAND}", "New home construction in Seattle and the Eastside: custom homes and teardown rebuilds, from permits and site work to the final walkthrough."],
+  "roofing"                   => ["Roof Replacement in Seattle | #{BRAND}", "Roof replacement in Seattle and the Eastside: asphalt shingles, metal roofing, flashing, ventilation, and gutters from a licensed contractor."],
+  "siding"                    => ["Siding Replacement in Seattle | #{BRAND}", "Siding replacement in Seattle and the Eastside: fiber cement, wood, and vinyl siding, house wrap, trim, and exterior paint."],
+  "window-replacement"        => ["Window Replacement in Seattle | #{BRAND}", nil],
+  "decks"                     => ["Deck Builder in Seattle | #{BRAND}", "Deck building and replacement in Seattle and the Eastside: composite and wood decks, stairs, railings, and covered decks by a licensed contractor."],
+  "patios-and-pavers"         => ["Paver Patios in Seattle | #{BRAND}", nil],
+  "concrete-work"             => ["Concrete Contractor in Seattle | #{BRAND}", nil],
+  "driveways"                 => ["Driveway Replacement Seattle | #{BRAND}", "Driveway replacement in Seattle and the Eastside: concrete and paver driveways, removal, base, drainage, and aprons from a licensed contractor."],
+  "foundation-repair"         => ["Foundation Repair in Seattle | #{BRAND}", "Foundation repair in Seattle and the Eastside: cracks, settlement, drainage, and seismic retrofits, engineered and permitted by a licensed contractor."],
+  "landscaping"               => ["Landscaping in Seattle | #{BRAND}", "Landscaping in Seattle and the Eastside: lawns, turf, planting beds, retaining walls, drainage, irrigation, and outdoor lighting."],
+  "fencing"                   => ["Fence Installation in Seattle | #{BRAND}", "Fence installation in Seattle and the Eastside: wood, horizontal, and metal fences and gates, set on concrete posts by a licensed contractor."],
+  "flooring-installation"     => ["Flooring Installation Seattle | #{BRAND}", "Flooring installation in Seattle and the Eastside: hardwood, luxury vinyl plank, and tile, with subfloor prep, transitions, and trim done right."],
+  "interior-finish-carpentry" => ["Finish Carpentry in Seattle | #{BRAND}", "Finish carpentry in Seattle and the Eastside: built-ins, fireplaces, feature walls, fine trim, and painting."],
+  "door-replacement"          => ["Door Replacement in Seattle | #{BRAND}", "Interior, entry, and patio door replacement in Seattle and the Eastside, with hardware, trim, and paint finished by a licensed contractor."],
+  "stairs-and-railings"       => ["Stairs &amp; Railings in Seattle | #{BRAND}", nil],
+  "drywall-repair"            => ["Drywall Repair in Seattle | #{BRAND}", nil],
+  "plumbing"                  => ["Remodel Plumbing in Seattle | #{BRAND}", "Remodel plumbing and repiping in Seattle and the Eastside: fixture moves, whole-house repiping, water heaters, drains, and gas lines, under permit."],
+  "electrical"                => ["Remodel Electrical in Seattle | #{BRAND}", "Remodel electrical in Seattle and the Eastside: panel upgrades, rewiring, lighting, EV chargers, and new circuits by licensed electricians."],
+  "hvac"                      => ["Heat Pumps &amp; HVAC in Seattle | #{BRAND}", "Heat pumps, ductless mini-splits, furnaces, and ductwork in Seattle and the Eastside for remodels, additions, and ADUs, by licensed technicians."],
+  "insulation"                => ["Home Insulation in Seattle | #{BRAND}", "Home insulation in Seattle and the Eastside: attic, wall, crawl space, and basement insulation, air sealing, and vapor barriers."],
+  "service-areas"             => ["Remodeling Service Areas | #{BRAND}", "Home remodeling in Seattle, Bellevue, Mercer Island, Kirkland, Redmond, Sammamish, Issaquah, Bothell, Renton, and Shoreline."],
+  "about"                     => ["About Us: Family Owned, 15+ Years | #{BRAND}", "Julius Remodeling Group is a family-owned remodeling company with 15+ years of experience and 1,500+ projects across Seattle and the Eastside."],
+  "specials"                  => ["Remodeling Specials | #{BRAND}", "Current specials: $1,500 toward finish materials for a bathroom remodel and $1,000 toward a kitchen remodel in Seattle and the Eastside."],
+  "newsletter"                => ["Newsletter Sign-Up | #{BRAND}", nil],
+  "bathroom-remodel-offer"    => ["$1,500 Toward Your Bathroom Remodel | #{BRAND}", "Limited-time offer: $1,500 toward finish materials for your bathroom remodel in Seattle and the Eastside. Book a free consultation."],
+  "kitchen-remodel-offer"     => ["$1,000 Toward Your Kitchen Remodel | #{BRAND}", "Limited-time offer: $1,000 toward finish materials for your kitchen remodel in Seattle and the Eastside. Book a free consultation."],
+  "consultation"              => ["Free Remodeling Consultation | #{BRAND}", nil],
+  "terms-and-conditions"      => ["Terms &amp; Conditions | #{BRAND}", "Terms and conditions for Julius Remodeling Group, including SMS terms: how to opt out of texts, get help, and how your number is handled."],
+  "privacy-policy"            => ["Privacy Policy | #{BRAND}", nil],
+  "404"                       => ["Page Not Found | #{BRAND}", nil],
+}
+AREAS.each do |a|
+  SEO[a[:slug]] = ["Home Remodeling in #{a[:name]}, WA | #{BRAND}",
+    "Home remodeling in #{a[:name]}, WA: kitchens, bathrooms, basements, and whole homes. Licensed, insured, and bonded local contractor. Free consultation."]
+end
+
+BUSINESS_ID = "#{SITE}/#business"
+CITY_LD = AREAS.map { |a| { "@type" => "City", "name" => "#{a[:name]}, WA" } }
+require "json"
+def jtext(h); h.gsub(/<[^>]+>/, "").gsub("&amp;", "&").gsub("&nbsp;", " ").gsub(/\s+/, " ").strip; end
+
+seo_count = 0
+Dir.glob(File.join(ROOT, "*.html")).sort.each do |path|
+  slug = File.basename(path, ".html")
+  next if slug == "promotions" || slug.start_with?("_")
+  s = File.read(path)
+  url = slug == "index" ? "#{SITE}/" : "#{SITE}/#{slug}"
+  title, desc = SEO[slug]
+  if title
+    s = s.sub(%r{<title>.*?</title>}) { "<title>#{title}</title>" }
+    s = s.sub(%r{<meta property="og:title" content="[^"]*">}) { %(<meta property="og:title" content="#{title}">) }
+  end
+  if desc
+    s = s.sub(%r{<meta name="description" content="[^"]*">}) { %(<meta name="description" content="#{desc}">) }
+    s = s.sub(%r{<meta property="og:description" content="[^"]*">}) { %(<meta property="og:description" content="#{desc}">) }
+  end
+  s = s.gsub("https://juliusremodeling.com", SITE)
+  s = s.gsub(%r{content="assets/logo\.jpg"}, %(content="#{SITE}/assets/logo.jpg"))
+  s = s.gsub(%r{"image":"assets/logo\.jpg"}, %("image":"#{SITE}/assets/logo.jpg"))
+  # One address per page: canonical + og:url (the 404 page gets noindex instead).
+  s = s.gsub(%r{\n?<link rel="canonical"[^>]*>}, "").gsub(%r{\n?<meta property="og:url"[^>]*>}, "").gsub(%r{\n?<meta name="robots" content="noindex">}, "")
+  extra = slug == "404" ? %(<meta name="robots" content="noindex">) : %(<link rel="canonical" href="#{url}">\n<meta property="og:url" content="#{url}">)
+  s = s.sub(%r{(<meta name="description" content="[^"]*">|</title>)}) { "#{$1}\n#{extra}" }
+  # Clean links: kitchen-remodeling.html -> /kitchen-remodeling, index.html -> /  (no redirect hop for Google).
+  s = s.gsub(%r{href="index\.html([?#][^"]*)?"}) { %(href="/#{$1}") }
+  s = s.gsub(%r{href="([a-z0-9-]+)\.html([?#][^"]*)?"}) { %(href="/#{$1}#{$2}") }
+  # Schema: business details on the home page; page, breadcrumb, and FAQ details on every page.
+  s = s.sub(%r{\n?<script type="application/ld\+json" id="seo-ld">.*?</script>}m, "")
+  graph = []
+  if slug == "index"
+    s = s.sub(%r{(<script type="application/ld\+json">\s*)\{"@context":"https://schema.org","@type":"GeneralContractor".*?\}(\s*</script>)}m) do
+      biz = {
+        "@context" => "https://schema.org", "@type" => "GeneralContractor", "@id" => BUSINESS_ID,
+        "name" => "Julius Remodeling Group", "alternateName" => "Julius Remodeling",
+        "description" => "Family-owned home remodeling company: kitchens, bathrooms, basements, additions, ADUs, and whole homes in Seattle and the Eastside.",
+        "url" => "#{SITE}/", "logo" => "#{SITE}/assets/logo.jpg", "image" => "#{SITE}/assets/logo.jpg",
+        "telephone" => "+1-425-699-9636", "email" => "ask@juliusremodeling.com",
+        "address" => { "@type" => "PostalAddress", "streetAddress" => "800 Bellevue Way NE, Suite 500", "addressLocality" => "Bellevue", "addressRegion" => "WA", "postalCode" => "98004", "addressCountry" => "US" },
+        "openingHours" => ["Mo-Fr 09:00-17:00", "Su 10:00-15:00"],
+        "areaServed" => CITY_LD,
+        "aggregateRating" => { "@type" => "AggregateRating", "ratingValue" => "4.98", "ratingCount" => "58", "bestRating" => "5" },
+        "hasCredential" => { "@type" => "EducationalOccupationalCredential", "credentialCategory" => "Washington State contractor license", "identifier" => "JULIURG780NJ", "recognizedBy" => { "@type" => "GovernmentOrganization", "name" => "Washington State Department of Labor & Industries" } },
+        "knowsAbout" => ALL.map { |x| jtext(x[:name]) },
+        "sameAs" => ["https://www.instagram.com/juliusremodeling/", "https://www.youtube.com/@Juliusremodelinggroup"],
+        "slogan" => "Transforming homes. Elevating lives.",
+      }
+      "#{$1}#{JSON.generate(biz)}#{$2}"
+    end
+    graph << { "@type" => "WebSite", "@id" => "#{SITE}/#website", "url" => "#{SITE}/", "name" => "Julius Remodeling Group", "publisher" => { "@id" => BUSINESS_ID } }
+  end
+  if slug == "condo-remodeling"
+    graph << { "@type" => "Service", "serviceType" => "Condo & apartment remodeling", "provider" => { "@id" => BUSINESS_ID }, "areaServed" => CITY_LD, "url" => url }
+  end
+  page_name = jtext(s[%r{<h1[^>]*>(.*?)</h1>}m, 1].to_s)
+  graph << { "@type" => "WebPage", "@id" => "#{url}#webpage", "url" => url, "name" => jtext(title || s[%r{<title>(.*?)</title>}, 1].to_s), "headline" => page_name,
+             "description" => jtext(desc || s[%r{<meta name="description" content="([^"]*)"}, 1].to_s), "isPartOf" => { "@id" => "#{SITE}/#website" }, "about" => { "@id" => BUSINESS_ID } } unless slug == "404"
+  unless %w[index 404].include?(slug)
+    crumbs = [["Home", "#{SITE}/"]]
+    crumbs << ["Service areas", "#{SITE}/service-areas"] if AREAS.any? { |a| a[:slug] == slug }
+    crumbs << ["Specials", "#{SITE}/specials"] if PROMOS.any? { |pr| pr[:slug] == slug }
+    crumbs << [jtext(title.to_s.sub(/ \| .*\z/, "")), url]
+    graph << { "@type" => "BreadcrumbList", "itemListElement" => crumbs.each_with_index.map { |(n, u), i| { "@type" => "ListItem", "position" => i + 1, "name" => n, "item" => u } } }
+  end
+  faqs = s.scan(%r{<summary><span class="mono">\d+</span>([^<]+)<span class="pm"[^>]*></span></summary>\s*<p>(.*?)</p>\s*</details>}m)
+  if faqs.any?
+    graph << { "@type" => "FAQPage", "mainEntity" => faqs.map { |q, a| { "@type" => "Question", "name" => jtext(q), "acceptedAnswer" => { "@type" => "Answer", "text" => jtext(a) } } } }
+  end
+  if graph.any?
+    ld = JSON.generate({ "@context" => "https://schema.org", "@graph" => graph }).gsub("</", "<\\/")
+    s = s.sub("</head>") { %(<script type="application/ld+json" id="seo-ld">#{ld}</script>\n</head>) }
+  end
+  File.write(path, s)
+  seo_count += 1
+end
+puts "SEO titles, descriptions, canonical links, clean links, and schema applied to #{seo_count} pages"
+
 
 # Cache-busting: every page loads site.css and site.js with a version that changes whenever the file changes,
 # so browsers never mix a new page with an old saved copy of the styles or scripts.

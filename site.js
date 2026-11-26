@@ -291,7 +291,7 @@ if (hdrWrap) {
     });
     var n = names();
     if (list) list.innerHTML = n.length ? n.length + " selected: " + n.map(function(t){ return '<span class="chipx">' + t.replace(/&/g, "&amp;").replace(/</g, "&lt;") + "</span>"; }).join("") : sec.getAttribute("data-none");
-    var href = n.length ? "consultation.html?type=" + kind + "&upgrades=" + encodeURIComponent(n.join("; ")) : "consultation.html";
+    var href = n.length ? "/consultation?type=" + kind + "&upgrades=" + encodeURIComponent(n.join("; ")) : "/consultation";
     sends.forEach(function(a){ a.href = href; var t = a.firstChild; if (t && t.nodeType === 3) t.nodeValue = n.length ? sec.getAttribute("data-send") + " " : "Book a free consultation "; });
     try { sessionStorage.setItem(KEY, JSON.stringify(picked)); } catch(e){}
   }

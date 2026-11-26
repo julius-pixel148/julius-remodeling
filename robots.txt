@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://juliusremodeling.com/sitemap.xml
+Sitemap: https://www.juliusremodeling.com/sitemap.xml
